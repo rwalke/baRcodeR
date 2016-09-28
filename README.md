@@ -7,5 +7,7 @@ Contains sample code for producing 2D barcode labels that can be printed on a st
 Formatted for ULINE Premium Laser Printer Labels
 Catalogue #S-19297 (80 labels per sheet, 1.75" x 0.5")
 
+Requires:**theme_empty.R**
+
 ## TO DO:
 Generalize from above code based on user input
