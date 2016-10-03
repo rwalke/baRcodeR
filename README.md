@@ -11,3 +11,24 @@ Requires:**theme_empty.R**
 
 ## TO DO:
 Generalize from above code based on user input
+
+## IN Progress:
+Variables to track for function:
+digits -> # digits to print (e.g. for leading zeros, 001, 000001, etc.)
+hlevels ->  # levels in hiearchy (e.g. Individual nested in Population = 2 levels)
+oname -> File name of pdf output
+iname -> FIle name of csv input
+errcorr -> Error correction; must be in c("L","M","Q","H")
+
+Examples of label inputs:
+#### A csv file with single column; each row = new label
+Labels<-read.csv("Labels.csv",header=F,as.is=T) # Simple csv file with a separate label in each row
+
+#### Any generic text; %04d = 4 digits preceded by zero as necessary
+#Labels<-data.frame(sprintf("@ColauttiLab\n2016-%04d",c(321:800)))
+
+#### Text with hierarchichal numbering (e.g. individuals within populations #11-20, sorted by population)
+Pop<-c(1:20)
+Ind<-c(1:80)
+Labels<-data.frame(sprintf("rc91@queensu.ca\nPOP-%02d-%03d",sort(rep(Pop,length(Ind))),c(1:80)))
+
