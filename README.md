@@ -22,10 +22,10 @@ errcorr -> Error correction; must be in c("L","M","Q","H")
 
 Examples of label inputs:
 #### A csv file with single column; each row = new label
-Labels<-read.csv("Labels.csv",header=F,as.is=T) # Simple csv file with a separate label in each row
+Labels<-read.csv("Labels.csv",header=F,as.is=T) 
 
 #### Any generic text; %04d = 4 digits preceded by zero as necessary
-#Labels<-data.frame(sprintf("@ColauttiLab\n2016-%04d",c(321:800)))
+Labels<-data.frame(sprintf("@ColauttiLab\n2016-%04d",c(321:800)))
 
 #### Text with hierarchichal numbering (e.g. individuals within populations #11-20, sorted by population)
 Pop<-c(1:20)
