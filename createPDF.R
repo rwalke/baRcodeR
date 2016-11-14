@@ -18,17 +18,7 @@
 ## NOTE: Labels must be in UTF-8 format!
 ## Should be a csv file with single column; each row = new label
 #Labels<-read.csv("Labels.csv",header=F,as.is=T) # Simple csv file with a separate label in each row
-
-## Or make your own! (Text = any generic text; %04d = 4 digits preceded by zero as necessary)
-#Labels<-data.frame(sprintf("@ColauttiLab\n2016-%04d",c(321:800)))
-
-
-## Error correction: allows for some damage to barcode without affecting ability to scan.
-#Level "L" - up to 7% damage -- ideal for very small labels (large pixels)
-#Level "M" - up to 15% damage
-#Level "Q" - up to 25% damage
-#Level "H" - up to 30% damage -- good for bigger levels (small pixels)
-
+#Make your own in LabelHierarchy.R!
 
 ##########################
 ###### END SETTINGS ######
@@ -50,9 +40,17 @@ while (oname==""){
 }
 
 
-# [Function] create_PDF prompts for pdf settings if "ask" is set to T 
+# [Function] create_PDF prompts for pdf settings if "ask" is set to T, otherwise creates with default values
+## Parameters: 
+## Labels: a vector of barcodes
+## ErrCorr: error correction, Levels of damage from low to high: L, M, Q, H
+## Across: set to TRUE to print labels across rows instead of down columns
+## Fsz: set font size
+## trunc: split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
+## ERows/ECols: number of rows/columns to skip, default is 0
+## ask: user prompt, default is false
 create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=F,ERows=0,ECols=0,ask=F){
-
+  
   if(length(Labels) == 0){
     print("Please pass in barcode labels")
   } else{
