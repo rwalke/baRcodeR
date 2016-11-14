@@ -22,32 +22,12 @@
 ## Or make your own! (Text = any generic text; %04d = 4 digits preceded by zero as necessary)
 #Labels<-data.frame(sprintf("@ColauttiLab\n2016-%04d",c(321:800)))
 
-## With hierarchichal numbering (e.g. individuals within populations #11-20, sorted by population)
-Pop<-c(11:20)
-Ind<-c(1:80)
-Labels<-data.frame(sprintf("rc91@queensu.ca\nPOP-%02d-%03d",sort(rep(Pop,length(Ind))),c(1:80)))
-
-
 
 ## Error correction: allows for some damage to barcode without affecting ability to scan.
 #Level "L" - up to 7% damage -- ideal for very small labels (large pixels)
 #Level "M" - up to 15% damage
 #Level "Q" - up to 25% damage
 #Level "H" - up to 30% damage -- good for bigger levels (small pixels)
-ErrCorr="H"
-
-
-## Set to TRUE to print labels across rows instead of down columns
-Across<-T
-
-# Set font size
-Fsz<-2.5
-# Split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
-trunc<-F
-
-## Number of rows/columns to skip --> Useful for printing on used sheets
-ERows<-0
-ECols<-0
 
 
 ##########################
@@ -62,10 +42,60 @@ library(png)
 library(qrcode)
 source("theme_empty.R")
 
+# file name
+oname <- readline("Enter the name of the output pdf file: ")
+oname<-paste0(oname,".pdf")
+while (oname==""){
+  oname <- readline("Enter the name of the output pdf file: ")
+}
+
+
+# [Function] create_PDF prompts for pdf settings if "ask" is set to T 
+create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=F,ERows=0,ECols=0,ask=F){
+
+  if(length(Labels) == 0){
+    print("Please pass in barcode labels")
+  } else{
+  
+    # if user prompt has been set to true
+    if (ask==T){
+      ## Error correction
+      ErrCorr <- toupper(readline("Specify an error correction - L, M, Q, H: "))
+      errCheck<-c("L","l","M","m","Q","q","H","h")
+      # check errCorr input
+      while((ErrCorr %in% errCheck)==FALSE){
+        print ("Invalid input, please only enter what is specified")
+        ErrCorr <- toupper(readline("Specify an error correction - L, M, Q, H: "))
+      }
+        
+      # possible inputs
+      inputCheck<-c("T","t","F","f")
+        
+      ## Set to TRUE to print labels across rows instead of down columns
+      Across<- toupper(readline("Please enter T or F to print across: "))
+        
+      while((Across %in% inputCheck)==FALSE){
+        print("Invalid input")
+        Across <- toupper(readline("Please enter T or F to print across: "))
+      }
+      # Set font size
+      Fsz<-as.numeric(readline("Please enter a font size: "))
+      # Split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
+      trunc<-toupper(readline("Do you want to split text into rows? (T/F): "))
+      while((trunc %in% inputCheck)==FALSE){
+        print("Invalid input")
+        trunc<-toupper(readline("Do you want to split text into rows? (T/F): "))
+      }
+        
+      ERows <- as.numeric(readline("Number of rows to skip? (enter 0 for default): "))
+      ECols <- as.numeric(readline("Number of cols to skip? (enter 0 for default): "))
+        
+    } # end ask == T
+    
 # Dummy data.frame for plotting
 dmy<-data.frame(x=c(0,457),y=c(0,212))
 ### Page Setup
-pdf("LabelsOut.pdf",width=8.5,height=11,onefile=T,family="Courier") # Standard North American 8.5 x 11
+pdf(oname,width=8.5,height=11,onefile=T,family="Courier") # Standard North American 8.5 x 11
 grid.newpage() # Open a new page on grid device 
 pushViewport(viewport(width=unit(8,"in"),height=unit(10,"in"),just=c("centre","centre"),layout = grid.layout(nrow=20, ncol=4))) # Margins: left/right:10mm x top/bottom:22mm
 row<-ERows
@@ -128,4 +158,8 @@ for (i in 1:nrow(Labels)){
   }
 }
 dev.off()
+} #end if
+} #end create_PDF()
 
+# Pass in Labels from global environment (Please make sure that Labels is existing)
+create_PDF(Labels)
