@@ -4,7 +4,7 @@
 #########################################
 ## Basic instructions:
 # Runs in R
-# Max 25 characters (longer labels truncated to 25 characters)
+# Max 25 characters (longer labels truncated to 27 characters)
 # Set up for ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
 # Output is a pdf of labels 
 # When printing: Use 'original size' (i.e. not 'fit' or 'shrink') and no margins in the print setup.
@@ -13,7 +13,7 @@
 ###### USER SETTINGS #####
 ##########################
 ## Install these packages if not installed already:
-#install.packages(c("ggplot2","grid","gridExtra","RCurl","png","ggplot2","qrcode"))
+##install.packages(c("ggplot2","grid","gridExtra","RCurl","png","ggplot2","qrcode"))
 ## File of labels for QR code
 ## NOTE: Labels must be in UTF-8 format!
 ## Should be a csv file with single column; each row = new label
@@ -57,6 +57,28 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=F,ERows=0,E
   
     # if user prompt has been set to true
     if (ask==T){
+      labelLength<-nchar(paste(Labels[1,1]))
+      ## Set font size
+      Fsz <- as.numeric(readline("Please enter a font size (2.2-4.7): "))
+      while (Fsz<2.2 || Fsz >4.7){
+        print ("Invalid input, please specify a font size within the range 2.2-4.7")
+        Fsz <-as.numeric(readline("Please enter a font size (2.2-4.7): "))
+      }
+      
+      while (Fsz>=2.2 && Fsz<=2.5 && labelLength >= 27){
+        print("ERROR: not enought space to print full label, please decrease font size")
+        Fsz <-as.numeric(readline("Please enter a font size (2.2-4.7): "))
+      }
+      while (Fsz>=2.6 && Fsz <=4.0 && labelLength >=18){
+        print("ERROR: not enought space to print full label, please decrease font size")
+        Fsz <-as.numeric(readline("Please enter a font size (2.2-4.7): "))
+      }
+      while(Fsz>=4.1 && Fsz<=4.7 && labelLength>=9){
+        print("ERROR: not enought space to print full label, please decrease font size")
+        Fsz <-as.numeric(readline("Please enter a font size (2.2-4.7): "))
+      }
+
+      
       ## Error correction
       ErrCorr <- toupper(readline("Specify an error correction - L, M, Q, H: "))
       errCheck<-c("L","l","M","m","Q","q","H","h")
@@ -76,8 +98,6 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=F,ERows=0,E
         print("Invalid input")
         Across <- toupper(readline("Please enter T or F to print across: "))
       }
-      # Set font size
-      Fsz<-as.numeric(readline("Please enter a font size: "))
       # Split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
       trunc<-toupper(readline("Do you want to split text into rows? (T/F): "))
       while((trunc %in% inputCheck)==FALSE){
@@ -105,7 +125,7 @@ for (i in 1:nrow(Labels)){
   Xsplt<-strsplit(Xtxt,"")[[1]]
   
   if(trunc==T){  # Truncate string across lines if trunc==T
-    if(length(Xsplt)>25){Xsplt<-Xsplt[1:25]}
+    if(length(Xsplt)>27){Xsplt<-Xsplt[1:27]}
     # If remaining string is > 8 characters, split into separate lines
     if(length(Xsplt)>8){
       Xnew<-{}
