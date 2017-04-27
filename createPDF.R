@@ -32,6 +32,24 @@ library(png)
 library(qrcode)
 source("theme_empty.R")
 
+mainDir <- "~/Documents/courses/barcodeProject/"
+subDir <- "output_pdf"
+dir.create(file.path(mainDir, subDir), showWarnings = FALSE)
+setwd(file.path(mainDir, subDir))
+
+
+option<-c(1,2)
+answer<-as.numeric(readline("1) use current env labels or 2) open from file? (enter either 1 or 2): "))
+while((answer %in% option)==FALSE){
+  noquote(print("Invalid input"))
+  answer<-as.numeric(readline("1) use current env labels or 2) open from file? (enter either 1 or 2): "))
+}
+if (answer==2){
+  myFile <-file.choose()
+  Labels <<-read.table(myFile,header=FALSE)
+} 
+
+
 # file name
 oname <- noquote(readline("Enter the name of the output pdf file: "))
 oname<-paste0(oname,".pdf")
@@ -182,9 +200,11 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
       }
         print(Xplt, vp = viewport(layout.pos.row=row,layout.pos.col=col,x=unit(0,"mm"),y=unit(0,"mm"),clip=F))
         Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
+        setwd(file.path(mainDir))
       }
     }
     dev.off()
+   
     } #end if
     } #end create_PDF()
     
@@ -194,3 +214,4 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
     
     print(noquote("Creating QR code..."))
     print(noquote(paste0("Outputting to: ", oname)))
+   
