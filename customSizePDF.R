@@ -32,6 +32,22 @@ library(png)
 library(qrcode)
 source("theme_empty.R")
 
+mainDir <- "~/Documents/courses/barcodeProject/"
+subDir <- "output_pdf"
+dir.create(file.path(mainDir, subDir), showWarnings = FALSE)
+setwd(file.path(mainDir, subDir))
+
+option<-c(1,2)
+answer<-as.numeric(readline("1) use current env labels or 2) open from file? (enter either 1 or 2): "))
+while((answer %in% option)==FALSE){
+  noquote(print("Invalid input"))
+  answer<-as.numeric(readline("1) use current env labels or 2) open from file? (enter either 1 or 2): "))
+}
+if (answer==2){
+  myFile <-file.choose()
+  Labels <<-read.table(myFile,header=FALSE)
+} 
+
 # file name
 oname <- noquote(readline("Enter the name of the output pdf file: "))
 oname<-paste0(oname,".pdf")
@@ -54,6 +70,7 @@ print(height_margin)
 
 # possible inputs
 yesNo<-c("Y","N")
+
 space<-toupper(readline("change distance between qrcode and label? (y/n): "))
 while((space %in% yesNo)==FALSE){
   noquote(print("Invalid input"))
@@ -68,6 +85,7 @@ if (space=="Y"){
   }  
 }
 y_space <- x_space-(as.integer(x_space*0.5))-15
+
 # [Function] create_PDF prompts for pdf settings if "ask" is set to T, otherwise creates with default values
 ## Parameters: 
 ## Labels: a vector of barcodes
@@ -181,13 +199,12 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=3.0,trunc=T,ERows=0,E
         }
       }
       # Create qrcode
-      Xpng<-rasterGrob(abs(qrcode_gen(paste0(Labels[i,]),ErrorCorrectionLevel=ErrCorr,dataOutput=T,plotQRcode=F,mask=3)-1),interpolate=F)
+      Xpng<-rasterGrob(abs(qrcode_gen(paste0(Labels[i,]),ErrorCorrectionLevel=ErrCorr,dataOutput=TRUE,plotQRcode=FALSE,mask=3)-1),interpolate=FALSE)
       # Create tag (QR code + text label)
       Xplt<-
-        ggplot(data=dmy,aes(x=0,y=0))+annotation_custom(Xpng,xmin=30,xmax=120,ymin=60,ymax=120)+coord_cartesian(xlim=c(0,457),ylim=c(0,212))+theme_empty()+
-        geom_text(aes(x=x_space,y=y_space,label=Xtxt,hjust=0,vjust=1),size=Fsz) # +geom_point(aes(x=x,y=y)) # useful points for fitting margins
+        ggplot(data=dmy,aes(x=0,y=0))+annotation_custom(Xpng,xmin=50,xmax=120,ymin=60,ymax=120)+coord_cartesian(xlim=c(0,657),ylim=c(0,412))+theme_empty()+
+        geom_text(aes(x=x_space,y=y_space,label=Xtxt,hjust=0,vjust=1),size=Fsz) #+geom_point(aes(x=x,y=y)) # useful points for fitting margins
       
-      # Output to tag position
       row<-row+1
       if(Across=="T"||Across ==T){
         if(row>ncol){
@@ -199,7 +216,7 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=3.0,trunc=T,ERows=0,E
             pushViewport(viewport(width=unit(width_margin,"in"),height=unit(height_margin,"in"),just=c("centre","centre"),layout = grid.layout(nrow, ncol))) # Margins: left/right:10mm x top/bottom:22mm
           }
         }
-        print(Xplt, vp = viewport(layout.pos.row=col,layout.pos.col=row,x=unit(0,"mm"),y=unit(0,"mm"),clip=F))
+        print(Xplt, vp = viewport(layout.pos.row=col,layout.pos.col=row,x=unit(0,"mm"),y=unit(0,"mm"),clip=T))
         Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
       } else {if(row>nrow){
         row<-1
@@ -207,14 +224,16 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=3.0,trunc=T,ERows=0,E
         if(col>ncol){
           col<-1
           grid.newpage() # Open a new page on grid device 
-          pushViewport(viewport(width=unit(width_margin,"in"),height=unit(height_margin,"in"),just=c("centre","centre"),layout = grid.layout(nrow, ncol))) # Margins: left/right:10mm x top/bottom:22mm
+          pushViewport(viewport(width=unit(width_margin,"in"),height=unit(height_margin,"in"),just=c("centre","centre"),layout = grid.layout(nrow, ncol)), strict=T) # Margins: left/right:10mm x top/bottom:22mm
         }
       }
-        print(Xplt, vp = viewport(layout.pos.row=row,layout.pos.col=col,x=unit(0,"mm"),y=unit(0,"mm"),clip=F))
+        print(Xplt, vp = viewport(layout.pos.row=row,layout.pos.col=col,x=unit(0,"mm"),y=unit(0,"mm"),clip=T))
         Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
+        setwd(file.path(mainDir))
       }
     }
     dev.off()
+    setwd(file.path(mainDir))
   } #end if
 } #end create_PDF()
 
