@@ -25,7 +25,7 @@
 ## With hierarchichal numbering (e.g. individuals within populations #11-20, sorted by population)
 Pop<-c(11:20)
 Ind<-c(1:80)
-Labels<-data.frame(sprintf("rc91@queensu.ca\nPOP-%02d-%03d",sort(rep(Pop,length(Ind))),c(1:80)))
+Labels<-data.frame(sprintf("rc91@queensu.ca\nPOP-%02d-%03d",sort(rep(Pop,length(Ind))),Ind))
 
 
 
