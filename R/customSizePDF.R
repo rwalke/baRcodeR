@@ -1,0 +1,245 @@
+#########################################
+## Script to make QR code labels      ###
+## Output to pdf to print on stickers ###
+#########################################
+## Basic instructions:
+# Runs in R
+# Max 25 characters (longer labels truncated to 27 characters)
+# Set up for ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+# Output is a pdf of labels 
+# When printing: Use 'original size' (i.e. not 'fit' or 'shrink') and no margins in the print setup.
+
+##########################
+###### USER SETTINGS #####
+##########################
+## Install these packages if not installed already:
+##install.packages(c("ggplot2","grid","gridExtra","RCurl","png","ggplot2","qrcode"))
+## File of labels for QR code
+## NOTE: Labels must be in UTF-8 format!
+## Should be a csv file with single column; each row = new label
+#Labels<-read.csv("Labels.csv",header=F,as.is=T) # Simple csv file with a separate label in each row
+#Make your own in LabelHierarchy.R!
+
+##########################
+###### END SETTINGS ######
+##########################
+
+## Libraries
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(png)
+library(qrcode)
+source("theme_empty.R")
+
+mainDir <- "~/Documents/courses/barcodeProject/"
+subDir <- "output_pdf"
+dir.create(file.path(mainDir, subDir), showWarnings = FALSE)
+setwd(file.path(mainDir, subDir))
+
+option<-c(1,2)
+answer<-as.numeric(readline("1) use current env labels or 2) open from file? (enter either 1 or 2): "))
+while((answer %in% option)==FALSE){
+  noquote(print("Invalid input"))
+  answer<-as.numeric(readline("1) use current env labels or 2) open from file? (enter either 1 or 2): "))
+}
+if (answer==2){
+  myFile <-file.choose()
+  Labels <<-read.table(myFile,header=FALSE)
+} 
+
+# file name
+oname <- noquote(readline("Enter the name of the output pdf file: "))
+oname<-paste0(oname,".pdf")
+while (oname==""){
+  oname <- noquote(readline("Enter the name of the output pdf file: "))
+}
+
+nrow<-as.numeric(readline("# of rows per page: "))
+ncol<-as.numeric(readline("# of col per page: "))
+
+height_margin<-as.numeric(readline("Please enter the height margin of page (in inch): ")) #top/down margin
+width_margin<-as.numeric(readline("Please enter the width margin of page (in inch): ")) #left/right margin
+#sticker_padding<-as.numeric(readline("Please enter the padding for each sticker: "))
+
+width_margin <- 8.5-width_margin*2
+height_margin <- 11-height_margin*2
+
+print(width_margin)
+print(height_margin)
+
+# possible inputs
+yesNo<-c("Y","N")
+
+space<-toupper(readline("change distance between qrcode and label? (y/n): "))
+while((space %in% yesNo)==FALSE){
+  noquote(print("Invalid input"))
+  space<-toupper(readline("change distance between qrcode and label? (y/n): "))
+}
+x_space <- 215
+if (space=="Y"){
+  x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
+  while((space_1 <190 || space_1 >250)){
+    noquote(print("Invalid input"))
+    x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
+  }  
+}
+y_space <- x_space-(as.integer(x_space*0.5))-15
+
+# [Function] create_PDF prompts for pdf settings if "ask" is set to T, otherwise creates with default values
+## Parameters: 
+## Labels: a vector of barcodes
+## ErrCorr: error correction, Levels of damage from low to high: L, M, Q, H
+## Across: set to TRUE to print labels across rows instead of down columns
+## Fsz: set font size
+## trunc: split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
+## ERows/ECols: number of rows/columns to skip, default is 0
+## ask: user prompt, default is false
+create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=3.0,trunc=T,ERows=0,ECols=0){
+  
+  if(length(Labels) == 0){
+    noquote(print("Please pass in barcode labels"))
+  } else{
+    labelLength<-nchar(paste(Labels[1,1]))
+    
+    # possible inputs
+    inputCheck<-c("T","t","F","f")
+    ask <- noquote(toupper(readline("Do you want to edit the parameters? (T/F): ")))
+    
+    while((ask %in% inputCheck)==FALSE){
+      noquote(print("Invalid input"))
+      ask <- noquote(toupper(readline("Do you want to edit the parameters? (T/F): ")))
+    }
+    
+    print(noquote("Creating QR code..."))
+    print(noquote(paste0("Outputting to: ", oname)))
+    
+    # if user prompt has been set to true
+    if (ask=="T"){
+      ## Set font size
+      Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
+      while (Fsz<2.2 || Fsz >4.7){
+        noquote(print("Invalid input, please specify a font size within the range 2.2-4.7"))
+        Fsz <-noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
+      }
+      
+      while (Fsz>=2.2 && Fsz<=2.5 && labelLength >= 27){
+        noquote(print("ERROR: not enought space to print full label, please decrease font size"))
+        Fsz <-noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
+      }
+      while (Fsz>=2.6 && Fsz <=4.0 && labelLength >=18){
+        noquote(print("ERROR: not enought space to print full label, please decrease font size"))
+        Fsz <-noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
+      }
+      while(Fsz>=4.1 && Fsz<=4.7 && labelLength>=9){
+        noquote(print("ERROR: not enought space to print full label, please decrease font size"))
+        Fsz <-noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
+      }
+      
+      
+      ## Error correction
+      ErrCorr <- noquote(toupper(readline("Specify an error correction - L, M, Q, H: ")))
+      errCheck<-c("L","l","M","m","Q","q","H","h")
+      # check errCorr input
+      while((ErrCorr %in% errCheck)==FALSE){
+        noquote(print ("Invalid input, please only enter what is specified"))
+        ErrCorr <- noquote(toupper(readline("Specify an error correction - L, M, Q, H: ")))
+      }
+      
+      ## Set to TRUE to print labels across rows instead of down columns
+      Across<- noquote(toupper(readline("Please enter T or F to print across: ")))
+      
+      while((Across %in% inputCheck)==FALSE){
+        noquote(print("Invalid input"))
+        Across <- noquote(toupper(readline("Please enter T or F to print across: ")))
+      }
+      # Split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
+      trunc<-noquote(toupper(readline("Do you want to split text into rows? (T/F): ")))
+      while((trunc %in% inputCheck)==FALSE){
+        noquote(print("Invalid input"))
+        trunc<-noquote(toupper(readline("Do you want to split text into rows? (T/F): ")))
+      }
+      
+      ERows <- noquote(as.numeric(readline("Number of rows to skip? (enter 0 for default): ")))
+      ECols <- noquote(as.numeric(readline("Number of cols to skip? (enter 0 for default): ")))
+      
+    } # end ask == T
+    # Dummy data.frame for plotting
+    
+    if (Fsz>=2.2 && Fsz<=2.5 && labelLength >= 27){
+      print(noquote("ERROR: not enought space to print full label, please decrease font size"))
+    }
+    dmy<-data.frame(x=c(0,457),y=c(0,212))
+    ### Page Setup
+    pdf(oname,width=8.5,height=11,onefile=T,family="Courier") # Standard North American 8.5 x 11
+    grid.newpage() # Open a new page on grid device 
+    pushViewport(viewport(width=unit(width_margin,"in"),height=unit(height_margin,"in"),just=c("centre","centre"),layout = grid.layout(nrow, ncol))) # Margins: left/right:10mm x top/bottom:22mm
+    row<-ERows
+    col<-ECols+1
+    for (i in 1:nrow(Labels)){
+      # Create text label
+      Xtxt<-paste(gsub("\\\\n","\\\n",Labels[i,]),collapse="")
+      # Split label to count characters
+      Xsplt<-strsplit(Xtxt,"")[[1]]
+      if(trunc==T){  # Truncate string across lines if trunc==T
+        if(length(Xsplt)>27){Xsplt<-Xsplt[1:27]}
+        # If remaining string is > 8 characters, split into separate lines
+        if(length(Xsplt)>8){
+          Xnew<-{}
+          count<-0
+          for(j in 1:length(Xsplt)){
+            count<-count+1
+            Xnew<-c(Xnew,Xsplt[j])
+            if(count>8){
+              count<-0
+              Xnew<-c(Xnew,"\n")        
+            }
+          }
+          Xtxt<-paste(Xnew,collapse="")
+        }
+      }
+      # Create qrcode
+      Xpng<-rasterGrob(abs(qrcode_gen(paste0(Labels[i,]),ErrorCorrectionLevel=ErrCorr,dataOutput=TRUE,plotQRcode=FALSE,mask=3)-1),interpolate=FALSE)
+      # Create tag (QR code + text label)
+      Xplt<-
+        ggplot(data=dmy,aes(x=0,y=0))+annotation_custom(Xpng,xmin=50,xmax=120,ymin=60,ymax=120)+coord_cartesian(xlim=c(0,657),ylim=c(0,412))+theme_empty()+
+        geom_text(aes(x=x_space,y=y_space,label=Xtxt,hjust=0,vjust=1),size=Fsz) #+geom_point(aes(x=x,y=y)) # useful points for fitting margins
+      
+      row<-row+1
+      if(Across=="T"||Across ==T){
+        if(row>ncol){
+          row<-1
+          col<-col+1
+          if(col>nrow){
+            col<-1
+            grid.newpage() # Open a new page on grid device 
+            pushViewport(viewport(width=unit(width_margin,"in"),height=unit(height_margin,"in"),just=c("centre","centre"),layout = grid.layout(nrow, ncol))) # Margins: left/right:10mm x top/bottom:22mm
+          }
+        }
+        print(Xplt, vp = viewport(layout.pos.row=col,layout.pos.col=row,x=unit(0,"mm"),y=unit(0,"mm"),clip=T))
+        Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
+      } else {if(row>nrow){
+        row<-1
+        col<-col+1
+        if(col>ncol){
+          col<-1
+          grid.newpage() # Open a new page on grid device 
+          pushViewport(viewport(width=unit(width_margin,"in"),height=unit(height_margin,"in"),just=c("centre","centre"),layout = grid.layout(nrow, ncol)), strict=T) # Margins: left/right:10mm x top/bottom:22mm
+        }
+      }
+        print(Xplt, vp = viewport(layout.pos.row=row,layout.pos.col=col,x=unit(0,"mm"),y=unit(0,"mm"),clip=T))
+        Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
+        setwd(file.path(mainDir))
+      }
+    }
+    dev.off()
+    setwd(file.path(mainDir))
+  } #end if
+} #end create_PDF()
+
+
+
+# Pass in Labels from global environment (Please make sure that Labels is existing)
+create_PDF(Labels)
+
+
