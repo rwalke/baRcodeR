@@ -1,9 +1,20 @@
 Package: BaRcodes
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Title: Custom R tools for collection, tracking, and curation of biological samples using 1D or 2D barcodes
+Version: 0.0.0.9100
+Authors@R: person("Robert", "Colautti", email = "robert.colautti@queensu.ca", role = c("aut", "cre"))
+Description: baRcodes is a set of R commands for generating and printing barcodes.
+    The ID codes can be generated in a hierachy or input from a list. IDs are 
+    converted to 2-dimensional barcodes (QR Codes) for printing on sticker 
+    sheets compatible with a standard laser printer
 Depends: R (>= 3.4.2)
-License: What license is it under?
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Imports: 
+    ggplot2,
+    grid,
+    gridExtra,
+    png,
+    qrcode
+
+    
