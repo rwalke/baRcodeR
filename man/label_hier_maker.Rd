@@ -15,6 +15,9 @@ label_hier_maker(user = F, hierarchy, end = NULL, digits = 2)
 
 \item{digits}{numerical. Default is 2. Number of digits to be printed. This will apply to all levels when \code{user=F}.}
 }
+\value{
+character labels in a hierarchy
+}
 \description{
 Makes hierarchical barcode labels from interactive user input or from list
 }

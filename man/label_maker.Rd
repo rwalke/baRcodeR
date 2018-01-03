@@ -4,7 +4,7 @@
 \alias{label_maker}
 \title{Makes list for barcode labels in environment}
 \usage{
-label_maker(user = F, string = NULL, level, digits)
+label_maker(user = F, string = NULL, level, digits = 3)
 }
 \arguments{
 \item{user}{logical. Default is FALSE. If the function is run with user prompts or with variables already specified}
@@ -16,7 +16,7 @@ label_maker(user = F, string = NULL, level, digits)
 \item{digits}{integer. The number of digits to print for the numbers appended to the text string. Default is 3.}
 }
 \value{
-a string of cahcar
+a string of characters
 }
 \description{
 Takes user prompts or variables to create  text labels consisting of a text
