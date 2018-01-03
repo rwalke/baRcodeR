@@ -1,4 +1,4 @@
-label_hier_maker<-function(user=F, hierarchy, end=NULL) {
+label_hier_maker<-function(user=F, hierarchy, end=NULL, digits=2) {
   if(user==T) {
     hlevels <- readline("What is the # of levels in hierarchy: ")
     hlevels<-as.numeric(hlevels)
@@ -48,20 +48,38 @@ label_hier_maker<-function(user=F, hierarchy, end=NULL) {
   }
 
   } else {
-    if (is.numeric(hlevels)==F) stop("hlevels is not numeric.")
     if (is.list(hierarchy)==F) stop("hierarchy is not in list format. See ?label_hier_maker")
     if (length(unique(sapply(hierarchy, length))) != 1) stop("hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
+    barcodes<-NULL
     for (i in 1:length(hierarchy)) {
-      str<-hierarchy[[1]][1]
+      str<-hierarchy[[i]][1]
+      startNum<-as.numeric(hierarchy[[i]][2])
+      endNum<-as.numeric(hierarchy[[i]][3])
+      maxNum <- max(startNum,endNum)
+      lvlRange <-c(startNum:endNum)
+      line<-paste0(str,"%0",digits,"d")
+      Labels<-sprintf(line,rep(lvlRange))
+      ## loop for levels
+      if (i > 1) {
+        ## replicate previous labels by number of elements in present level
+        temp_barcode<-rep(barcodes, each=length(startNum:endNum))
+        ## rep present level elements so the length matches that of temp_barcode
+        temp_label<-rep(Labels, length.out=length(temp_barcode))
+        ## paste everything together
+        Labels<-paste(temp_barcode, temp_label, sep="-")
+      }
+      barcodes<-paste0(Labels,end)
     }
+    return(barcodes)
+  }
 
 }
 
 
 
 
-a<-c("one",3,6)
-b<-c("two",1,3)
-test<-list(a,b)
+a<-c("a",3,6)
+b<-c("b",1,3)
+c<-list(a,b)
 
-length(unique(sapply(hierarchy, length))) == 1
+label_hier_maker(hierarchy=c, end="end")
