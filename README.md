@@ -11,8 +11,8 @@ Adding ability to run from console in addition to user prompts by adding input v
 Writing vignette/methods on how to use package
 
 
-~~LabelMaker.R~~
-LabelHierarchy.R
+~~LabelMaker.R~~  
+~~LabelHierarchy.R~~
 createPDF.R
 customSizePDF.R
 
