@@ -6,7 +6,8 @@
 #' @param hierarchy list. A list with each element consisting of three members (string, beginning value, end value). See examples. Used only when \code{user=F}
 #' @param end character. A string to be appended to end of each barcode.
 #' @param digits numerical. Default is 2. Number of digits to be printed. This will apply to all levels when \code{user=F}.
-#'
+#' @export
+#' @return character labels in a hierarchy
 #' @examples
 #'
 #' \dontrun{
