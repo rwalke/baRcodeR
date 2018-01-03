@@ -2,7 +2,7 @@
 #'
 #' Takes user prompts or variables to create  text labels consisting of a text
 #' string and numbers (string001, string002 ... ...) . This function will only
-#' create simple text labels compared to \code{\link{label_hierarchy}} that
+#' create simple text labels compared to \code{\link{label_hier_maker}} that
 #' creates a hierarchical list of labels. The created output will then be fed
 #' into \code{\link{create_PDF}} to create 2-D labels in PDF.
 #'
@@ -11,12 +11,15 @@
 #' to set custom sequences of numbers for the levels. See example.
 #'
 #' @return a string of characters
-#' @param user logical. Default is FALSE. If the function is run with user prompts or with variables already specified
+#' @param user logical. Default is FALSE. If the function is run with user
+#' prompts or with variables already specified
 #' @param string character. Text string for barcode. Default null.
-#' @param level integer string. Defines the numerical values to be appended to the character string. Can be any sequence of numbers, not just sequential
-#' @param digits integer. The number of digits to print for the numbers appended to the text string. Default is 3.
+#' @param level integer string. Defines the numerical values to be appended
+#' to the character string. Can be any sequence of numbers, not just sequential
+#' @param digits integer. The number of digits to print for the numbers
+#' appended to the text string. Default is 3.
 #'
-#' @seealso \code{\link{label_hierarchy}}
+#' @seealso \code{\link{label_hier_maker}}
 #' @export
 #' @examples
 #'

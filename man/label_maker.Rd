@@ -7,13 +7,16 @@
 label_maker(user = F, string = NULL, level, digits = 3)
 }
 \arguments{
-\item{user}{logical. Default is FALSE. If the function is run with user prompts or with variables already specified}
+\item{user}{logical. Default is FALSE. If the function is run with user
+prompts or with variables already specified}
 
 \item{string}{character. Text string for barcode. Default null.}
 
-\item{level}{integer string. Defines the numerical values to be appended to the character string. Can be any sequence of numbers, not just sequential}
+\item{level}{integer string. Defines the numerical values to be appended
+to the character string. Can be any sequence of numbers, not just sequential}
 
-\item{digits}{integer. The number of digits to print for the numbers appended to the text string. Default is 3.}
+\item{digits}{integer. The number of digits to print for the numbers
+appended to the text string. Default is 3.}
 }
 \value{
 a string of characters

@@ -7,19 +7,23 @@
 label_hier_maker(user = F, hierarchy, end = NULL, digits = 2)
 }
 \arguments{
-\item{user}{logical. Should the function be used interactively? Default is false. When true, all other arguments can be empty}
+\item{user}{logical. Should the function be used interactively? Default is
+false. When true, all other arguments can be empty}
 
-\item{hierarchy}{list. A list with each element consisting of three members (string, beginning value, end value). See examples. Used only when \code{user=F}}
+\item{hierarchy}{list. A list with each element consisting of three members
+(string, beginning value, end value). See examples. Used only when \code{user=F}}
 
 \item{end}{character. A string to be appended to end of each barcode.}
 
-\item{digits}{numerical. Default is 2. Number of digits to be printed. This will apply to all levels when \code{user=F}.}
+\item{digits}{numerical. Default is 2. Number of digits to be printed. This will
+apply to all levels when \code{user=F}.}
 }
 \value{
 character labels in a hierarchy
 }
 \description{
 Makes hierarchical barcode labels from interactive user input or from list
+ with string input, beginning and ending numerical values.
 }
 \examples{
 
