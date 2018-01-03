@@ -17,7 +17,7 @@
 #' @param digits integer. The number of digits to print for the numbers appended to the text string. Default is 3.
 #'
 #' @seealso \code{\link{label_hierarchy}}
-#'
+#' @export
 #' @examples
 #'
 #'
