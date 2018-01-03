@@ -1,3 +1,35 @@
+#' Make hierarchical barcode labels
+#'
+#' Makes hierarchical barcode labels from interactive user input or from list
+#'
+#' @param user logical. Should the function be used interactively? Default is false. When true, all other arguments can be empty
+#' @param hierarchy list. A list with each element consisting of three members (string, beginning value, end value). See examples. Used only when \code{user=F}
+#' @param end character. A string to be appended to end of each barcode.
+#' @param digits numerical. Default is 2. Number of digits to be printed. This will apply to all levels when \code{user=F}.
+#'
+#' @examples
+#'
+#' \dontrun{
+#' ## for interactive mode
+#' label_hier_maker(user=T)
+#' }
+#'
+#' ## how to make hierarchy list
+#'
+#' ## create vectors for each level in the order string_prefix, beginning_value, end_value and combine in list
+#'
+#' a<-c("a",3,6)
+#' b<-c("b",1,3)
+#' c<-list(a,b)
+#' Labels<-label_hier_maker(hierarchy=c)
+#' Labels
+#'
+#' ## add string at end of each label
+#' Labels<-label_hier_maker(hierarchy=c, end="end")
+#' Labels
+#'
+
+
 label_hier_maker<-function(user=F, hierarchy, end=NULL, digits=2) {
   if(user==T) {
     hlevels <- readline("What is the # of levels in hierarchy: ")
@@ -76,10 +108,3 @@ label_hier_maker<-function(user=F, hierarchy, end=NULL, digits=2) {
 }
 
 
-
-
-a<-c("a",3,6)
-b<-c("b",1,3)
-c<-list(a,b)
-
-label_hier_maker(hierarchy=c, end="end")
