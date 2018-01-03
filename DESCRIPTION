@@ -17,3 +17,4 @@ Imports:
     png,
     qrcode
 Suggests: testthat
+RoxygenNote: 6.0.1
