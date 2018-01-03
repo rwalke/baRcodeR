@@ -28,8 +28,9 @@
 #' level<-c(1:5, 8:10, 999:1000)
 #' Labels<-label_maker(string="string", level = level, digits=4)
 #' Labels
-#' ## not run, function using user prompt does not use any of the other parameters
+#'
 #' \dontrun{
+#' ## function using user prompt does not use any of the other parameters
 #' Labels<-label_maker(user=T)
 #' Labels
 #' }
