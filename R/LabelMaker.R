@@ -10,7 +10,7 @@
 #' between the starting and ending number. When \code{user=F}, it is possible
 #' to set custom sequences of numbers for the levels. See example.
 #'
-#' @return a string of cahcar
+#' @return a string of characters
 #' @param user logical. Default is FALSE. If the function is run with user prompts or with variables already specified
 #' @param string character. Text string for barcode. Default null.
 #' @param level integer string. Defines the numerical values to be appended to the character string. Can be any sequence of numbers, not just sequential
@@ -37,7 +37,7 @@
 
 
 
-label_maker<-function(user=F, string=NULL, level, digits){
+label_maker<-function(user=F, string=NULL, level, digits=3){
   if (user==T) {
     ## asks for string
     str <- readline(paste0("Please enter string for level: "))
