@@ -24,7 +24,7 @@ a string of characters
 \description{
 Takes user prompts or variables to create  text labels consisting of a text
 string and numbers (string001, string002 ... ...) . This function will only
-create simple text labels compared to \code{\link{label_hierarchy}} that
+create simple text labels compared to \code{\link{label_hier_maker}} that
 creates a hierarchical list of labels. The created output will then be fed
 into \code{\link{create_PDF}} to create 2-D labels in PDF.
 }
@@ -51,5 +51,5 @@ Labels
 }
 }
 \seealso{
-\code{\link{label_hierarchy}}
+\code{\link{label_hier_maker}}
 }
