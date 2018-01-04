@@ -17,7 +17,7 @@
 #' @param name character. Name of pdf output file. Default is "LabelsOut"
 
 create_PDF<-function(user=F, Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,ECols=0, name="LabelsOut"){
-    if (legnth(Labels)==0) stop("Labels do not exist. Please pass in Labels")
+    if (length(Labels)==0) stop("Labels do not exist. Please pass in Labels")
     labelLength<-nchar(paste(Labels[1,1]))
 
     # if user prompt has been set to true
@@ -139,3 +139,5 @@ create_PDF<-function(user=F, Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,E
 
    #end if
 } #end create_PDF()
+
+
