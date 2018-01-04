@@ -15,6 +15,18 @@
 #' @param ERows number of rows to skip. Default is 0.
 #' @param ECols number of columns to skip. Default is 0.
 #' @param name character. Name of pdf output file. Default is "LabelsOut"
+#'
+#'
+#' @examples
+#' ## data frame
+#' example<- as.data.frame(c("ao1", "a02", "a03"))
+#'
+#' \dontrun{
+#' ## run with default options, pdf file will be "example.pdf"
+#' create_PDF(Labels=example, name="example")
+#' ## run interactively. Overrides default pdf options
+#' create_PDF(user=T, Labels=example)
+#' }
 
 create_PDF<-function(user=F, Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,ECols=0, name="LabelsOut"){
     if (length(Labels)==0) stop("Labels do not exist. Please pass in Labels")
@@ -132,7 +144,6 @@ create_PDF<-function(user=F, Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,E
       }
         print(Xplt, vp = viewport(layout.pos.row=row,layout.pos.col=col,x=unit(0,"mm"),y=unit(0,"mm"),clip=F))
         Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
-        setwd(file.path(mainDir))
       }
     }
     dev.off()
