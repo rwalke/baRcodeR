@@ -13,7 +13,7 @@ Writing vignette/methods on how to use package
 
 ~~LabelMaker.R~~  
 ~~LabelHierarchy.R~~
-createPDF.R
+~~createPDF.R~~
 customSizePDF.R
 
 
