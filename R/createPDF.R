@@ -6,35 +6,24 @@
 #'
 #' The pdf setup is for the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca). The page format can be modified using \code{\link{customPDF}}.
 #'
-#'
+#' @param user logical. Whether to run function as interactive. Default is false
+#' @param Labels data frame. One column data frame containing the text for each barcode as a row.
+#' @param ErrCorr the error correction value. Level of damage from low to high: L, M, Q, H. Default is "H"
+#' @param Across logical. When true, print labels in rows. When false, print labels in columns. Default is T.
+#' @param Fsz numerical. Set font size. A number between 2.2 and 4.7. Depending on the length of the label, there may not be enough space to print the entire label using bigger font sizes. Default font size is 2.5
+#' @param trunc logical. Text is split into rows to prevent cutoff when labels are long. Default is T.
+#' @param ERows number of rows to skip. Default is 0.
+#' @param ECols number of columns to skip. Default is 0.
+#' @param name character. Name of pdf output file. Default is "LabelsOut"
 
-# [Function] create_PDF prompts for pdf settings if "ask" is set to T, otherwise creates with default values
-## Parameters:
-## Labels: a vector of barcodes
-## ErrCorr: error correction, Levels of damage from low to high: L, M, Q, H
-## Across: set to TRUE to print labels across rows instead of down columns
-## Fsz: set font size
-## trunc: split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
-## ERows/ECols: number of rows/columns to skip, default is 0
-## ask: user prompt, default is false
-create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,ECols=0, name="Output"){
-
-  if(length(Labels) == 0){
-    noquote(print("Please pass in barcode labels"))
-  } else{
+create_PDF<-function(user=F, Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,ECols=0, name="LabelsOut"){
+    if (legnth(Labels)==0) stop("Labels do not exist. Please pass in Labels")
     labelLength<-nchar(paste(Labels[1,1]))
 
-    # possible inputs
-    inputCheck<-c("T","t","F","f")
-    ask <- noquote(toupper(readline("Do you want to edit the parameters? (T/F): ")))
-
-    while((ask %in% inputCheck)==FALSE){
-      noquote(print("Invalid input"))
-      ask <- noquote(toupper(readline("Do you want to edit the parameters? (T/F): ")))
-    }
-
     # if user prompt has been set to true
-    if (ask=="T"){
+    if (user==T){
+      # possible inputs
+      inputCheck<-c("T","t","F","f")
       ## Set font size
       Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
       while (Fsz<2.2 || Fsz >4.7){
@@ -54,20 +43,16 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
         noquote(print("ERROR: not enought space to print full label, please decrease font size"))
         Fsz <-noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
       }
-
-
       ## Error correction
       ErrCorr <- noquote(toupper(readline("Specify an error correction - L, M, Q, H: ")))
       errCheck<-c("L","l","M","m","Q","q","H","h")
       # check errCorr input
       while((ErrCorr %in% errCheck)==FALSE){
-        noquote(print ("Invalid input, please only enter what is specified"))
+        noquote(print("Invalid input, please only enter what is specified"))
         ErrCorr <- noquote(toupper(readline("Specify an error correction - L, M, Q, H: ")))
       }
-
       ## Set to TRUE to print labels across rows instead of down columns
       Across<- noquote(toupper(readline("Please enter T or F to print across: ")))
-
       while((Across %in% inputCheck)==FALSE){
         noquote(print("Invalid input"))
         Across <- noquote(toupper(readline("Please enter T or F to print across: ")))
@@ -78,22 +63,18 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
         noquote(print("Invalid input"))
         trunc<-noquote(toupper(readline("Do you want to split text into rows? (T/F): ")))
       }
-
       ERows <- noquote(as.numeric(readline("Number of rows to skip? (enter 0 for default): ")))
       ECols <- noquote(as.numeric(readline("Number of cols to skip? (enter 0 for default): ")))
-
     } # end ask == T
     # Dummy data.frame for plotting
 
-    if (Fsz>=2.2 && Fsz<=2.5 && labelLength >= 27){
-      print(noquote("ERROR: not enought space to print full label, please decrease font size"))
-    }
+    if (Fsz>=2.2 && Fsz<=2.5 && labelLength >= 27) stop("ERROR: not enought space to print full label, please decrease font size")
     dmy<-data.frame(x=c(0,457),y=c(0,212))
     ### Page Setup
     oname<-paste0(name, ".pdf")
     pdf(oname,width=8.5,height=11,onefile=T,family="Courier") # Standard North American 8.5 x 11
-    grid.newpage() # Open a new page on grid device
-    pushViewport(viewport(width=unit(8,"in"),height=unit(10,"in"),just=c("centre","centre"),layout = grid.layout(nrow=20, ncol=4))) # Margins: left/right:10mm x top/bottom:22mm
+    grid::grid.newpage() # Open a new page on grid device
+    grid::pushViewport(viewport(width=unit(8,"in"),height=unit(10,"in"),just=c("centre","centre"),layout = grid.layout(nrow=20, ncol=4))) # Margins: left/right:10mm x top/bottom:22mm
     row<-ERows
     col<-ECols+1
     for (i in 1:nrow(Labels)){
@@ -120,10 +101,10 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
         }
       }
       # Create qrcode
-      Xpng<-rasterGrob(abs(qrcode_gen(paste0(Labels[i,]),ErrorCorrectionLevel=ErrCorr,dataOutput=T,plotQRcode=F,mask=3)-1),interpolate=F)
+      Xpng<-grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels[i,]),ErrorCorrectionLevel=ErrCorr,dataOutput=T,plotQRcode=F,mask=3)-1),interpolate=F)
       # Create tag (QR code + text label)
       Xplt<-
-        ggplot(data=dmy,aes(x=0,y=0))+annotation_custom(Xpng,xmin=30,xmax=180,ymin=60,ymax=180)+coord_cartesian(xlim=c(0,457),ylim=c(0,212))+theme_empty()+
+        ggplot2::ggplot(data=dmy,aes(x=0,y=0))+annotation_custom(Xpng,xmin=30,xmax=180,ymin=60,ymax=180)+coord_cartesian(xlim=c(0,457),ylim=c(0,212))+BaRcodes::theme_empty()+
         geom_text(aes(x=215,y=182,label=Xtxt,hjust=0,vjust=1),size=Fsz) # +geom_point(aes(x=x,y=y)) # useful points for fitting margins
 
       # Output to tag position
@@ -134,8 +115,8 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
           col<-col+1
           if(col>20){
             col<-1
-            grid.newpage() # Open a new page on grid device
-            pushViewport(viewport(width=unit(8,"in"),height=unit(10,"in"),just=c("centre","centre"),layout = grid.layout(nrow=20, ncol=4))) # Margins: left/right:10mm x top/bottom:22mm
+            grid::grid.newpage() # Open a new page on grid device
+            grid::pushViewport(viewport(width=unit(8,"in"),height=unit(10,"in"),just=c("centre","centre"),layout = grid.layout(nrow=20, ncol=4))) # Margins: left/right:10mm x top/bottom:22mm
           }
         }
         print(Xplt, vp = viewport(layout.pos.row=col,layout.pos.col=row,x=unit(0,"mm"),y=unit(0,"mm"),clip=F))
@@ -145,8 +126,8 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
         col<-col+1
         if(col>4){
           col<-1
-          grid.newpage() # Open a new page on grid device
-          pushViewport(viewport(width=unit(8,"in"),height=unit(10,"in"),just=c("centre","centre"),layout = grid.layout(nrow=20, ncol=4))) # Margins: left/right:10mm x top/bottom:22mm
+          grid::grid.newpage() # Open a new page on grid device
+          grid::pushViewport(viewport(width=unit(8,"in"),height=unit(10,"in"),just=c("centre","centre"),layout = grid.layout(nrow=20, ncol=4))) # Margins: left/right:10mm x top/bottom:22mm
         }
       }
         print(Xplt, vp = viewport(layout.pos.row=row,layout.pos.col=col,x=unit(0,"mm"),y=unit(0,"mm"),clip=F))
@@ -156,5 +137,5 @@ create_PDF<-function(Labels = NA, ErrCorr="H",Across=T,Fsz=2.5,trunc=T,ERows=0,E
     }
     dev.off()
 
-  } #end if
+   #end if
 } #end create_PDF()
