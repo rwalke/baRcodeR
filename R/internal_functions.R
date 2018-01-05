@@ -1,8 +1,9 @@
 #' Internal functions
 #'
-#' Function theme_empty is a code snippet to use in \code{\link{creatPDF}} to remove all lines from plots when creating the barcode PDF file. This function is not exported.
+#' Function theme_empty is a code snippet to use in \code{\link{custom_create_PDF}} to remove all lines from plots when creating the barcode PDF file. This function is not exported.
 #'
-#'
+#' @param base_size numerical. Value to be passed onto base_size in ggplot theme_classic.
+#' @param base_family character. Value to be passed onto base_family in ggplot theme_classic.
 
 # Custom theme to remove all lines from plots
 theme_empty<-function(base_size = 12, base_family = "") {
