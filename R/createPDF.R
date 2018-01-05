@@ -1,6 +1,6 @@
 #' Make qr codes and print to stickers
 #'
-#' This function will take in a data frame of labels and produce a pdf of QR codes which can then be printed. This is a wrapper function for \code{\link{.create_PDF}}
+#' This function will take in a data frame of labels and produce a pdf of QR codes which can then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
 #'
 #' @return pdf file that is saved to the working directory containing QR codes.
 #'
