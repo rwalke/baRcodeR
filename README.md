@@ -16,6 +16,8 @@ Writing vignette/methods on how to use package
 ~~createPDF.R~~
 ~~customSizePDF.R~~
 
+write vignette/methods ... ... 
+
 
 ## To Do:
 Make tests using testthat package
