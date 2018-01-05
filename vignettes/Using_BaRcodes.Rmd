@@ -1,0 +1,17 @@
+---
+title: "BaRcodes - tracking and labelling biological samples"
+author: "Yihan Wu"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quick Start to Use BaRcodes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+introduction points:
+biological samples are complex to label and maintain.
+Multi-level sampling, ie. populations, lines, individuals, samples per individual.
+Manual creation of barcodes, especially hierarchical ones, are timeconsuming. Commercial software requires extra installation and is difficult to customize.  
+
+The BaRcodes package will create barcodes in a pdf output to be printed using a laser printer and sticker sheets.  Functions will create one-level or hierarchical labels, 
