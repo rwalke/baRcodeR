@@ -1,10 +1,8 @@
 #' Make qr codes and print to stickers
 #'
-#' This function will take in a data frame of labels and produce a pdf of QR codes which can then be printed.
+#' This function will take in a data frame of labels and produce a pdf of QR codes which can then be printed. The pdf setup is for the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
 #'
 #' @return pdf file that is saved to the working directory containing QR codes.
-#' @export
-#' The pdf setup is for the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca).
 #'
 #' @param user logical. Whether to run function as interactive. Default is false
 #' @param Labels data frame. One column data frame containing the text for each barcode as a row.
@@ -22,10 +20,10 @@
 #' @param width_margin numerical. The width margin of the page (in inches). Default is 0.25 inches.
 #' @param cust_spacing logical. Default is F. If spacing between qrcode and label should be changed.
 #' @param x_space numerical. An integer between 190-250. This sets the distance between the qrcode and the label. Default is 215. This parameter is only used when \code{cust_spacing = T}.
+#' @seealso \code{\link{create_PDF}}
+#' @export
 
-#' @seealso \code{\link{.create_PDF}}
-
-.create_PDF<-function(user=F, Labels = NA, name="LabelsOut", ErrCorr="H", Fsz=2.5,Across=T,ERows=0,ECols=0,trunc=T, numrow=20, numcol=4, height_margin=0.5, width_margin=0.25, cust_spacing=F, x_space=215){
+custom_create_PDF<-function(user=F, Labels = NA, name="LabelsOut", ErrCorr="H", Fsz=2.5,Across=T,ERows=0,ECols=0,trunc=T, numrow=20, numcol=4, height_margin=0.5, width_margin=0.25, cust_spacing=F, x_space=215){
   if (length(Labels)==0) stop("Labels do not exist. Please pass in Labels")
   labelLength<-nchar(paste(Labels[1,1]))
   # if user prompt has been set to true
