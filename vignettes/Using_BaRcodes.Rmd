@@ -14,4 +14,36 @@ biological samples are complex to label and maintain.
 Multi-level sampling, ie. populations, lines, individuals, samples per individual.
 Manual creation of barcodes, especially hierarchical ones, are timeconsuming. Commercial software requires extra installation and is difficult to customize.  
 
-The BaRcodes package will create barcodes in a pdf output to be printed using a laser printer and sticker sheets.  Functions will create one-level or hierarchical labels, 
+
+
+The BaRcodes package will create barcodes in a pdf output to be printed using a laser printer and sticker sheets. Each function can be run interactively with prompts to guide label and barcode creation. 
+
+
+If you have text labels in a one column text file, skip to {Create barcodes}.
+
+Required packages 
+
+'BaRcodes' requires four additional packages and their dependencies. 
+
+```{r}
+install.packages(c("ggplot2", "grDevices", "grid", "qrcode"))
+```
+
+
+Graphic of simple vs hierarchical labels?
+
+Create simple labels  
+
+Simple one-level barcodes can be created using the 'label_maker()' function. You can use the function interactively.
+```{r}
+Labels<-label_maker(user=T)
+```
+
+User prompts will be shown in the console. 
+
+Create hierarchical labels
+
+Create barcodes
+
+Advanced Options
+
