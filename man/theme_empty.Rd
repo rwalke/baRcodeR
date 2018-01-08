@@ -6,6 +6,11 @@
 \usage{
 theme_empty(base_size = 12, base_family = "")
 }
+\arguments{
+\item{base_size}{numerical. Value to be passed onto base_size in ggplot theme_classic.}
+
+\item{base_family}{character. Value to be passed onto base_family in ggplot theme_classic.}
+}
 \description{
-Function theme_empty is a code snippet to use in \code{\link{creatPDF}} to remove all lines from plots when creating the barcode PDF file. This function is not exported.
+Function theme_empty is a code snippet to use in \code{\link{custom_create_PDF}} to remove all lines from plots when creating the barcode PDF file. This function is not exported.
 }

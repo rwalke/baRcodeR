@@ -10,7 +10,7 @@ label_maker(user = F, string = NULL, level, digits = 3)
 \item{user}{logical. Default is FALSE. If the function is run with user
 prompts or with variables already specified}
 
-\item{string}{character. Text string for barcode. Default null.}
+\item{string}{character. Text string for label. Default null.}
 
 \item{level}{integer string. Defines the numerical values to be appended
 to the character string. Can be any sequence of numbers, not just sequential}
