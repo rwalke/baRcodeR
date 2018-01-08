@@ -103,6 +103,16 @@ It is also possible to create the labels directly without user prompts by the ar
 Labels<-label_maker(string="example", level=5:10, digits=3)
 ```
 
+Because the number can be set through the argument 'level', it is possible to use a non-sequential sequence of numbers such as below:
+
+```{r eval=F, include=T}
+number_sequence<-seq(1, 10, 2)
+Labels<-label_maker(string="example", level=number_sequence, digits=3)
+```
+
+The output will then be:
+
+> [1] "example001" "example003" "example005" "example007" "example009"
 
 
 Create hierarchical labels
