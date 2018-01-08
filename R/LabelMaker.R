@@ -13,7 +13,7 @@
 #' @return a string of characters
 #' @param user logical. Default is FALSE. If the function is run with user
 #' prompts or with variables already specified
-#' @param string character. Text string for barcode. Default null.
+#' @param string character. Text string for label. Default null.
 #' @param level integer string. Defines the numerical values to be appended
 #' to the character string. Can be any sequence of numbers, not just sequential
 #' @param digits integer. The number of digits to print for the numbers
