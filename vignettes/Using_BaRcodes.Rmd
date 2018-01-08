@@ -25,21 +25,85 @@ Required packages
 
 'BaRcodes' requires four additional packages and their dependencies. 
 
-```{r}
+```{r eval=F, include=T}
 install.packages(c("ggplot2", "grDevices", "grid", "qrcode"))
 ```
 
 
 Graphic of simple vs hierarchical labels?
 
-Create simple labels  
+#Create simple labels {#label-maker}
 
-Simple one-level barcodes can be created using the 'label_maker()' function. You can use the function interactively.
-```{r}
+Simple one-level barcodes can be created using the 'label_maker()' function. One-level labels consist of two parts, a string and a number. The string will remain the same for all labels produced while the number will vary. This can be used to label and track samples from a population where each individual will be assigned a different number.
+
+The purpose of the example below will be to create labels like below. 
+
+```
+example005
+example006
+example007
+example008
+example009
+example010
+```
+First, load `BaRcodes`.
+
+```{r eval=F, include=T}
+library(BaRcodes)
+```
+
+## By user prompt {#label-maker-user-prompt}
+
+```{r eval=F, include=T}
 Labels<-label_maker(user=T)
 ```
 
-User prompts will be shown in the console. 
+In the code snippet above, user prompts will be shown in the console and the user input to the prompts will set the parameters to create labels that will be contained in the object `Labels`. The first user prompt shown in the console will be: 
+
+>  \> Please enter string for level: 
+
+The string will be the part of the label that will be the same for every label produced. This can be the name of a population, a species or a location. In this example, the string entered by the user into the console as denoted by the `>` symbol is "example."
+
+>  \> Please enter string for level: example
+
+The second user prompt is:
+
+>  \> Enter the starting number for level: 
+
+The prompt asks for the smallest number for the labels. The response entered was 5. The user has the option of determining which numbers the label should start increasing from. Labels produced do not have to start from 1. 
+
+>  \> Enter the starting number for level: 5
+
+The third user prompt is:
+
+>  \> Enter the ending number for level: 
+
+The prompt asks for the largest number suffix. The labels produced will be numbered sequentially from the starting number to the ending number. It is possible to create labels that are not sequentially numbered (see [By arguments](#label-maker-arguments)) Here, the user input is 10. 
+
+>  \> Enter the ending number for level: 10
+
+After the starting and ending numbers are set, the function calculates the number of digits in the biggest number for the labels. In this example, the maximum number of digits is 2. The console will print:
+
+>Please enter a number larger or equal to 2
+
+and ask:
+
+>  \> Number of digits to print for level:
+
+It is possible to set the number of digits to print for the labels. This may come in useful for consistency if similar labels with higher numbers is produced in the future. In this example, the number of digits printed is set to 3.
+
+>  \> Number of digits to print for level: 3 
+
+A string of characters will be returned. 
+
+## By arguments {#label-maker-arguments}
+It is also possible to create the labels directly without user prompts by the arguments in `label_maker`. The example can also be reproduced by the code:
+
+```{r eval=F, include=T}
+Labels<-label_maker(string="example", level=5:10, digits=3)
+```
+
+
 
 Create hierarchical labels
 
