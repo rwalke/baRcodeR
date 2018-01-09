@@ -217,16 +217,58 @@ Labels<-read.csv("Labels.csv")
 
 ## By user prompt {#create-barcodes-user-prompt}
 
+Here, using the hierarchical set of labels, a PDF file containing the labels will be created with the name "example.pdf", a font size of 3.5, and an error correction level "Q" meaning the barcode can tolerate up to 25% damage. 
 with `user=T`, user promps will show up to guide creation of a PDF file containing barcodes.
 
-```{r eval-F, include=T}
+```{r eval=F, include=T}
 create_PDF(user=T)
 ```
 A user prompt is printed into the console. For example:
 
 >  \> Please enter name for PDF output file: 
 
+Any combination of letters and numbers can be used for the name of the pdf file. Here, the file name is set to "example."
 
+>  \> Please enter name for PDF output file: example
+
+The next user prompt is to set the size of the text printed on each barcode. 
+
+>  \> Please enter a font size (2.2-4.7): 
+
+This user input has to be a number between 2.2 and 4.7. In this example, the font size will be 3.5.
+
+>  \> Please enter a font size (2.2-4.7): 3.5
+
+It is possble that the labels are too long, or cannot fit on one row due to the size of the font selected. This will cause an error to print to console.
+
+> ERROR: not enought space to print full label, please decrease font size.
+
+The font size user prompt will appear again to reset to a more appropriate font size.  
+
+>  \> Please enter a font size (2.2-4.7):
+
+The last basic parameter to set is the error correction level. There are four possible levels: L, M, Q, and H. 
+
+Level "L" - up to 7% damage -- ideal for very small labels (large pixels)
+Level "M" - up to 15% damage
+Level "Q" - up to 25% damage
+Level "H" - up to 30% damage -- good for bigger levels (small pixels)
+
+The user prompt for error correction level is similar to previous prompts.
+
+>  \> Specify an error correction - L, M, Q, H: 
+
+This example uses an error correction level "Q"
+
+>  \> Specify an error correction - L, M, Q, H: Q
+
+The last user prompt asks whether the user wants to modify the advanced parameters. 
+
+>  \> Edit advanced parameters? (Y/N): 
+
+In this example, no advanced parameters are modified. The advanced parameters are covered in [advanced options](#custom-create-pdf)
+
+>  \> Edit advanced parameters? (Y/N): N
 
 # Advanced Options of for pdf output {#custom-create-pdf}
 
