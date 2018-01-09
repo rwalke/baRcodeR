@@ -84,7 +84,7 @@ The prompt asks for the largest number suffix. The labels produced will be numbe
 
 After the starting and ending numbers are set, the function calculates the number of digits in the biggest number for the labels. In this example, the maximum number of digits is 2. The console will print:
 
->Please enter a number larger or equal to 2
+> Please enter a number larger or equal to 2
 
 and ask:
 
@@ -152,23 +152,23 @@ Labels<-label_hier_maker(user=T)
 
 The prompt that appears in the console is:
 
->  \>What is the # of levels in hierarchy: 
+>  \> What is the # of levels in hierarchy: 
 
 In this example, we have levels a, b, and c, three levels in total. 
 
->  \>What is the # of levels in hierarchy: 3
+>  \> What is the # of levels in hierarchy: 3
 
 The second prompt asks if a string should be appended to all labels.
 
->  \>String at end of barcode? (y/n):
+>  \> String at end of barcode? (y/n):
 
 There are only two possible responses to this question as indiciated in the parenthesis. If the answer is yes, then a new prompt will appear.
 
->  \>Please enter ending string: 
+>  \> Please enter ending string: 
 
 In this example, there is no ending string.
 
->  \>String at end of barcode? (y/n): n
+>  \> String at end of barcode? (y/n): n
 
 For each level, there will be a series of prompts. The user will be able to set the string, the starting number, and the ending number for each level similar to the questions in `label_maker`(see [label_maker](#label-maker-user-prompt) for step by step instructions). The number of digits to print for each level can also vary. 
 
@@ -207,14 +207,26 @@ write.csv(Labels, "Labels.csv")
 
 2D barcodes are created using a set of text labels. Users can manually create their own labels in a one-column format or create labels using `label_maker` or `label_hier_maker`. 
 
+The function `create_PDF` has been set up to produce a pdf file containing barcodes that fit to the dimensions of ULINE Premium Laser Printer Labels #S-19297 (80 labels per sheet, 1.75" x 0.5"). If needed, the page setup can be modified using advanced options in [custom_create_PDF](#custom-create-pdf). 
+
 The first step is to read in the labels from file:
 
 ```{r eval=F, include=T}
 Labels<-read.csv("Labels.csv")
 ```
 
+## By user prompt {#create-barcodes-user-prompt}
+
+with `user=T`, user promps will show up to guide creation of a PDF file containing barcodes.
+
+```{r eval-F, include=T}
+create_PDF(user=T)
+```
+A user prompt is printed into the console. For example:
+
+>  \> Please enter name for PDF output file: 
 
 
 
-Advanced Options
+# Advanced Options of for pdf output {#custom-create-pdf}
 
