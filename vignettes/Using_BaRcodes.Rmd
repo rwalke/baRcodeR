@@ -281,4 +281,9 @@ create_PDF(Labels=Labels, name = "example", ErrCorr = "Q", Fsz=2.5)
 
 # Advanced Options of for pdf output {#custom-create-pdf}
 
+There are advanced options for the pdf output which can be accessed interactively or by specifying additional arguments in `create_PDf`. The user prompts are similar to the ones shown above so they will not be repeated. Documentation of the advanced options can be found using through the man page `?custom_create_PDF`.
+
+
+
+
 
