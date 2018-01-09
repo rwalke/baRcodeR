@@ -10,7 +10,7 @@ custom_create_PDF(user = F, Labels = NA, name = "LabelsOut",
   width_margin = 0.25, cust_spacing = F, x_space = 215)
 }
 \arguments{
-\item{user}{logical. Whether to run function as interactive. Default is false}
+\item{user}{logical. Whether to run function as interactive. Default is \code{FALSE}}
 
 \item{Labels}{data frame. One column data frame containing the text for each
 barcode as a row.}
@@ -18,21 +18,21 @@ barcode as a row.}
 \item{name}{character. Name of pdf output file. Default is "LabelsOut"}
 
 \item{ErrCorr}{the error correction value. Level of damage from low to high:
-L, M, Q, H. Default is "H"}
+L, M, Q, H. Default is \code{"H"}}
 
 \item{Fsz}{numerical. Set font size. A number between 2.2 and 4.7. Depending
 on the length of the label, there may not be enough space to print the entire
  label using bigger font sizes. Default font size is 2.5}
 
 \item{Across}{logical. When true, print labels in rows. When false, print
-labels in columns. Default is T.}
+labels in columns. Default is \code{TRUE}.}
 
 \item{ERows}{number of rows to skip. Default is 0.}
 
 \item{ECols}{number of columns to skip. Default is 0.}
 
 \item{trunc}{logical. Text is split into rows to prevent cutoff when labels
-are long. Default is T.}
+are long. Default is \code{TRUE}.}
 
 \item{numrow}{numerical. Number of rows per page. Default is 20 rows per page.}
 
@@ -45,10 +45,10 @@ Default is 0.5 inches.}
 \item{width_margin}{numerical. The width margin of the page (in inches).
 Default is 0.25 inches.}
 
-\item{cust_spacing}{logical. Default is F. If spacing between qrcode and
+\item{cust_spacing}{logical. Default is \code{FALSE}. If spacing between qrcode and
 label should be changed.}
 
-\item{x_space}{numerical. An integer between 190-250. This sets the distance
+\item{x_space}{numerical. An integer between 190 - 250. This sets the distance
 between the qrcode and the label. Default is 215. This parameter is only
 used when \code{cust_spacing = T}.}
 }
