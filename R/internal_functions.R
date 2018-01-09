@@ -4,7 +4,7 @@
 #'
 #' @param base_size numerical. Value to be passed onto base_size in ggplot theme_classic.
 #' @param base_family character. Value to be passed onto base_family in ggplot theme_classic.
-
+#' @noRd
 # Custom theme to remove all lines from plots
 theme_empty<-function(base_size = 12, base_family = "") {
   theme_classic(base_size = base_size, base_family = base_family) %+replace%

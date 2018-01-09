@@ -11,12 +11,13 @@ label_hier_maker(user = F, hierarchy, end = NULL, digits = 2)
 false. When true, all other arguments can be empty}
 
 \item{hierarchy}{list. A list with each element consisting of three members
-(string, beginning value, end value). See examples. Used only when \code{user=F}}
+(string, beginning value, end value). See examples. Used only when
+ \code{user=F})}
 
 \item{end}{character. A string to be appended to end of each barcode.}
 
-\item{digits}{numerical. Default is 2. Number of digits to be printed. This will
-apply to all levels when \code{user=F}.}
+\item{digits}{numerical. Default is 2. Number of digits to be printed. This
+will apply to all levels when \code{user=F}.}
 }
 \value{
 character labels in a hierarchy
@@ -34,7 +35,8 @@ label_hier_maker(user=T)
 
 ## how to make hierarchy list
 
-## create vectors for each level in the order string_prefix, beginning_value, end_value and combine in list
+## create vectors for each level in the order string_prefix, beginning_value,
+## end_value and combine in list
 
 a<-c("a",3,6)
 b<-c("b",1,3)
