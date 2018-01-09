@@ -23,7 +23,7 @@
 #' @seealso \code{\link{create_PDF}}
 #' @export
 
-custom_create_PDF<-function(user=F, Labels = NA, name="LabelsOut", ErrCorr="H", Fsz=2.5,Across=T,ERows=0,ECols=0,trunc=T, numrow=20, numcol=4, height_margin=0.5, width_margin=0.25, cust_spacing=F, x_space=215){
+custom_create_PDF<-function(user=F, Labels = NA, name="LabelsOut", ErrCorr="H", Fsz = 2.5, Across=T, ERows=0, ECols=0, trunc=T, numrow=20, numcol=4, height_margin=0.5, width_margin=0.25, cust_spacing=F, x_space=215){
   if (length(Labels)==0) stop("Labels do not exist. Please pass in Labels")
   labelLength<-nchar(paste(Labels[1,1]))
   # if user prompt has been set to true
