@@ -270,5 +270,15 @@ In this example, no advanced parameters are modified. The advanced parameters ar
 
 >  \> Edit advanced parameters? (Y/N): N
 
+## By arguments
+
+The same example above can be reproduced with:
+
+```{r eval=F, include=T}
+create_PDF(Labels=Labels, name = "example", ErrCorr = "Q", Fsz=2.5)
+```
+
+
 # Advanced Options of for pdf output {#custom-create-pdf}
+
 
