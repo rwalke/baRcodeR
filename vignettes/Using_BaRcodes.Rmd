@@ -32,7 +32,7 @@ install.packages(c("ggplot2", "grDevices", "grid", "qrcode"))
 
 Graphic of simple vs hierarchical labels?
 
-#Create simple labels {#label-maker}
+# Create simple labels {#label-maker}
 
 Simple one-level barcodes can be created using the 'label_maker()' function. One-level labels consist of two parts, a string and a number. The string will remain the same for all labels produced while the number will vary. This can be used to label and track samples from a population where each individual will be assigned a different number.
 
@@ -115,7 +115,23 @@ The output will then be:
 > [1] "example001" "example003" "example005" "example007" "example009"
 
 
-Create hierarchical labels
+# Create hierarchical labels {#label_hier_maker}
+
+`label_hier_maker` is used to make labels that follow a hierarchical or tree-like structure. Similar to `label_maker`, this function can be run interactively and also using the arguments in the function. It is possibel to set different numbers of levels, each with their own text string that is consistent across the level, and individual numerical suffixes. Below is an example of a list of hierarchical labels with three levels (a, b, c) and varying numbers of individuals for each level (a=3, b=2, c=2). 
+
+```
+a1-b1-c1
+a1-b1-c2
+a1-b2-c1
+a1-b2-c2
+a2-b1-c1
+a2-b1-c2
+a2-b2-c1
+a2-b2-c2
+```
+
+
+## By user prompts
 
 Create barcodes
 
