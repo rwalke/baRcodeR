@@ -6,22 +6,21 @@
 #'
 #' @return pdf file that is saved to the working directory containing QR codes.
 #'
-#' @param user logical. Whether to run function as interactive. Default is false
+#' @param user logical. Whether to run function as interactive. Default is \code{FALSE}
 #' @param Labels data frame. One column data frame containing the text for each
 #' barcode as a row.
 #' @param name character. Name of pdf output file. Default is "LabelsOut"
 #' @param ErrCorr the error correction value. Level of damage from low to high:
-#' L, M, Q, H. Default is "H"
+#' L, M, Q, H. Default is \code{"H"}
 #' @param Fsz numerical. Set font size. A number between 2.2 and 4.7. Depending
 #' on the length of the label, there may not be enough space to print the entire
 #'  label using bigger font sizes. Default font size is 2.5
-#'
 #' @param Across logical. When true, print labels in rows. When false, print
-#' labels in columns. Default is T.
+#' labels in columns. Default is \code{TRUE}.
 #' @param ERows number of rows to skip. Default is 0.
 #' @param ECols number of columns to skip. Default is 0.
 #' @param trunc logical. Text is split into rows to prevent cutoff when labels
-#' are long. Default is T.
+#' are long. Default is \code{TRUE}.
 #' @param numrow numerical. Number of rows per page. Default is 20 rows per page.
 #' @param numcol numerical. Number of columns per page. Default is 4 columns
 #' per page.
@@ -29,9 +28,9 @@
 #' Default is 0.5 inches.
 #' @param width_margin numerical. The width margin of the page (in inches).
 #' Default is 0.25 inches.
-#' @param cust_spacing logical. Default is F. If spacing between qrcode and
+#' @param cust_spacing logical. Default is \code{FALSE}. If spacing between qrcode and
 #' label should be changed.
-#' @param x_space numerical. An integer between 190-250. This sets the distance
+#' @param x_space numerical. An integer between 190 - 250. This sets the distance
 #' between the qrcode and the label. Default is 215. This parameter is only
 #' used when \code{cust_spacing = T}.
 #' @seealso \code{\link{create_PDF}}
