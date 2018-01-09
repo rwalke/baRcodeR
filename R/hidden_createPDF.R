@@ -31,6 +31,8 @@ custom_create_PDF<-function(user=F, Labels = NA, name="LabelsOut", ErrCorr="H", 
     # possible inputs
     inputCheck<-c("T","t","F","f")
     yesNo<-c("Y","N")
+    ## ask for name
+    name <- readline(paste0("Please enter name for PDF output file: "))
     ## Set font size
     Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
     while (Fsz<2.2 || Fsz >4.7){
