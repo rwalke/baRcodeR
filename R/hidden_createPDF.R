@@ -159,7 +159,7 @@ custom_create_PDF<-function(user=F,
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, width = 8.5, height = 11, onefile = T, family = "Courier") # Standard North American 8.5 x 11
   grid::grid.newpage() # Open a new page on grid device
-  grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
+  grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
   row<-ERows
   col<-ECols+1
   for (i in 1:nrow(Labels)){
@@ -189,8 +189,8 @@ custom_create_PDF<-function(user=F,
     Xpng<-grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels[i,]), ErrorCorrectionLevel=ErrCorr, dataOutput = T, plotQRcode = F, mask = 3) - 1), interpolate = F)
     # Create tag (QR code + text label)
     Xplt<-
-      ggplot2::ggplot(data=dmy,aes(x=0,y=0))+annotation_custom(Xpng,xmin=30,xmax=180,ymin=60,ymax=180)+coord_cartesian(xlim=c(0,457),ylim=c(0,212))+BaRcodes::theme_empty()+
-      -      geom_text(aes(x=x_space,y=y_space,label=Xtxt,hjust=0,vjust=1),size=Fsz) # +geom_point(aes(x=x,y=y)) # useful points for fitting margins
+      ggplot2::ggplot(data=dmy,ggplot2::aes(x=0,y=0))+ggplot2::annotation_custom(Xpng,xmin=30,xmax=180,ymin=60,ymax=180)+ggplot2::coord_cartesian(xlim=c(0,457),ylim=c(0,212))+theme_empty()+
+      ggplot2::geom_text(ggplot2::aes(x=x_space,y=y_space,label=Xtxt,hjust=0,vjust=1),size=Fsz) # +geom_point(aes(x=x,y=y)) # useful points for fitting margins
 
     # Output to tag position
     row<-row+1
@@ -201,7 +201,7 @@ custom_create_PDF<-function(user=F,
         if(col > numrow){
           col<-1
           grid::grid.newpage() # Open a new page on grid device
-          grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre","centre"), layout = grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
+          grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre","centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
         }
       }
       print(Xplt, vp = grid::viewport(layout.pos.row = col, layout.pos.col = row, x = grid::unit(0,"mm"), y = grid::unit(0,"mm"), clip = F))
@@ -212,7 +212,7 @@ custom_create_PDF<-function(user=F,
       if(col > numcol){
         col<- 1
         grid::grid.newpage() # Open a new page on grid device
-        grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
+        grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
       }
     }
       print(Xplt, vp = grid::viewport(layout.pos.row = row, layout.pos.col = col, x= grid::unit(0, "mm"), y = grid::unit(0, "mm"), clip = F))
