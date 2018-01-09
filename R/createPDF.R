@@ -9,15 +9,7 @@
 #' printer; Item # S-19297 (uline.ca). The page format can be modified using
 #' the \code{...} options.
 #'
-#' @param user logical. Whether to run function as interactive. Default is false
-#' @param Labels data frame. One column data frame containing the text for each
-#'  barcode as a row.
-#' @param name character. Name of pdf output file. Default is "LabelsOut"
-#' @param ErrCorr the error correction value. Level of damage from low to high:
-#'  L, M, Q, H. Default is "H"
-#' @param Fsz numerical. Set font size. A number between 2.2 and 4.7. Depending
-#'  on the length of the label, there may not be enough space to print the
-#'  entire label using bigger font sizes. Default font size is 2.5
+#' @inheritParams custom_create_PDF
 #' @param ... more advanced arguments to modify layout of pdf output. See
 #'  \code{\link{custom_create_PDF}} for arguments. The advanced options can be
 #'   accessed interactively when \code{user = T} by entering T when prompted to
