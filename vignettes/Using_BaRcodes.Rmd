@@ -131,7 +131,37 @@ a2-b2-c2
 ```
 
 
-## By user prompts
+
+## By user prompts {#label-hier-maker-user-prompt}
+
+To create the hierarchical labels using prompts, start with the argument `user=T` in the function.
+
+```{r eval=F, include=T}
+Labels<-label_hier_maker(user=T)
+```
+
+The prompt that appears in the console is:
+
+>  \>What is the # of levels in hierarchy: 
+
+In this example, we have levels a, b, and c, three levels in total. 
+
+>  \>What is the # of levels in hierarchy: 3
+
+The second prompt asks if a string should be appended to all labels.
+
+>  \>String at end of barcode? (y/n):
+
+There are only two possible responses to this question as indiciated in the parenthesis. If the answer is yes, then a new prompt will appear.
+
+>  \>Please enter ending string: 
+
+In this example, there is no ending string.
+
+>  \>String at end of barcode? (y/n): n
+
+For each level, there will be a series of prompts. The user will be able to set the string, the starting number, and the ending number for each level similar to the questions in `label_maker`(see [label_maker](#label-maker-user-prompt) for step by step instructions). The number of digits to print for each level can also vary. 
+
 
 Create barcodes
 
