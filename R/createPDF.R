@@ -11,7 +11,7 @@
 #' @param name character. Name of pdf output file. Default is "LabelsOut"
 #' @param ErrCorr the error correction value. Level of damage from low to high: L, M, Q, H. Default is "H"
 #' @param Fsz numerical. Set font size. A number between 2.2 and 4.7. Depending on the length of the label, there may not be enough space to print the entire label using bigger font sizes. Default font size is 2.5
-#' @param ... more advanced arguments to modify layout of pdf output. Can be accessed interactively when \code{user = F}.
+#' @param ... more advanced arguments to modify layout of pdf output. See \code{\link{custom_create_PDF}} for arguments. The advanced options can be accessed interactively when \code{user = T} by entering T when prompted to modify advanced options.
 #' @export
 #' @examples
 #' ## data frame
@@ -27,7 +27,7 @@
 
 
 create_PDF<-function(user=F, Labels = NA, name="LabelsOut", ErrCorr="H", Fsz=2.5, ...) {
-  custom_create_PDF(user, Labels, name, ErrCorr, Fsz...)
+  custom_create_PDF(user, Labels, name, ErrCorr, Fsz, ...)
 }
 
 
