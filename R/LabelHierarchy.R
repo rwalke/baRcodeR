@@ -6,10 +6,11 @@
 #' @param user logical. Should the function be used interactively? Default is
 #' false. When true, all other arguments can be empty
 #' @param hierarchy list. A list with each element consisting of three members
-#'  (string, beginning value, end value). See examples. Used only when \code{user=F}
+#'  (string, beginning value, end value). See examples. Used only when
+#'   \code{user=F})
 #' @param end character. A string to be appended to end of each barcode.
-#' @param digits numerical. Default is 2. Number of digits to be printed. This will
-#'  apply to all levels when \code{user=F}.
+#' @param digits numerical. Default is 2. Number of digits to be printed. This
+#' will apply to all levels when \code{user=F}.
 #' @export
 #' @return character labels in a hierarchy
 #' @examples
@@ -21,7 +22,8 @@
 #'
 #' ## how to make hierarchy list
 #'
-#' ## create vectors for each level in the order string_prefix, beginning_value, end_value and combine in list
+#' ## create vectors for each level in the order string_prefix, beginning_value,
+#' ## end_value and combine in list
 #'
 #' a<-c("a",3,6)
 #' b<-c("b",1,3)
