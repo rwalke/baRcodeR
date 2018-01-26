@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Quick Start to Use BaRcodes}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 introduction points:
@@ -49,7 +51,12 @@ example010
 First, load `BaRcodes`.
 
 ```{r eval=F, include=T}
-library(BaRcodes)
+# package has not been made 
+#library(BaRcodes)
+library(ggplot2)
+library(grDevices)
+library(grid)
+library(qrcode)
 ```
 
 ## By user prompt {#label-maker-user-prompt}
@@ -221,7 +228,7 @@ Here, using the hierarchical set of labels, a PDF file containing the labels wil
 with `user=T`, user promps will show up to guide creation of a PDF file containing barcodes.
 
 ```{r eval=F, include=T}
-create_PDF(user=T)
+create_PDF(user=T, Labels=Labels)
 ```
 A user prompt is printed into the console. For example:
 
