@@ -135,7 +135,7 @@ custom_create_PDF<-function(user=F,
       x_space <- 215
       if (space=="Y"){
         x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
-        while((space < 190 || space > 250)){
+        while((x_space < 190 || x_space > 250)){
           noquote(print("Invalid input"))
           x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
         }
