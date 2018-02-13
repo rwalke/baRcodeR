@@ -6,7 +6,8 @@ Authors@R: c(person("Robert", "Colautti", email = "robert.colautti@queensu.ca", 
 Description: Tools to create labels for biological samples. The creation of 
     labels and pdf files for printing on sticker sheets is guided by user 
     prompts. Both one-level and hierarchical labels can be created. 
-Depends: R (>= 3.4.2)
+Depends: 
+    R (>= 3.4.2)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
