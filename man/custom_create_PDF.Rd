@@ -4,7 +4,7 @@
 \alias{custom_create_PDF}
 \title{Make qr codes and print to stickers}
 \usage{
-custom_create_PDF(user = F, Labels = NA, name = "LabelsOut",
+custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
   ErrCorr = "H", Fsz = 2.5, Across = T, ERows = 0, ECols = 0,
   trunc = T, numrow = 20, numcol = 4, height_margin = 0.5,
   width_margin = 0.25, cust_spacing = F, x_space = 215)

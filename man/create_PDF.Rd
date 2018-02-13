@@ -4,7 +4,7 @@
 \alias{create_PDF}
 \title{Make qr codes and print to stickers}
 \usage{
-create_PDF(user = F, Labels = NA, name = "LabelsOut", ErrCorr = "H",
+create_PDF(user = F, Labels = NULL, name = "LabelsOut", ErrCorr = "H",
   Fsz = 2.5, ...)
 }
 \arguments{
