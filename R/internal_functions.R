@@ -7,21 +7,21 @@
 #'
 # Custom theme to remove all lines from plots
 theme_empty<-function(base_size = 12, base_family = "") {
-  ggplot2::theme_classic(base_size = base_size, base_family = base_family)%+replace%ggplot2::theme(
+  ggplot2::theme_classic(base_size = base_size, base_family = base_family) + ggplot2::theme_replace(
     plot.margin = grid::unit(c(2,4,-2,-2),"mm"),
-    axis.text = element_blank(),
-    axis.title.x = element_blank(),
-    axis.text.x = element_blank(),
-    axis.title.y = element_blank(),
-    axis.text.y = element_blank(),
-    axis.ticks = element_blank(),
-    axis.line = element_blank(),
-    panel.background = element_blank(),
-    panel.border = element_blank(),
-    plot.title=element_blank(),
-    legend.background = element_blank(),
-    legend.text = element_blank(),
-    legend.title = element_blank()
+    axis.text = ggplot2::element_blank(),
+    axis.title.x = ggplot2::element_blank(),
+    axis.text.x = ggplot2::element_blank(),
+    axis.title.y = ggplot2::element_blank(),
+    axis.text.y = ggplot2::element_blank(),
+    axis.ticks = ggplot2::element_blank(),
+    axis.line = ggplot2::element_blank(),
+    panel.background = ggplot2::element_blank(),
+    panel.border = ggplot2::element_blank(),
+    plot.title = ggplot2::element_blank(),
+    legend.background = ggplot2::element_blank(),
+    legend.text = ggplot2::element_blank(),
+    legend.title = ggplot2::element_blank()
   )
 
 }
