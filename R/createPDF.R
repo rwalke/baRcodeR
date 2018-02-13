@@ -29,7 +29,7 @@
 
 
 create_PDF<-function(user=F,
-                     Labels = NA,
+                     Labels = NULL,
                      name="LabelsOut",
                      ErrCorr="H",
                      Fsz=2.5, ...) {
