@@ -70,7 +70,7 @@ label_maker<-function(user=F, string=NULL, level, digits=3){
     if (nchar(max(level))> digits) stop("Max value of levels is greater than number of digits. Increase digits value.")
     line<-paste0(string,"%0",digits,"d")
     Labels<-sprintf(line,rep(level))
-    return(Labels)
+    return(data.frame(Labels))
   }
 
 }

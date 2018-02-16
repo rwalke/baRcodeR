@@ -109,7 +109,7 @@ label_hier_maker<-function(user=F, hierarchy, end=NULL, digits=2) {
       }
       barcodes<-paste0(Labels,end)
     }
-    return(barcodes)
+    return(data.frame(barcodes))
   }
 
 }
