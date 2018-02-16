@@ -50,12 +50,12 @@ example010
 ```
 First, load `BaRcodes`.
 
-```{r eval=F, include=T}
+```{r eval=T, include=T}
 # package has not been made 
-#library(BaRcodes)
+library(BaRcodes)
 library(ggplot2)
-library(grDevices)
-library(grid)
+#library(grDevices)
+#library(grid)
 library(qrcode)
 ```
 
@@ -106,20 +106,24 @@ A string of characters will be returned.
 ## By arguments {#label-maker-arguments}
 It is also possible to create the labels directly without user prompts by the arguments in `label_maker`. The example can also be reproduced by the code:
 
-```{r eval=F, include=T}
+```{r eval=T, include=T}
 Labels<-label_maker(string="example", level=5:10, digits=3)
+Labels
 ```
 
 Because the number can be set through the argument 'level', it is possible to use a non-sequential sequence of numbers such as below:
 
-```{r eval=F, include=T}
+```{r eval=T, include=T}
 number_sequence<-seq(1, 10, 2)
 Labels<-label_maker(string="example", level=number_sequence, digits=3)
 ```
 
 The output will then be:
 
-> [1] "example001" "example003" "example005" "example007" "example009"
+```{r eval=T, include=F}
+Labels
+```
+
 
 Labels can then be saved using:
 
@@ -194,13 +198,16 @@ You can specify the ending string for all labels through the `end` argument and 
 
 The list can then be passed into `label_hier_maker`.
 
-```{r, eval=F, include=T}
+```{r, eval=T, include=T}
 Labels<-label_hier_maker(hierarchy = hier_list, digits=1)
 ```
 
 The output will be:
 
-> [1] "a1-b1-c1" "a1-b1-c2" "a1-b2-c1" "a1-b2-c2" "a2-b1-c1" "a2-b1-c2" "a2-b2-c1" "a2-b2-c2" "a3-b1-c1" "a3-b1-c2" "a3-b2-c1" "a3-b2-c2"
+```{r eval=T, include=F}
+Labels
+```
+
 
 Labels can then be saved using:
 
@@ -216,10 +223,11 @@ write.csv(Labels, "Labels.csv")
 
 The function `create_PDF` has been set up to produce a pdf file containing barcodes that fit to the dimensions of ULINE Premium Laser Printer Labels #S-19297 (80 labels per sheet, 1.75" x 0.5"). If needed, the page setup can be modified using advanced options in [custom_create_PDF](#custom-create-pdf). 
 
-The first step is to read in the labels from file:
+The first step is read in the labels, whether from a csv file or the output of `label_maker` or `label_hier_maker`. 
 
 ```{r eval=F, include=T}
-Labels<-read.csv("Labels.csv")
+# Reading in from a csv file
+# Labels<-read.csv("Labels.csv")
 ```
 
 ## By user prompt {#create-barcodes-user-prompt}
@@ -281,7 +289,7 @@ In this example, no advanced parameters are modified. The advanced parameters ar
 
 The same example above can be reproduced with:
 
-```{r eval=F, include=T}
+```{r eval=T, include=T}
 create_PDF(Labels=Labels, name = "example", ErrCorr = "Q", Fsz=2.5)
 ```
 
@@ -292,10 +300,10 @@ There are advanced options for the pdf output which can be accessed interactivel
 
 Arguments can be passed from `create_PDF` to `custom_create_PDF` as `create_PDF` is just a wrapper for `custom_create_PDF`. 
 
-```{r eval=F, include=T}
+```{r eval=T, include=T}
 
 ## This will create a pdf sheet where the labels are printed in columns then rows. It will skip 3 rows from the top and one column from the left. 
-create_PDF(Labels=Labels, name = "example", ErrCorr = "Q", Fsz=2.5, Across=F, ERows=3, ECol=1)
+create_PDF(Labels=Labels, name = "example_advanced", ErrCorr = "Q", Fsz=2.5, Across=F, ERows=3, ECol=1)
 ```
 
 
