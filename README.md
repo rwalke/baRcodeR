@@ -16,14 +16,12 @@ Writing vignette/methods on how to use package
 ~~createPDF.R~~
 ~~customSizePDF.R~~
 
-draft of vignette done 
+~~Vignette~~
 
 
 ## To Do:
-Make tests using testthat package
-
-
-
+~~Make tests using testthat package~~
+Check installation on unix and make source files
 
 ## Variables:
 Variables to track for function:
