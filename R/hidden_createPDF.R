@@ -54,7 +54,7 @@ custom_create_PDF<-function(user=F,
   if (length(Labels)==0) stop("Labels do not exist. Please pass in Labels")
   labelLength<-nchar(paste(Labels[1,1]))
   # clean up any open graphical devices if function fails
-  on.exit(dev.off())
+  on.exit(grDevices::dev.off())
   # if user prompt has been set to true
   if (user == T){
     # possible inputs
