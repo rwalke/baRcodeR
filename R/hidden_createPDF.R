@@ -221,7 +221,6 @@ custom_create_PDF<-function(user=F,
       Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
     }
   }
-  grDevices::dev.off()
 
   #end if
 } #end create_PDF()
