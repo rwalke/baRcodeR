@@ -7,7 +7,7 @@ Description: Tools to create labels for biological samples. The creation of
     labels and pdf files for printing on sticker sheets is guided by user 
     prompts. Both one-level and hierarchical labels can be created. 
 Depends: 
-    R (>= 3.4.2)
+    R (>= 3.4.0)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
