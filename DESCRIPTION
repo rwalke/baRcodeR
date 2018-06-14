@@ -3,6 +3,7 @@ Title: Custom R tools for collection, tracking, and curation of biological sampl
 Version: 0.0.0.9100
 Authors@R: c(person("Robert", "Colautti", email = "robert.colautti@queensu.ca", role = c("aut", "cre")), 
     person("Emily", "Bao", role="aut"), person("Yihan", "Wu", role="aut"))
+Maintainer: Yihan Wu <yihan.wu@queensu.ca>
 Description: Tools to create labels for biological samples. The creation of 
     labels and pdf files for printing on sticker sheets is guided by user 
     prompts. Both one-level and hierarchical labels can be created. 
