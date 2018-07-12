@@ -21,7 +21,8 @@ Writing vignette/methods on how to use package
 
 ## To Do:
 ~~Make tests using testthat package~~
-Check installation on unix and make source files
+~~Check installation on unix and make source files~~
+~~Check on win-builder~~
 
 ## Variables:
 Variables to track for function:
