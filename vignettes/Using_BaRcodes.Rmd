@@ -52,7 +52,7 @@ First, load `baRcodeR`.
 
 ```{r eval=T, include=T}
 # package has not been made 
-library(BaRcodes)
+library(baRcodeR)
 library(ggplot2)
 #library(grDevices)
 #library(grid)
