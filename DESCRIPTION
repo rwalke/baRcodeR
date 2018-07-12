@@ -1,4 +1,4 @@
-Package: BaRcodes
+Package: baRcodeR
 Title: Custom R Tools for Collection, Tracking, and Curation of Biological Samples using 2D Barcodes
 Version: 0.0.1.0000
 Authors@R: c(person("Yihan", "Wu", role="aut", email = "yihan.wu@queensu.ca"), person("Robert", "Colautti", email = "robert.colautti@queensu.ca", role = c("aut", "cre")), 
