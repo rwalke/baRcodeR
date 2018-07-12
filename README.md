@@ -1,8 +1,10 @@
 # II-I-II-baRcodeR-I-II-III
-The purpose of this project is to build a set of tools in R for labelling and tracking biological samples
+
+
 
 ## Description:
 
+The purpose of this project is to build a set of tools in R for labelling and tracking biological samples
 
 ## In Progress: 
 GOAL: reorganize code so that it is following guidelines to submit to CRAN
