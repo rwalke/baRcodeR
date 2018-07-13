@@ -119,6 +119,4 @@ make_labels<-function() {
 
 }
 
-make_labels()
-
 
