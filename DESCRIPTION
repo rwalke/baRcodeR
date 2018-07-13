@@ -16,7 +16,9 @@ Imports:
     ggplot2,
     grDevices,
     grid,
-    qrcode
+    miniUI (>= 0.1.1),
+    qrcode,
+    shiny (>= 0.13)
 Suggests: testthat,
     knitr,
     rmarkdown
