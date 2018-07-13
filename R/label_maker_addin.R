@@ -16,7 +16,7 @@ make_labels<-function() {
   ui<-miniUI::miniPage(
     miniUI::gadgetTitleBar("Make labels"),
     miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
-      miniUI::miniTabPanel("Simple Labels", value = title, icon = NULL,
+      miniUI::miniTabPanel("Simple Labels", value = graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
                                      shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
                                      shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
@@ -27,7 +27,7 @@ make_labels<-function() {
                                      shiny::tags$h2("Preview"),
                                      DT::DTOutput("label_df")
                                    )),
-      miniUI::miniTabPanel("PDF_maker", value= title, icon = NULL,
+      miniUI::miniTabPanel("PDF_maker", value= graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
                      shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
                                accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
@@ -78,12 +78,12 @@ make_labels<-function() {
     output$label_df<-DT::renderDataTable(Labels())
     shiny::observeEvent(input$make, {
       fileName<-sprintf("Labels_%s.csv", Sys.Date())
-      write.csv(Labels(), file = file.path(getwd(), fileName), row.names=F)
+      utils::write.csv(Labels(), file = file.path(getwd(), fileName), row.names=F)
 
     })
     Labels_pdf<-shiny::eventReactive(input$label_check, {
       shiny::req(input$labels)
-      Labels<-read.csv(input$labels$datapath, header=input$header)
+      Labels<-utils::read.csv(input$labels$datapath, header=input$header)
       shiny::validate(
         shiny::need(ncol(Labels) == 1, "Your label file contains more than one column. Please modify your file.")
       )
