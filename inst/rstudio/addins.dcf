@@ -1,0 +1,4 @@
+Name: Make labels and barcodes
+Description: Simple label making and pdf creation from text file.
+Binding: make_labels
+Interactive: true
