@@ -1,4 +1,4 @@
-library(BaRcodes)
+library(baRcodeR)
 
 context("Input warnings")
 

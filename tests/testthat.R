@@ -1,4 +1,4 @@
 library(testthat)
-library(BaRcodes)
+library(baRcodeR)
 
-test_check("BaRcodes")
+test_check("baRcodeR")
