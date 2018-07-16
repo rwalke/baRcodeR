@@ -35,6 +35,7 @@
 #' used when \code{cust_spacing = T}.
 #' @seealso \code{\link{create_PDF}}
 #' @export
+#' @import qrcode
 
 custom_create_PDF<-function(user=F,
                             Labels=NULL,
