@@ -13,6 +13,7 @@
 
 make_labels<-function() {
   # user interface
+  # base::library(qrcode)
   ui<-miniUI::miniPage(
     miniUI::gadgetTitleBar("Make labels"),
     miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
