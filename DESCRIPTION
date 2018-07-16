@@ -9,7 +9,7 @@ Description: Tools to create labels for biological samples. The creation of
     prompts. Both one-level and hierarchical labels can be created. 
 Depends: 
     R (>= 3.4.0)
-License: GPL-2
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
