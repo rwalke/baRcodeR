@@ -18,7 +18,8 @@ make_labels<-function() {
     miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
       miniUI::miniTabPanel("Simple Labels", value = graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
-                                     shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
+                     shiny::tags$h1("Simple Labels", id = "title"),
+                     shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
                                      shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
                                      shiny::numericInput("end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
                                      shiny::numericInput("digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
@@ -27,6 +28,22 @@ make_labels<-function() {
                                      shiny::tags$h2("Preview"),
                                      DT::DTOutput("label_df")
                                    )),
+      miniUI::miniTabPanel("Hierarchical Lables", value = graphics::title, icon = NULL,
+                           miniUI::miniContentPanel(
+                             shiny::tags$h1("Hierarchical Labels", id = "title"),
+                             shiny::numericInput("hier_digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
+                             shiny::textInput("hier_prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
+                             shiny::numericInput("hier_start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                             shiny::numericInput("hier_end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                             shiny::actionButton('insertBtn', 'Add level'),
+                             shiny::actionButton('removeBtn', 'Remove level'),
+                             # shiny::actionButton("hier_label_preview", "Preview Labels"),
+                             shiny::actionButton("hier_label_make", "Create Labels.csv"),
+                             shiny::tags$h2("Levels"),
+                             shiny::verbatimTextOutput("list_check"),
+                             shiny::tags$h2("Label Preview"),
+                             DT::DTOutput("hier_label_df")
+                           )),
       miniUI::miniTabPanel("PDF_maker", value= graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
                      shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
@@ -91,11 +108,51 @@ make_labels<-function() {
     })
     output$check_make_labels<-DT::renderDataTable(Labels_pdf())
     PDF_done<-shiny::eventReactive(input$make_pdf, {
-      baRcodeR::custom_create_PDF(user=F, Labels = Labels(), name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space)
+      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf(), name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space)
       status<-"Done"
       status
     })
     output$PDF_status<-shiny::renderPrint({print(PDF_done())})
+    ## server-side for hierarchical values
+    values<-shiny::reactiveValues()
+    values$df<-data.frame(Prefix = character(0), start=integer(), end=integer(), stringsAsFactors = F)
+    shiny::observeEvent(input$removeBtn, {
+      shiny::isolate(values$df<-values$df[-(nrow(values$df)),])
+    })
+    shiny::observeEvent(input$insertBtn, {
+      # level_name<-input$insertBtn
+      shiny::validate(
+        shiny::need(input$hier_prefix != "", "Please enter a prefix"),
+        shiny::need(input$hier_start_number != "", "Please enter a starting value"),
+        shiny::need(input$hier_end_number != "", "Please enter an ending value"),
+        shiny::need(input$hier_digits != "", "Please enter the number of digits")
+      )
+      shiny::isolate(values$df[nrow(values$df) + 1,]<-c(input$hier_prefix, input$hier_start_number, input$hier_end_number))
+      shiny::updateTextInput(session = session, "hier_prefix", "Label String", value = character(0))
+      shiny::updateNumericInput(session = session, "hier_start_number", "From (integer)", value = numeric(0), min = 1, max = Inf)
+      shiny::updateNumericInput(session = session, "hier_end_number", "To (integer)", value = numeric(0), min = 1, max = Inf)
+    })
+    hier_label_df<-shiny::reactive({
+      # shiny::validate(
+      #   shiny::need(input$hier_prefix != "", "Please enter a prefix"),
+      #   shiny::need(input$hier_start_number != "", "Please enter a starting value"),
+      #   shiny::need(input$hier_end_number != "", "Please enter an ending value"),
+      #   shiny::need(input$hier_digits != "", "Please enter the number of digits")
+      # )
+      shiny::validate(
+        shiny::need(nrow(values$df) != 0, "Please add a level")
+      )
+      hierarchy <- split(values$df, seq(nrow(values$df)))
+      hier_Labels <- baRcodeR::label_hier_maker(user=F, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
+      hier_Labels
+    })
+
+    output$list_check<-shiny::renderPrint(values$df)
+    output$hier_label_df<-DT::renderDataTable(hier_label_df())
+    shiny::observeEvent(input$hier_label_make, {
+      fileName<-sprintf("Labels_%s.csv", Sys.Date())
+      utils::write.csv(hier_label_df(), file = file.path(getwd(), fileName), row.names=F)
+    })
 
     ## Your reactive logic goes here.
 
