@@ -19,7 +19,7 @@ Writing vignette/methods on how to use package
 ~~customSizePDF.R~~
 
 ~~Vignette~~
-
+~~R studio addin w/ simple & hierarchical labels + advanced pdf options~~
 
 ## To Do:
 ~~Make tests using testthat package~~
