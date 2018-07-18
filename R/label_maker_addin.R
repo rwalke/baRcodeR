@@ -17,22 +17,30 @@ make_labels<-function() {
   ui<-miniUI::miniPage(
     miniUI::gadgetTitleBar("Make labels"),
     miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
+                              # simple label tab
       miniUI::miniTabPanel("Simple Labels", value = graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
+                     # user input elements
                      shiny::tags$h1("Simple Labels", id = "title"),
                      shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
-                                     shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
-                                     shiny::numericInput("end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
-                                     shiny::numericInput("digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
-                                     # textOutput("check"),
-                                     shiny::actionButton("make", "Create Label.csv"),
-                                     shiny::tags$h2("Preview"),
-                                     DT::DTOutput("label_df")
+                     shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                     shiny::numericInput("end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                     shiny::numericInput("digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
+                     # textOutput("check"),
+                     shiny::actionButton("make", "Create Label.csv"),
+                     # output code snippet for reproducibility
+                     shiny::tags$h3("Reproducible code"),
+                     shiny::verbatimTextOutput("label_code"),
+                     # output showing label preview
+                     shiny::tags$h2("Preview"),
+                     DT::DTOutput("label_df")
                                    )),
+      # hierarchy label tab
       miniUI::miniTabPanel("Hierarchical Lables", value = graphics::title, icon = NULL,
                            miniUI::miniContentPanel(
+                             # ui elements
                              shiny::tags$h1("Hierarchical Labels", id = "title"),
-                             shiny::numericInput("hier_digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
+                             shiny::numericInput("hier_digits", "digits", value = 2, min = 1, max = Inf, width=NULL),
                              shiny::textInput("hier_prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
                              shiny::numericInput("hier_start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
                              shiny::numericInput("hier_end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
@@ -40,13 +48,21 @@ make_labels<-function() {
                              shiny::actionButton('removeBtn', 'Remove level'),
                              # shiny::actionButton("hier_label_preview", "Preview Labels"),
                              shiny::actionButton("hier_label_make", "Create Labels.csv"),
+                             # code snippet
+                             shiny::tags$h3("Reproducible Code"),
+                             shiny::verbatimTextOutput("hier_code"),
+                             # output elements
                              shiny::tags$h2("Levels"),
+                             # output hierarchy as df
                              shiny::verbatimTextOutput("list_check"),
                              shiny::tags$h2("Label Preview"),
+                             # label preview
                              DT::DTOutput("hier_label_df")
                            )),
+      # tab for pdf output
       miniUI::miniTabPanel("PDF_maker", value= graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
+                     # ui elements
                      shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
                                accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
                      shiny::checkboxInput("header", "Header in file?", value=T),
@@ -64,16 +80,23 @@ make_labels<-function() {
                      shiny::numericInput("width_margin", "Width margin (in)", value = 0.25, min = 0, max = 20, width=NULL, step = 0.05),
                      shiny::checkboxInput("cust_spacing", "Custom spacing between barcode and text", value=F),
                      # radioButtons("cust_spacing", "Custom Spacing between barcode and text?", choices = c(Yes = T, No = F), selected = F),
+                     # conditional doesn't work in miniContent panel but doesn't matter
                      shiny::conditionalPanel(
                        condition = "input.cust_spacing == T",
                        shiny::numericInput("x_space", "Space between barcode and text", value = 215, min = 190, max = 250, width=NULL)
                      ),
                      shiny::tags$li("Click 'Import Label File' to import and check format of file."),
                      shiny::actionButton("label_check", "Import Label File"),
+                     # output elements
+                     # label preview datatable
                      DT::DTOutput("check_make_labels"),
-                     shiny::tags$li("Click 'Make PDF' and wait for 'Done' to show up before opening PDf file"),
-                     shiny::textOutput("PDF_status"),
-                     shiny::actionButton("make_pdf", "Make PDF")
+                     # code snippet
+                     shiny::tags$h3("Reproducible Code"),
+                     shiny::verbatimTextOutput("PDF_code_render"),
+                     shiny::tags$li("Click 'Make PDF' and wait for 'Done' to show up before opening PDF file"),
+                     shiny::actionButton("make_pdf", "Make PDF"),
+                     # status of pdf making
+                     shiny::textOutput("PDF_status")
 
                    )
                       )
@@ -82,8 +105,9 @@ make_labels<-function() {
 )
   # Define server logic required to draw a histogram
   server <- function(input, output, session) {
-
+    # simple label serverside
     output$check <- shiny::renderText({paste0(input$prefix, input$start_number, input$end_number)})
+    # making simple labels
     Labels <- shiny::reactive({
       shiny::validate(
         shiny::need(input$prefix != "", "Please enter a prefix"),
@@ -93,12 +117,17 @@ make_labels<-function() {
       )
       baRcodeR::label_maker(user=F, string = input$prefix, level = seq(input$start_number, input$end_number), digits = input$digits)
     })
+    # preview of simple labels
     output$label_df<-DT::renderDataTable(Labels())
+    # writing simple labels
     shiny::observeEvent(input$make, {
       fileName<-sprintf("Labels_%s.csv", Sys.Date())
       utils::write.csv(Labels(), file = file.path(getwd(), fileName), row.names=F)
 
     })
+    output$label_code<-shiny::renderPrint(noquote(paste0("label_maker(user = F, string = \'", input$prefix, " \', ", "level = c(", input$start_number, ",", input$end_number, "), digits = ", input$digits, ")")))
+    # pdf making server side
+    # check label file
     Labels_pdf<-shiny::eventReactive(input$label_check, {
       shiny::req(input$labels)
       Labels<-utils::read.csv(input$labels$datapath, header=input$header)
@@ -107,19 +136,31 @@ make_labels<-function() {
       )
       Labels
     })
+    # preview label file
     output$check_make_labels<-DT::renderDataTable(Labels_pdf())
+    # text indicator that pdf finished making
     PDF_done<-shiny::eventReactive(input$make_pdf, {
       baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf(), name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space)
       status<-"Done"
       status
     })
+    PDF_code_snippet<-reactive({noquote(paste0("custom_create_PDF(user=F, Labels = label_csv, name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", height_margin = ", input$height_margin, ", width_margin = ", input$width_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ")"))})
+    csv_code_snippet<-reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
+    output$PDF_code_render<-renderText({
+      paste(csv_code_snippet(), PDF_code_snippet(), sep = "\n")
+      })
+    # rendering of pdf indicator
     output$PDF_status<-shiny::renderPrint({print(PDF_done())})
-    ## server-side for hierarchical values
+    # server-side for hierarchical values
+    # set reactiveValues to store the level inputs
     values<-shiny::reactiveValues()
+    # set up data frame within reactiveValue function
     values$df<-data.frame(Prefix = character(0), start=integer(), end=integer(), stringsAsFactors = F)
+    # delete row from the df if button is pressed.
     shiny::observeEvent(input$removeBtn, {
       shiny::isolate(values$df<-values$df[-(nrow(values$df)),])
     })
+    # add level to df
     shiny::observeEvent(input$insertBtn, {
       # level_name<-input$insertBtn
       shiny::validate(
@@ -133,6 +174,7 @@ make_labels<-function() {
       shiny::updateNumericInput(session = session, "hier_start_number", "From (integer)", value = numeric(0), min = 1, max = Inf)
       shiny::updateNumericInput(session = session, "hier_end_number", "To (integer)", value = numeric(0), min = 1, max = Inf)
     })
+    # make hierarchical labels
     hier_label_df<-shiny::reactive({
       # shiny::validate(
       #   shiny::need(input$hier_prefix != "", "Please enter a prefix"),
@@ -147,15 +189,23 @@ make_labels<-function() {
       hier_Labels <- baRcodeR::label_hier_maker(user=F, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
       hier_Labels
     })
+    hier_code_snippet_obj<-reactive({
+      begin_string<-noquote(strsplit(paste(split(values$df, seq(nrow(values$df))), collapse=', '), ' ')[[1]])
+      replace_string<-gsub(pattern = "list\\(", replacement = "c\\(", begin_string)
+      replace_string<-paste(replace_string, sep="", collapse="")
+      noquote(paste0("label_hier_maker(user = F, hierarchy = list(", replace_string, "), end = NULL, digits = ", input$hier_digits, ")"))
 
+      })
+    output$hier_code<-renderText(hier_code_snippet_obj())
+    # rough df of the level df
     output$list_check<-shiny::renderPrint(values$df)
+    # preview of hierarchical labels
     output$hier_label_df<-DT::renderDataTable(hier_label_df())
+    # make the csv file
     shiny::observeEvent(input$hier_label_make, {
       fileName<-sprintf("Labels_%s.csv", Sys.Date())
       utils::write.csv(hier_label_df(), file = file.path(getwd(), fileName), row.names=F)
     })
-
-    ## Your reactive logic goes here.
 
     # Listen for the 'done' event. This event will be fired when a user
     # is finished interacting with your application, and clicks the 'done'
