@@ -18,7 +18,7 @@ make_labels<-function() {
     miniUI::gadgetTitleBar("Make labels"),
     miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
                               # simple label tab
-      miniUI::miniTabPanel("Simple Labels", value = graphics::title, icon = NULL,
+      miniUI::miniTabPanel("Simple Label Generation", value = graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
                      # user input elements
                      shiny::tags$h1("Simple Labels", id = "title"),
@@ -36,7 +36,7 @@ make_labels<-function() {
                      DT::DTOutput("label_df")
                                    )),
       # hierarchy label tab
-      miniUI::miniTabPanel("Hierarchical Lables", value = graphics::title, icon = NULL,
+      miniUI::miniTabPanel("Hierarchical Label Generation", value = graphics::title, icon = NULL,
                            miniUI::miniContentPanel(
                              # ui elements
                              shiny::tags$h1("Hierarchical Labels", id = "title"),
@@ -60,7 +60,7 @@ make_labels<-function() {
                              DT::DTOutput("hier_label_df")
                            )),
       # tab for pdf output
-      miniUI::miniTabPanel("PDF_maker", value= graphics::title, icon = NULL,
+      miniUI::miniTabPanel("Barcode Creation", value= graphics::title, icon = NULL,
                    miniUI::miniContentPanel(
                      # ui elements
                      shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
