@@ -146,7 +146,7 @@ make_labels<-function() {
     })
     PDF_code_snippet<-reactive({noquote(paste0("custom_create_PDF(user=F, Labels = label_csv, name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", height_margin = ", input$height_margin, ", width_margin = ", input$width_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ")"))})
     csv_code_snippet<-reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
-    output$PDF_code_render<-renderText({
+    output$PDF_code_render<-shiny::renderText({
       paste(csv_code_snippet(), PDF_code_snippet(), sep = "\n")
       })
     # rendering of pdf indicator
@@ -196,7 +196,7 @@ make_labels<-function() {
       noquote(paste0("label_hier_maker(user = F, hierarchy = list(", replace_string, "), end = NULL, digits = ", input$hier_digits, ")"))
 
       })
-    output$hier_code<-renderText(hier_code_snippet_obj())
+    output$hier_code<-shiny::renderText(hier_code_snippet_obj())
     # rough df of the level df
     output$list_check<-shiny::renderPrint(values$df)
     # preview of hierarchical labels
