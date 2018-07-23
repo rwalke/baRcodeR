@@ -144,8 +144,8 @@ make_labels<-function() {
       status<-"Done"
       status
     })
-    PDF_code_snippet<-reactive({noquote(paste0("custom_create_PDF(user=F, Labels = label_csv, name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", height_margin = ", input$height_margin, ", width_margin = ", input$width_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ")"))})
-    csv_code_snippet<-reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
+    PDF_code_snippet<-shiny::reactive({noquote(paste0("custom_create_PDF(user=F, Labels = label_csv, name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", height_margin = ", input$height_margin, ", width_margin = ", input$width_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ")"))})
+    csv_code_snippet<-shiny::reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
     output$PDF_code_render<-shiny::renderText({
       paste(csv_code_snippet(), PDF_code_snippet(), sep = "\n")
       })
@@ -189,7 +189,7 @@ make_labels<-function() {
       hier_Labels <- baRcodeR::label_hier_maker(user=F, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
       hier_Labels
     })
-    hier_code_snippet_obj<-reactive({
+    hier_code_snippet_obj<-shiny::reactive({
       begin_string<-noquote(strsplit(paste(split(values$df, seq(nrow(values$df))), collapse=', '), ' ')[[1]])
       replace_string<-gsub(pattern = "list\\(", replacement = "c\\(", begin_string)
       replace_string<-paste(replace_string, sep="", collapse="")
