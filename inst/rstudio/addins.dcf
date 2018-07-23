@@ -1,4 +1,4 @@
-Name: Make labels and barcodes
+Name: Generate and Print Barcode Labels
 Description: Simple label making and pdf creation from text file.
 Binding: make_labels
 Interactive: true
