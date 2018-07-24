@@ -11,12 +11,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-introduction points:
-biological samples are complex to label and maintain.
-Multi-level sampling, ie. populations, lines, individuals, samples per individual.
-Manual creation of barcodes, especially hierarchical ones, are timeconsuming. Commercial software requires extra installation and is difficult to customize.  
-
-
 
 The baRcodeR package will create barcodes in a pdf output to be printed using a laser printer and sticker sheets. Each function can be run interactively with prompts to guide label and barcode creation. 
 
@@ -51,12 +45,9 @@ example010
 First, load `baRcodeR`.
 
 ```{r eval=T, include=T}
-# package has not been made 
+
 library(baRcodeR)
-library(ggplot2)
-#library(grDevices)
-#library(grid)
-library(qrcode)
+
 ```
 
 ## By user prompt {#label-maker-user-prompt}
@@ -267,7 +258,7 @@ The last basic parameter to set is the error correction level. There are four po
 Level "L" - up to 7% damage -- ideal for very small labels (large pixels)
 Level "M" - up to 15% damage
 Level "Q" - up to 25% damage
-Level "H" - up to 30% damage -- good for bigger levels (small pixels)
+Level "H" - up to 30% damage -- good for bigger labels (small pixels)
 
 The user prompt for error correction level is similar to previous prompts.
 
@@ -281,7 +272,7 @@ The last user prompt asks whether the user wants to modify the advanced paramete
 
 >  \> Edit advanced parameters? (Y/N): 
 
-In this example, no advanced parameters are modified. The advanced parameters are covered in [advanced options](#custom-create-pdf)
+In this example, no advanced parameters are modified. Using advanced parameters are covered in [advanced options](#custom-create-pdf)
 
 >  \> Edit advanced parameters? (Y/N): N
 
