@@ -2,6 +2,16 @@
 
 
 
+## Quick Start:
+
+```
+devtools::install_github("yihanwu/baRcodeR")
+library(baRcodeR)
+```
+
+
+
+
 ## Description:
 
 The purpose of this project is to build a set of tools in R for labelling and tracking biological samples
