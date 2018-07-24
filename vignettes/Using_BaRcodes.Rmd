@@ -15,7 +15,7 @@ editor_options:
 The baRcodeR package will create barcodes in a pdf output to be printed using a laser printer and sticker sheets. Each function can be run interactively with prompts to guide label and barcode creation. 
 
 
-If you have text labels in a one column text file, skip to {Create barcodes}.
+If you have text labels in a one column text file, skip to [Create barcodes](#create-barcodes).
 
 Required packages 
 
@@ -25,8 +25,6 @@ Required packages
 install.packages(c("ggplot2", "grDevices", "grid", "qrcode"))
 ```
 
-
-Graphic of simple vs hierarchical labels?
 
 # Create simple labels {#label-maker}
 
@@ -280,7 +278,7 @@ In this example, no advanced parameters are modified. Using advanced parameters 
 
 The same example above can be reproduced with:
 
-```{r eval=T, include=T}
+```{r eval=F, include=T}
 create_PDF(Labels=Labels, name = "example", ErrCorr = "Q", Fsz=2.5)
 ```
 
@@ -291,7 +289,7 @@ There are advanced options for the pdf output which can be accessed interactivel
 
 Arguments can be passed from `create_PDF` to `custom_create_PDF` as `create_PDF` is just a wrapper for `custom_create_PDF`. 
 
-```{r eval=T, include=T}
+```{r eval=F, include=T}
 
 ## This will create a pdf sheet where the labels are printed in columns then rows. It will skip 3 rows from the top and one column from the left. 
 create_PDF(Labels=Labels, name = "example_advanced", ErrCorr = "Q", Fsz=2.5, Across=F, ERows=3, ECol=1)
