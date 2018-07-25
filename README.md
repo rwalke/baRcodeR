@@ -5,7 +5,7 @@ Yihan Wu, Emily Bao and Robert I. Colautti
 ## Quick Start:
 
 ```
-devtools::install_github("yihanwu/baRcodeR")
+devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
 library(baRcodeR)
 ```
 
@@ -44,6 +44,15 @@ The Barcode Creation tab contains all the advanced options for page layout.
 ![Screenshot of PDF creation tab](man/figures/tab-3-screenshot.png)
 
 Text files can be previewed before generating barcodes.
+
+## Usage from the console
+
+Please load the vignette "Using-baRcodeR" for console use.
+
+```
+library(baRcodeR)
+vignette("Using-baRcodeR")
+```
 
 
 
