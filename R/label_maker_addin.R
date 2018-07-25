@@ -18,49 +18,59 @@ make_labels<-function() {
     miniUI::gadgetTitleBar("baRcodeR"),
     miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
                               # simple label tab
-      miniUI::miniTabPanel("Simple Label Generation", value = graphics::title, icon = NULL,
+      miniUI::miniTabPanel("Simple Label Generation", value = graphics::title, icon = shiny::icon("bars"),
                    miniUI::miniContentPanel(
-                     # user input elements
-                     shiny::tags$h1("Simple Labels", id = "title"),
-                     shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
-                     shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
-                     shiny::numericInput("end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
-                     shiny::numericInput("digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
-                     # textOutput("check"),
-                     shiny::actionButton("make", "Create Label.csv"),
-                     # output code snippet for reproducibility
-                     shiny::tags$h3("Reproducible code"),
-                     shiny::verbatimTextOutput("label_code"),
-                     # output showing label preview
-                     shiny::tags$h2("Preview"),
-                     DT::DTOutput("label_df")
+                     shiny::fillRow(
+                       shiny::fillCol(tagList(# user input elements
+                         shiny::tags$h1("Simple Labels", id = "title"),
+                         shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
+                         shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                         shiny::numericInput("end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                         shiny::numericInput("digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
+                         # textOutput("check"),
+                         shiny::actionButton("make", "Create Label.csv"))),
+                       shiny::fillRow(tagList(# output code snippet for reproducibility
+                         shiny::tags$h3("Reproducible code"),
+                         shiny::verbatimTextOutput("label_code"),
+                         # output showing label preview
+                         shiny::tags$h3("Preview"),
+                         DT::DTOutput("label_df")))
+                     )
+
                                    )),
       # hierarchy label tab
-      miniUI::miniTabPanel("Hierarchical Label Generation", value = graphics::title, icon = NULL,
+      miniUI::miniTabPanel("Hierarchical Label Generation", value = graphics::title, icon = shiny::icon("sitemap"),
                            miniUI::miniContentPanel(
-                             # ui elements
-                             shiny::tags$h1("Hierarchical Labels", id = "title"),
-                             shiny::numericInput("hier_digits", "digits", value = 2, min = 1, max = Inf, width=NULL),
-                             shiny::textInput("hier_prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
-                             shiny::numericInput("hier_start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
-                             shiny::numericInput("hier_end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
-                             shiny::actionButton('insertBtn', 'Add level'),
-                             shiny::actionButton('removeBtn', 'Remove level'),
-                             # shiny::actionButton("hier_label_preview", "Preview Labels"),
-                             shiny::actionButton("hier_label_make", "Create Labels.csv"),
-                             # code snippet
-                             shiny::tags$h3("Reproducible Code"),
-                             shiny::verbatimTextOutput("hier_code"),
-                             # output elements
-                             shiny::tags$h2("Levels"),
-                             # output hierarchy as df
-                             shiny::verbatimTextOutput("list_check"),
-                             shiny::tags$h2("Label Preview"),
-                             # label preview
-                             DT::DTOutput("hier_label_df")
+                             shiny::fillRow(
+                               shiny::fillCol(tagList(
+                                 # ui elements
+                                 shiny::tags$h1("Hierarchical Labels", id = "title"),
+                                 shiny::numericInput("hier_digits", "digits", value = 2, min = 1, max = Inf, width=NULL),
+                                 shiny::textInput("hier_prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
+                                 shiny::numericInput("hier_start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                                 shiny::numericInput("hier_end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
+                                 shiny::actionButton('insertBtn', 'Add level'),
+                                 shiny::actionButton('removeBtn', 'Remove level'),
+                                 # shiny::actionButton("hier_label_preview", "Preview Labels"),
+                                 shiny::actionButton("hier_label_make", "Create Labels.csv")
+                               )),
+                               shiny::fillCol(tagList(
+                                 # code snippet
+                                 shiny::tags$h3("Reproducible Code"),
+                                 shiny::verbatimTextOutput("hier_code"),
+                                 # output elements
+                                 shiny::tags$h3("Levels"),
+                                 # output hierarchy as df
+                                 shiny::verbatimTextOutput("list_check"),
+                                 shiny::tags$h3("Label Preview"),
+                                 # label preview
+                                 DT::DTOutput("hier_label_df")
+                               ))
+                             )
+
                            )),
       # tab for pdf output
-      miniUI::miniTabPanel("Barcode Creation", value= graphics::title, icon = NULL,
+      miniUI::miniTabPanel("Barcode Creation", value= graphics::title, icon = shiny::icon("qrcode"),
                    miniUI::miniContentPanel(
                      # ui elements
                      shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
@@ -125,7 +135,7 @@ make_labels<-function() {
       utils::write.csv(Labels(), file = file.path(getwd(), fileName), row.names=F)
 
     })
-    output$label_code<-shiny::renderPrint(noquote(paste0("label_maker(user = F, string = \'", input$prefix, " \', ", "level = c(", input$start_number, ",", input$end_number, "), digits = ", input$digits, ")")))
+    output$label_code<-shiny::renderPrint(noquote(paste0("label_maker(user = F, string = \'", input$prefix, "\', ", "level = c(", input$start_number, ",", input$end_number, "), digits = ", input$digits, ")")))
     # pdf making server side
     # check label file
     Labels_pdf<-shiny::eventReactive(input$label_check, {
@@ -222,7 +232,7 @@ make_labels<-function() {
   }
   # Run the application
   # shinyApp(ui = ui, server = server)
-  viewer <- shiny::dialogViewer("Subset", width = 1000, height = 1000)
+  viewer <- shiny::dialogViewer("Subset", width = 800, height = 1000)
   shiny::runGadget(ui, server, viewer = viewer)
 
 }
