@@ -1,6 +1,6 @@
-# II-I-II-baRcodeR-I-II-III
+# baRcodeR
 
-
+Yihan Wu, Emily Bao and Robert I. Colautti
 
 ## Quick Start:
 
@@ -9,30 +9,21 @@ devtools::install_github("yihanwu/baRcodeR")
 library(baRcodeR)
 ```
 
+## Introduction
+
+`baRcodeR` is a R package for generating sample labels and 2D barcodes for labelling and tracking biological samples. Users can: 
+
+* generate simple labels (Ex-001, Ex-002, Ex-003 ...),
+* generate hierarchical labels (A-01-B-01, A-01-B-02, A-02-B-01, A-02-B-02, A-03-B01 ...),
+* produce PDF files with custom layouts for all types of sticker labels.
 
 
 
-## Description:
+## RStudio addin 
 
-The purpose of this project is to build a set of tools in R for labelling and tracking biological samples
+The main baRcodeR functions, label creation and barcode generation, can be performed interactive via the RStudio addin found on the toolbar. 
 
-## In Progress: 
-GOAL: reorganize code so that it is following guidelines to submit to CRAN
-Adding Roxygen documentation to create man pages
-Adding ability to run from console in addition to user prompts by adding input variables to function for those needed
-Writing vignette/methods on how to use package
+![](readme-files/add-in-screenshot.png)
 
 
-~~LabelMaker.R~~  
-~~LabelHierarchy.R~~
-~~createPDF.R~~
-~~customSizePDF.R~~
-
-~~Vignette~~
-~~R studio addin w/ simple & hierarchical labels + advanced pdf options~~
-
-## To Do:
-~~Make tests using testthat package~~
-~~Check installation on unix and make source files~~
-~~Check on win-builder~~
 
