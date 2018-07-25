@@ -72,8 +72,10 @@ make_labels<-function() {
       # tab for pdf output
       miniUI::miniTabPanel("Barcode Creation", value= graphics::title, icon = shiny::icon("qrcode"),
                    miniUI::miniContentPanel(
-                     # ui elements
-                     shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
+                     shiny::fillRow(
+                       shiny::fillCol(
+                         shiny::tagList(
+                           shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
                                accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
                      shiny::checkboxInput("header", "Header in file?", value=T),
                      # radioButtons("header", "Header in file?", choices = c(Yes = T, No = F), selected = T),
@@ -94,8 +96,11 @@ make_labels<-function() {
                      shiny::conditionalPanel(
                        condition = "input.cust_spacing == T",
                        shiny::numericInput("x_space", "Space between barcode and text", value = 215, min = 190, max = 250, width=NULL)
-                     ),
-                     shiny::tags$li("Click 'Import Label File' to import and check format of file."),
+                     )
+                         )
+                       ),
+                       shiny::fillCol(
+                         shiny::tagList(shiny::tags$body("Click 'Import Label File' to import and check format of file."),
                      shiny::actionButton("label_check", "Import Label File"),
                      # output elements
                      # label preview datatable
@@ -103,10 +108,12 @@ make_labels<-function() {
                      # code snippet
                      shiny::tags$h3("Reproducible Code"),
                      shiny::verbatimTextOutput("PDF_code_render"),
-                     shiny::tags$li("Click 'Make PDF' and wait for 'Done' to show up before opening PDF file"),
+                     shiny::tags$body("Click 'Make PDF' and wait for 'Done' to show up before opening PDF file"),
                      shiny::actionButton("make_pdf", "Make PDF"),
                      # status of pdf making
-                     shiny::textOutput("PDF_status")
+                     shiny::textOutput("PDF_status"))
+                       )
+                     )
 
                    )
                       )
