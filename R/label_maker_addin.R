@@ -21,7 +21,7 @@ make_labels<-function() {
       miniUI::miniTabPanel("Simple Label Generation", value = graphics::title, icon = shiny::icon("bars"),
                    miniUI::miniContentPanel(
                      shiny::fillRow(
-                       shiny::fillCol(tagList(# user input elements
+                       shiny::fillCol(shiny::tagList(# user input elements
                          shiny::tags$h1("Simple Labels", id = "title"),
                          shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
                          shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
@@ -29,7 +29,7 @@ make_labels<-function() {
                          shiny::numericInput("digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
                          # textOutput("check"),
                          shiny::actionButton("make", "Create Label.csv"))),
-                       shiny::fillRow(tagList(# output code snippet for reproducibility
+                       shiny::fillRow(shiny::tagList(# output code snippet for reproducibility
                          shiny::tags$h3("Reproducible code"),
                          shiny::verbatimTextOutput("label_code"),
                          # output showing label preview
@@ -42,7 +42,7 @@ make_labels<-function() {
       miniUI::miniTabPanel("Hierarchical Label Generation", value = graphics::title, icon = shiny::icon("sitemap"),
                            miniUI::miniContentPanel(
                              shiny::fillRow(
-                               shiny::fillCol(tagList(
+                               shiny::fillCol(shiny::tagList(
                                  # ui elements
                                  shiny::tags$h1("Hierarchical Labels", id = "title"),
                                  shiny::numericInput("hier_digits", "digits", value = 2, min = 1, max = Inf, width=NULL),
@@ -54,7 +54,7 @@ make_labels<-function() {
                                  # shiny::actionButton("hier_label_preview", "Preview Labels"),
                                  shiny::actionButton("hier_label_make", "Create Labels.csv")
                                )),
-                               shiny::fillCol(tagList(
+                               shiny::fillCol(shiny::tagList(
                                  # code snippet
                                  shiny::tags$h3("Reproducible Code"),
                                  shiny::verbatimTextOutput("hier_code"),
