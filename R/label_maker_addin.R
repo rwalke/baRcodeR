@@ -59,7 +59,7 @@ make_labels<-function() {
                                  shiny::tags$h3("Reproducible Code"),
                                  shiny::verbatimTextOutput("hier_code"),
                                  # output elements
-                                 shiny::tags$h3("Levels"),
+                                 shiny::tags$h3("Hierarchy"),
                                  # output hierarchy as df
                                  shiny::verbatimTextOutput("list_check"),
                                  shiny::tags$h3("Label Preview"),
