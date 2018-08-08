@@ -43,11 +43,19 @@
 label_maker<-function(user=F, string=NULL, level, digits=3){
   if (user==T) {
     ## asks for string
-    str <- readline(paste0("Please enter string for level: "))
+    string <- readline(paste0("Please enter string for level: "))
     ## first value of level
     startNum <- as.numeric(readline(paste0("Enter the starting number for level: ")))
+    while(is.na(startNum) == T) {
+      print("Invalid input. Please enter an integer.")
+      startNum <- as.numeric(readline(paste0("Enter the starting number for level: ")))
+    }
     ## ending value of level
     endNum <- as.numeric(readline(paste0("Enter the ending number for level: ")))
+    while(is.na(endNum) == T){
+      print("Invalid input. Please enter an integer.")
+      endNum <- as.numeric(readline(paste0("Enter the ending number for level: ")))
+    }
     ## finds greatest value
     maxNum <- max(startNum,endNum)
     ## checks what is number of digits in max value
@@ -55,26 +63,27 @@ label_maker<-function(user=F, string=NULL, level, digits=3){
     ## asks for how many digits to print
     digits <- as.numeric(readline(paste0("Number of digits to print for level: ")))
     # check input
+    while(is.na(as.numeric(digits))==T){
+      print("Invalid input. Please only enter an integer.")
+      digits <- as.numeric(readline(paste0("Number of digits to print: ")))
+    }
     ## if the number to digits to print is less than the digits in max value, try again
     while (digits<digitsMax){
       print(paste0("Please enter a number larger or equal to ", nchar(paste(maxNum))))
       digits <- as.numeric(readline(paste0("Number of digits to print for level: ")))
     }
-    lvlRange <-c(startNum:endNum)
-    line<-paste0(str,"%0",digits,"d")
-    Labels<-sprintf(line,rep(lvlRange))
-    return(Labels)
-  } else {
-    if (is.numeric(level)==F) stop("level is not a string of numbers")
-    if (is.numeric(digits)==F) stop("Digits is not a numerical value")
-    if (nchar(max(level))> digits) stop("Max value of levels is greater than number of digits. Increase digits value.")
-    line<-paste0(string,"%0",digits,"d")
-    Labels<-sprintf(line,rep(level))
-    return(data.frame(Labels))
+    level <-c(startNum:endNum)
   }
+  if (is.numeric(level)==F) stop("level is not a string of numbers")
+  if (is.numeric(digits)==F) stop("Digits is not a numerical value")
+  if (nchar(max(level))> digits) stop("Max value of levels is greater than number of digits. Increase digits value.")
+  line<-paste0(string,"%0",digits,"d")
+  Labels<-sprintf(line,rep(level))
+  ind_string<-rep(string, length(rep(level)))
+  numbers<-rep(level)
+  return(data.frame(Labels, ind_string, level))
 
 }
-
 
 
 
