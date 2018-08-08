@@ -90,11 +90,11 @@ label_hier_maker <- function(user=F, hierarchy, end=NULL, digits=2){
     if (is.na(endNum) == T ){
       stop(paste0("Invalid ending number on level", i, ". Please doublecheck your input"))
     }
+    maxNum <- max(startNum,endNum)
     digitsMax <- max(digits,nchar(paste(maxNum)))
     if (digitsMax > digits){
       warning("Digits specified less than max level number. Increasing number of digits for level")
     }
-    maxNum <- max(startNum,endNum)
     lvlRange <-c(startNum:endNum)
     line<-paste0(str,"%0",digits,"d")
     Labels<-sprintf(line,rep(lvlRange))
