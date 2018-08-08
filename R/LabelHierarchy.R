@@ -8,7 +8,7 @@
 #' @param hierarchy list. A list with each element consisting of three members
 #'  (string, beginning value, end value). See examples. Used only when
 #'   \code{user=F})
-#' @param end character. A string to be appended to end of each barcode.
+#' @param end character. A string to be appended to end of each label.
 #' @param digits numerical. Default is 2. Number of digits to be printed. This
 #' will apply to all levels when \code{user=F}.
 #' @export
@@ -43,7 +43,7 @@ label_hier_maker <- function(user=F, hierarchy, end=NULL, digits=2){
     hlevels<-as.numeric(hlevels)
     # possible inputs
     strEndCheck<-c("Y","y","N","n")
-    strEnd <- readline("String at end of barcode? (y/n) ")
+    strEnd <- readline("String at end of label? (y/n) ")
     # check input
     while((strEnd %in% strEndCheck )== FALSE){
       print ("Invalid input, please only enter what is specified.")
@@ -79,7 +79,6 @@ label_hier_maker <- function(user=F, hierarchy, end=NULL, digits=2){
   }
   if (is.list(hierarchy) == F) stop("hierarchy is not in list format. See ?label_hier_maker")
   if (length(unique(sapply(hierarchy, length))) != 1) stop("hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
-  barcodes<-NULL
   for(i in 1:length(hierarchy)){
     str<-hierarchy[[i]][1]
     startNum<-as.numeric(hierarchy[[i]][2])
@@ -106,10 +105,19 @@ label_hier_maker <- function(user=F, hierarchy, end=NULL, digits=2){
       temp_label<-rep(Labels, length.out=length(temp_barcode))
       ## paste everything together
       Labels<-paste(temp_barcode, temp_label, sep="-")
-    }
-    barcodes <- paste0(Labels, end)
-  }
-  return(data.frame(barcodes))
-}
 
+    }
+    barcodes <- Labels
+  }
+  label_df<-cbind(barcodes, data.frame(t(sapply(strsplit(barcodes, "-"),c))))
+  df_names<-sapply(hierarchy, function(x) x[1])
+  if (any(nchar(df_names) == 0)){
+    warning("Empty string in level. Defaulting to level number in data frame.")
+    names(label_df)<-c("label", paste0("level", 1:length(hierarchy)))
+  } else {
+    names(label_df)<-c("label", df_names)
+  }
+  label_df$label <- paste0(label_df$label, end)
+  return(label_df)
+}
 
