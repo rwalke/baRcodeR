@@ -94,6 +94,7 @@ label_hier_maker <- function(user=F, hierarchy, end=NULL, digits=2){
     digitsMax <- max(digits,nchar(paste(maxNum)))
     if (digitsMax > digits){
       warning("Digits specified less than max level number. Increasing number of digits for level")
+      digits<-digitsMax
     }
     lvlRange <-c(startNum:endNum)
     line<-paste0(str,"%0",digits,"d")
