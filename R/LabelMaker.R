@@ -84,8 +84,8 @@ label_maker<-function(user=F, string=NULL, level, digits=3){
   line<-paste0(string,"%0",digits,"d")
   Labels<-sprintf(line,rep(level))
   ind_string<-rep(string, length(rep(level)))
-  numbers<-rep(level)
-  return(data.frame(Labels, ind_string, level))
+  ind_number<-rep(level)
+  return(data.frame(Labels, ind_string, ind_number))
 
 }
 
