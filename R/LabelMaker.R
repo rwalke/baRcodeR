@@ -76,7 +76,10 @@ label_maker<-function(user=F, string=NULL, level, digits=3){
   }
   if (is.numeric(level)==F) stop("level is not a string of numbers")
   if (is.numeric(digits)==F) stop("Digits is not a numerical value")
-  if (nchar(max(level))> digits) stop("Max value of levels is greater than number of digits. Increase digits value.")
+  if (digitsMax > digits){
+    warning("Digits specified less than max number. Increasing number of digits.")
+  }
+  digitsMax <- max(digits,nchar(paste(maxNum)))
   line<-paste0(string,"%0",digits,"d")
   Labels<-sprintf(line,rep(level))
   ind_string<-rep(string, length(rep(level)))
