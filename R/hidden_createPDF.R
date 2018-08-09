@@ -53,7 +53,20 @@ custom_create_PDF<-function(user=F,
                             cust_spacing=F,
                             x_space=215){
   if (length(Labels)==0) stop("Labels do not exist. Please pass in Labels")
-  labelLength<-nchar(paste(Labels[1,1]))
+  if(class(Labels) %in% c("character", "integer", "numeric")){
+    # treat as vector
+    Labels<-Labels
+  } else if (class(Labels) == "data.frame") {
+    if (any(tolower(names(Labels)) == "label")){
+      Labels <- Labels[, "label"]
+    } else {
+      warning("Cannot find a label column. Using first column as label input.")
+      Labels <- Labels[,1]
+    }
+  } else {
+    stop("Label input not a vector or a data frame. Please check your input.")
+  }
+  labelLength<-max(nchar(paste(Labels)))
   # clean up any open graphical devices if function fails
   on.exit(grDevices::dev.off())
   # if user prompt has been set to true
