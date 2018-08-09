@@ -148,13 +148,10 @@ make_labels<-function() {
     Labels_pdf<-shiny::eventReactive(input$label_check, {
       shiny::req(input$labels)
       Labels<-utils::read.csv(input$labels$datapath, header=input$header)
-      shiny::validate(
-        shiny::need(ncol(Labels) == 1, "Your label file contains more than one column. Please modify your file.")
-      )
       Labels
     })
     # preview label file
-    output$check_make_labels<-DT::renderDataTable(Labels_pdf())
+    output$check_make_labels<-DT::renderDataTable(Labels_pdf(), server = F, selection = list(mode = "single", target = "column", selected = 1))
     # text indicator that pdf finished making
     PDF_done<-shiny::eventReactive(input$make_pdf, {
       baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf(), name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space)
