@@ -17,22 +17,30 @@
 #' @export
 #' @examples
 #' ## data frame
-#' example<- as.data.frame(c("ao1", "a02", "a03"))
+#' example_vector <- as.data.frame(c("ao1", "a02", "a03"))
 #'
 #' \dontrun{
 #' ## run with default options, pdf file will be "example.pdf"
-#' create_PDF(Labels=example, name="example")
+#' create_PDF(Labels = example_vector, name = "example")
 #' ## run interactively. Overrides default pdf options
-#' create_PDF(user=T, Labels=example)
+#' create_PDF(user = T, Labels = example_vector)
+#' ## run using a data frame, automatically choosing the "label" column
+#' example_df <- data.frame("level1" = c("a1", "a2"), "label" = c("a1-b1",
+#' "a1-b2"), "level2" = c("b1", "b1"))
+#' create_PDF(user = F, Labels = example_df)
+#' ## run using an unnamed data frame
+#' example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
+#' ## specify column from data frame
+#' create_PDF(user = F, Labels = example_df[,2])
 #' }
 #' @seealso \code{\link{custom_create_PDF}}
 
 
-create_PDF<-function(user=F,
+create_PDF <- function(user = F,
                      Labels = NULL,
-                     name="LabelsOut",
-                     ErrCorr="H",
-                     Fsz=2.5, ...) {
+                     name ="LabelsOut",
+                     ErrCorr = "H",
+                     Fsz = 2.5, ...) {
   custom_create_PDF(user, Labels, name, ErrCorr, Fsz, ...)
 }
 
