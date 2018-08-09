@@ -154,11 +154,13 @@ make_labels<-function() {
     output$check_make_labels<-DT::renderDataTable(Labels_pdf(), server = F, selection = list(mode = "single", target = "column", selected = 1))
     # text indicator that pdf finished making
     PDF_done<-shiny::eventReactive(input$make_pdf, {
-      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf(), name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space)
+      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space)
       status<-"Done"
       status
     })
-    PDF_code_snippet<-shiny::reactive({noquote(paste0("custom_create_PDF(user=F, Labels = label_csv, name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", height_margin = ", input$height_margin, ", width_margin = ", input$width_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ")"))})
+    PDF_code_snippet<-shiny::reactive({
+      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", height_margin = ", input$height_margin, ", width_margin = ", input$width_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ")"))
+      })
     csv_code_snippet<-shiny::reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
     output$PDF_code_render<-shiny::renderText({
       paste(csv_code_snippet(), PDF_code_snippet(), sep = "\n")
