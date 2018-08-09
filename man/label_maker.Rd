@@ -25,7 +25,7 @@ a string of characters
 Takes user prompts or variables to create  text labels consisting of a text
 string and numbers (string001, string002 ... ...) . This function will only
 create simple text labels compared to \code{\link{label_hier_maker}} that
-creates a hierarchical list of labels. The created output will then be fed
+creates a hierarchical list of labels. The created output can then be fed
 into \code{\link{create_PDF}} to create 2-D labels in PDF.
 }
 \details{
@@ -37,16 +37,16 @@ to set custom sequences of numbers for the levels. See example.
 
 
 ## sequential string of numbers in label
-Labels<-label_maker(string="string", level = c(1:5), digits=2)
+Labels <- label_maker(string = "string", level = c(1:5), digits = 2)
 Labels
 ## can also use nonsequential strings in input for levels
-level<-c(1:5, 8:10, 999:1000)
-Labels<-label_maker(string="string", level = level, digits=4)
+level <- c(1:5, 8:10, 999:1000)
+Labels <- label_maker(string = "string", level = level, digits = 4)
 Labels
 
 \dontrun{
 ## function using user prompt does not use any of the other parameters
-Labels<-label_maker(user=T)
+Labels <- label_maker(user = T)
 Labels
 }
 }

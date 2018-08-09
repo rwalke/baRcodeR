@@ -30,7 +30,7 @@ Makes hierarchical barcode labels from interactive user input or from list
 
 \dontrun{
 ## for interactive mode
-label_hier_maker(user=T)
+label_hier_maker(user = T)
 }
 
 ## how to make hierarchy list
@@ -38,14 +38,14 @@ label_hier_maker(user=T)
 ## create vectors for each level in the order string_prefix, beginning_value,
 ## end_value and combine in list
 
-a<-c("a",3,6)
-b<-c("b",1,3)
-c<-list(a,b)
-Labels<-label_hier_maker(hierarchy=c)
+a <- c("a", 3, 6)
+b <- c("b", 1, 3)
+c <- list(a, b)
+Labels <- label_hier_maker(hierarchy = c)
 Labels
 
 ## add string at end of each label
-Labels<-label_hier_maker(hierarchy=c, end="end")
+Labels <- label_hier_maker(hierarchy = c, end = "end")
 Labels
 
 }

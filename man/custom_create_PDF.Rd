@@ -55,7 +55,7 @@ used when \code{cust_spacing = T}.}
 pdf file that is saved to the working directory containing QR codes.
 }
 \description{
-This function will take in a data frame of labels and produce a pdf of QR
+This function will take in a vector or data frame of labels and produce a pdf of QR
 codes which can then be printed. The pdf setup is for the ULINE 1.75X1/2
 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
 }
