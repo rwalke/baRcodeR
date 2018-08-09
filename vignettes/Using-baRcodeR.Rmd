@@ -15,7 +15,7 @@ editor_options:
 The baRcodeR package will create barcodes in a pdf output to be printed using a laser printer and sticker sheets. Each function can be run interactively with prompts to guide label and barcode creation. 
 
 
-If you have text labels in a one column text file, skip to [Create barcodes](#create-barcodes).
+If you have labels in a text file, skip to [Create barcodes](#create-barcodes).
 
 Required packages 
 
@@ -222,7 +222,9 @@ The first step is read in the labels, whether from a csv file or the output of `
 ## By user prompt {#create-barcodes-user-prompt}
 
 Here, using the hierarchical set of labels, a PDF file containing the labels will be created with the name "example.pdf", a font size of 3.5, and an error correction level "Q" meaning the barcode can tolerate up to 25% damage. 
-with `user=T`, user promps will show up to guide creation of a PDF file containing barcodes.
+With `user=T`, user promps will show up to guide creation of a PDF file containing barcodes.
+
+If `Labels` is a vector, the vector will be directly used to generate barcodes. If `Labels` is a data frame, the function will find a column called `label` and use that column, or the first column if there is no column called `label.` 
 
 ```{r eval=F, include=T}
 create_PDF(user=T, Labels=Labels)

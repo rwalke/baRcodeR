@@ -13,7 +13,7 @@ library(baRcodeR)
 
 `baRcodeR` is a R package for generating sample labels and 2D barcodes for labelling and tracking biological samples. Users can: 
 
-* generate simple labels (Ex-001, Ex-002, Ex-003 ...),
+* generate simple labels (Ex001, Ex002, Ex003 ...),
 * generate hierarchical labels (A01-B01, A01-B02, A02-B01, A02-B02, A03-B01 ...),
 * produce PDF files with custom layouts for all types of sticker labels.
 
