@@ -76,16 +76,15 @@ label_maker<-function(user=F, string=NULL, level, digits=3){
   }
   if (is.numeric(level)==F) stop("level is not a string of numbers")
   if (is.numeric(digits)==F) stop("Digits is not a numerical value")
-  maxNum <- max(startNum,endNum)
-  if (nchar(paste(maxNum)) > digits){
+  if (nchar(paste(max(level))) > digits){
     warning("Digits specified less than max number. Increasing number of digits.")
-    digits<-nchar(paste(maxNum))
+    digits<-nchar(paste(max(level)))
   }
   line<-paste0(string,"%0",digits,"d")
-  Labels<-sprintf(line,rep(level))
+  label<-sprintf(line,rep(level))
   ind_string<-rep(string, length(rep(level)))
   ind_number<-rep(level)
-  return(data.frame(Labels, ind_string, ind_number))
+  return(data.frame(label, ind_string, ind_number))
 
 }
 
