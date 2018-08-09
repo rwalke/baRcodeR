@@ -178,9 +178,9 @@ custom_create_PDF<-function(user=F,
   grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
   row<-ERows
   col<-ECols+1
-  for (i in 1:nrow(Labels)){
+  for (i in 1:length(Labels)){
     # Create text label
-    Xtxt<-paste(gsub("\\\\n","\\\n",Labels[i,]),collapse="")
+    Xtxt<-paste(gsub("\\\\n","\\\n",Labels[i]),collapse="")
     # Split label to count characters
     Xsplt<-strsplit(Xtxt,"")[[1]]
 
@@ -202,7 +202,7 @@ custom_create_PDF<-function(user=F,
       }
     }
     # Create qrcode
-    Xpng<-grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels[i,]), ErrorCorrectionLevel=ErrCorr, dataOutput = T, plotQRcode = F, mask = 3) - 1), interpolate = F)
+    Xpng<-grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels[i]), ErrorCorrectionLevel=ErrCorr, dataOutput = T, plotQRcode = F, mask = 3) - 1), interpolate = F)
     # Create tag (QR code + text label)
     Xplt<-
       ggplot2::ggplot(data=dmy,ggplot2::aes(x=0,y=0))+ggplot2::annotation_custom(Xpng,xmin=30,xmax=180,ymin=60,ymax=180)+ggplot2::coord_cartesian(xlim=c(0,457),ylim=c(0,212))+theme_empty()+
