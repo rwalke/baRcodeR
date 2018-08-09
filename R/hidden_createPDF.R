@@ -52,7 +52,7 @@ custom_create_PDF<-function(user=F,
                             cust_spacing=F,
                             x_space=215){
   if (length(Labels)==0) stop("Labels do not exist. Please pass in Labels")
-  if(class(Labels) %in% c("character", "integer", "numeric")){
+  if(class(Labels) %in% c("character", "integer", "numeric", "factor")){
     # treat as vector
     Labels<-Labels
   } else if (class(Labels) == "data.frame") {
