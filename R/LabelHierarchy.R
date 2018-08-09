@@ -112,7 +112,7 @@ label_hier_maker <- function(user=F, hierarchy, end=NULL, digits=2){
   label_df<-cbind(barcodes, data.frame(t(sapply(strsplit(barcodes, "-"),c))))
   df_names<-sapply(hierarchy, function(x) x[1])
   if (any(nchar(df_names) == 0)){
-    warning("Empty string in level. Defaulting to level number in data frame.")
+    warning("Empty string in level. Using default column naming.")
     names(label_df)<-c("label", paste0("level", 1:length(hierarchy)))
   } else {
     names(label_df)<-c("label", df_names)
