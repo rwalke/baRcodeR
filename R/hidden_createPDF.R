@@ -7,8 +7,7 @@
 #' @return pdf file that is saved to the working directory containing QR codes.
 #'
 #' @param user logical. Whether to run function as interactive. Default is \code{FALSE}
-#' @param Labels data frame. One column data frame containing the text for each
-#' barcode as a row.
+#' @param Labels vector or data frame.
 #' @param name character. Name of pdf output file. Default is "LabelsOut"
 #' @param ErrCorr the error correction value. Level of damage from low to high:
 #' L, M, Q, H. Default is \code{"H"}
