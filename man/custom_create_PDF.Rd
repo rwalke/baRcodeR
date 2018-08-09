@@ -12,8 +12,7 @@ custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
 \arguments{
 \item{user}{logical. Whether to run function as interactive. Default is \code{FALSE}}
 
-\item{Labels}{data frame. One column data frame containing the text for each
-barcode as a row.}
+\item{Labels}{vector or data frame.}
 
 \item{name}{character. Name of pdf output file. Default is "LabelsOut"}
 

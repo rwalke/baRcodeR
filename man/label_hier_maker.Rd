@@ -14,7 +14,7 @@ false. When true, all other arguments can be empty}
 (string, beginning value, end value). See examples. Used only when
  \code{user=F})}
 
-\item{end}{character. A string to be appended to end of each barcode.}
+\item{end}{character. A string to be appended to end of each label.}
 
 \item{digits}{numerical. Default is 2. Number of digits to be printed. This
 will apply to all levels when \code{user=F}.}
