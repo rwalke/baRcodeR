@@ -12,4 +12,5 @@ test_that("input errors are produced", {
   expect_error(label_hier_maker(hierarchy = list(c("a",3,6), c("b","j",3)), "Invalid starting number"))
   expect_warning(label_hier_maker(hierarchy = list(c("a",3,6), c("b",100,103)), digits = 2), "Digits specified less than max level number")
   expect_error(create_PDF(), "Labels do not exist. Please pass in Labels")
+  expect_error(create_PDF(Labels = matrix(data=c(1:15), nrow=3, ncol = 5)), "Label input not a vector or a data frame")
 })
