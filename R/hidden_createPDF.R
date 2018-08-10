@@ -1,8 +1,11 @@
 #' Make qr codes and print to stickers
 #'
-#' This function will take in a vector or data frame of labels and produce a pdf of QR
-#' codes which can then be printed. The pdf setup is for the ULINE 1.75X1/2
-#' WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+#' \code{custom_create_PDF} will take in a vector or data frame of labels and
+#' produce a pdf of QR codes which can then be printed. The pdf setup is for
+#' the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+#'
+#' \code{barcode_make} is the helper function generating the actual qrcode and
+#' creating the layout within the label sticker.
 #'
 #' @return pdf file that is saved to the working directory containing QR codes.
 #'
@@ -11,13 +14,15 @@
 #' @param name character. Name of pdf output file. Default is "LabelsOut"
 #' @param ErrCorr the error correction value. Level of damage from low to high:
 #' L, M, Q, H. Default is \code{"H"}
-#' @param Fsz numerical. Set font size. A number between 2.2 and 4.7. Depending
+#' @param Fsz numerical. Sets font size. A number between 2.2 and 4.7. Depending
 #' on the length of the label, there may not be enough space to print the entire
 #'  label using bigger font sizes. Default font size is 2.5
 #' @param Across logical. When true, print labels in rows. When false, print
 #' labels in columns. Default is \code{TRUE}.
-#' @param ERows number of rows to skip. Default is 0.
-#' @param ECols number of columns to skip. Default is 0.
+#' @param ERows number of rows to skip. Default is 0. Setting ERows to 6 will put
+#'  the first label at row 7.
+#' @param ECols number of columns to skip. Default is 0. Setting ECols to 2 will
+#' put the first label at column 2.
 #' @param trunc logical. Text is split into rows to prevent cutoff when labels
 #' are long. Default is \code{TRUE}.
 #' @param numrow numerical. Number of rows per page. Default is 20 rows per page.
@@ -32,25 +37,29 @@
 #' @param x_space numerical. An integer between 190 - 250. This sets the distance
 #' between the qrcode and the label. Default is 215. This parameter is only
 #' used when \code{cust_spacing = T}.
+#' @param page_width Width of page (in inches). Default is set to 8.5 inches.
+#' @param page_height Height of page (in inches). Default is set to 11 inches.
 #' @seealso \code{\link{create_PDF}}
 #' @export
 #' @import qrcode
 
 custom_create_PDF <- function(user = F,
-                            Labels = NULL,
-                            name = "LabelsOut",
-                            ErrCorr = "H",
-                            Fsz = 2.5,
-                            Across = T,
-                            ERows = 0,
-                            ECols = 0,
-                            trunc = T,
-                            numrow = 20,
-                            numcol = 4,
-                            height_margin = 0.5,
-                            width_margin = 0.25,
-                            cust_spacing = F,
-                            x_space = 215){
+                              Labels = NULL,
+                              name = "LabelsOut",
+                              ErrCorr = "H",
+                              Fsz = 2.5,
+                              Across = T,
+                              ERows = 0,
+                              ECols = 0,
+                              trunc = T,
+                              numrow = 20,
+                              numcol = 4,
+                              height_margin = 0.5,
+                              width_margin = 0.25,
+                              cust_spacing = F,
+                              x_space = 215,
+                              page_width = 8.5,
+                              page_height = 11){
   if (length(Labels) == 0) stop("Labels do not exist. Please pass in Labels")
   # what to do depending on class of Label input
   if(class(Labels) %in% c("character", "integer", "numeric", "factor")){
@@ -173,68 +182,79 @@ custom_create_PDF <- function(user = F,
   }
   ### Page Setup
   oname <- paste0(name, ".pdf")
-  grDevices::pdf(oname, width = 8.5, height = 11, onefile = T, family = "Courier") # Standard North American 8.5 x 11
+  grDevices::pdf(oname, width = page_width, height = page_height, onefile = T, family = "Courier") # Standard North American 8.5 x 11
   grid::grid.newpage() # Open a new page on grid device
   grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
-  row <- ERows
-  col <- ECols + 1
-  for (i in 1:length(Labels)){
-    # Create text label
-    Xtxt<-paste(gsub("\\\\n", "\\\n", Labels[i]), collapse="")
-    # Split label to count characters
-    Xsplt <- strsplit(Xtxt, "")[[1]]
 
-    if(trunc == T){  # Truncate string across lines if trunc==T
-      if(length(Xsplt) > 27){Xsplt <- Xsplt[1:27]}
-      # If remaining string is > 8 characters, split into separate lines
-      if(length(Xsplt) > 8){
-        Xnew <- {}
-        count <- 0
-        for(j in 1:length(Xsplt)){
-          count <- count + 1
-          Xnew <- c(Xnew, Xsplt[j])
-          if(count > 8){
-            count<- 0
-            Xnew <- c(Xnew,"\n")
-          }
-        }
-        Xtxt <- paste(Xnew, collapse="")
-      }
-    }
-    # Create qrcode
-    Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels[i]), ErrorCorrectionLevel = ErrCorr, dataOutput = T, plotQRcode = F, mask = 3) - 1), interpolate = F)
-    # Create tag (QR code + text label)
-    Xplt <-
-      ggplot2::ggplot(data = dmy, ggplot2::aes(x = 0, y = 0)) + ggplot2::annotation_custom(Xpng, xmin = 30, xmax = 180, ymin = 60, ymax = 180) + ggplot2::coord_cartesian(xlim = c(0, 457), ylim = c(0, 212)) + theme_empty() +
-      ggplot2::geom_text(ggplot2::aes(x = x_space, y = y_space, label = Xtxt, hjust = 0, vjust = 1), size = Fsz) # +geom_point(aes(x=x,y=y)) # useful points for fitting margins
+  label_plots<- lapply(Labels, barcode_make, trunc = trunc, ErrCorr = ErrCorr, x_space = x_space, y_space = y_space, dummy_df= dmy, Fsz = Fsz)
 
-    # Output to tag position
-    row <- row+1
-    if(Across == "T" || Across == T){
-      if(row > numcol){
-        row <- 1
-        col <- col + 1
-        if(col > numrow){
-          col <- 1
-          grid::grid.newpage() # Open a new page on grid device
-          grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre","centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
-        }
+  x_pos <- ERows + 1
+  y_pos <- ECols + 1
+  # create data frame of coord positions
+
+  for (i in 1:length(label_plots)){
+    # print(c("in", x_pos, y_pos))
+    # reset if any of the values are greater than page limits
+    if (x_pos > numrow | y_pos > numcol){
+      grid::grid.newpage() # Open a new page on grid device
+      grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre","centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
+      x_pos = 1
+      y_pos = 1
+    }
+    #print(c(x_pos, y_pos))
+    # print the label onto the viewport
+    print(label_plots[[i]], vp = grid::viewport(layout.pos.row = x_pos, layout.pos.col = y_pos, x = grid::unit(0,"mm"), y = grid::unit(0,"mm"), clip = F))
+    if (Across == "T" || Across == T){
+      y_pos <- y_pos + 1
+      if (y_pos > numcol) {
+        y_pos <- 1
+        x_pos <- x_pos + 1
       }
-      print(Xplt, vp = grid::viewport(layout.pos.row = col, layout.pos.col = row, x = grid::unit(0,"mm"), y = grid::unit(0,"mm"), clip = F))
-      Xplt<-Xpng<-Xtxt<-Xsplt<-QRLink<-NA # Reset object to avoid mislabelling
-    } else {if(row > numrow){
-      row <- 1
-      col <- col+1
-      if(col > numcol){
-        col <- 1
-        grid::grid.newpage() # Open a new page on grid device
-        grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
+    } else {
+      x_pos <- x_pos + 1
+      if (x_pos > numrow) {
+        x_pos <- 1
+        y_pos <- y_pos + 1
       }
     }
-      print(Xplt, vp = grid::viewport(layout.pos.row = row, layout.pos.col = col, x = grid::unit(0, "mm"), y = grid::unit(0, "mm"), clip = F))
-      Xplt <- Xpng <- Xtxt <- Xsplt <- QRLink <- NA # Reset object to avoid mislabelling
-    }
+    # print(c("out", x_pos, y_pos))
   }
 
   #end if
 } #end create_PDF()
+
+
+#' @rdname custom_create_PDF
+#' @export
+barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, dummy_df, Fsz){
+  # Create text label
+  Xtxt<-paste(gsub("\\\\n", "\\\n", Labels), collapse="")
+  # Split label to count characters
+  Xsplt <- strsplit(Xtxt, "")[[1]]
+
+  if(trunc == T){  # Truncate string across lines if trunc==T
+    if(length(Xsplt) > 27){Xsplt <- Xsplt[1:27]}
+    # If remaining string is > 8 characters, split into separate lines
+    if(length(Xsplt) > 8){
+      Xnew <- {}
+      count <- 0
+      for(j in 1:length(Xsplt)){
+        count <- count + 1
+        Xnew <- c(Xnew, Xsplt[j])
+        if(count > 8){
+          count<- 0
+          Xnew <- c(Xnew,"\n")
+        }
+      }
+      Xtxt <- paste(Xnew, collapse="")
+    }
+  }
+  # Create qrcode
+  Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels), ErrorCorrectionLevel = ErrCorr, dataOutput = T, plotQRcode = F, mask = 3) - 1), interpolate = F)
+  # Create tag (QR code + text label)
+  Xplt <-
+    ggplot2::ggplot(data = dummy_df, ggplot2::aes(x = 0, y = 0)) + ggplot2::annotation_custom(Xpng, xmin = 30, xmax = 180, ymin = 60, ymax = 180) + ggplot2::coord_cartesian(xlim = c(0, 457), ylim = c(0, 212)) + theme_empty() +
+    ggplot2::geom_text(ggplot2::aes(x = x_space, y = y_space, label = Xtxt, hjust = 0, vjust = 1), size = Fsz)
+  return(Xplt)
+}
+
