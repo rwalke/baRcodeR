@@ -152,13 +152,13 @@ make_labels<-function() {
     })
     # preview label file
     output$check_make_labels<-DT::renderDataTable(Labels_pdf(), server = F, selection = list(mode = "single", target = "column", selected = 1))
-    output$label_preview <- renderPlot({
+    output$label_preview <- shiny::renderPlot({
       plot_image()
     },
     width = function(){80 * (input$page_width - 2 * input$width_margin)/input$numcol},
     height = function(){80 * (input$page_height - 2 * input$height_margin)/input$numrow}
     )
-    plot_image<-reactive({
+    plot_image<-shiny::reactive({
       dmy <- data.frame(x = c(0, 457), y = c(0, 212))
       label_plot <- barcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr, Fsz = input$font_size, trunc = input$trunc, dummy_df = dmy, x_space = input$x_space, y_space = input$y_space)
       label_plot

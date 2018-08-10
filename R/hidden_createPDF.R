@@ -40,6 +40,7 @@
 #' between the qrcode and the label. Default is 215.
 #' @param y_space numerical. An integer between 80 and 215. Default is 182
 #' used when \code{cust_spacing = T}.
+#' @param dummy_df Used for testing. Layout of label.
 
 #' @seealso \code{\link{create_PDF}}
 #' @export
