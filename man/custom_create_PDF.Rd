@@ -7,9 +7,9 @@
 \usage{
 custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
   ErrCorr = "H", Fsz = 2.5, Across = T, ERows = 0, ECols = 0,
-  trunc = T, numrow = 20, numcol = 4, height_margin = 0.5,
-  width_margin = 0.25, cust_spacing = F, x_space = 215,
-  page_width = 8.5, page_height = 11)
+  trunc = T, numrow = 20, numcol = 4, page_width = 8.5,
+  page_height = 11, width_margin = 0.25, height_margin = 0.5,
+  cust_spacing = F, x_space = 215, y_space = 182)
 
 barcode_make(Labels, trunc, ErrCorr, x_space, y_space, dummy_df, Fsz)
 }
@@ -44,22 +44,26 @@ are long. Default is \code{TRUE}.}
 \item{numcol}{numerical. Number of columns per page. Default is 4 columns
 per page.}
 
-\item{height_margin}{numerical. The height margin of the page (in inches).
-Default is 0.5 inches.}
+\item{page_width}{Width of page (in inches). Default is set to 8.5 inches.}
+
+\item{page_height}{Height of page (in inches). Default is set to 11 inches.}
 
 \item{width_margin}{numerical. The width margin of the page (in inches).
 Default is 0.25 inches.}
+
+\item{height_margin}{numerical. The height margin of the page (in inches).
+Default is 0.5 inches.}
 
 \item{cust_spacing}{logical. Default is \code{FALSE}. If spacing between qrcode and
 label should be changed.}
 
 \item{x_space}{numerical. An integer between 190 - 250. This sets the distance
-between the qrcode and the label. Default is 215. This parameter is only
+between the qrcode and the label. Default is 215.}
+
+\item{y_space}{numerical. An integer between 80 and 215. Default is 182
 used when \code{cust_spacing = T}.}
 
-\item{page_width}{Width of page (in inches). Default is set to 8.5 inches.}
-
-\item{page_height}{Height of page (in inches). Default is set to 11 inches.}
+\item{dummy_df}{Used for testing. Layout of label.}
 }
 \value{
 pdf file that is saved to the working directory containing QR codes.
