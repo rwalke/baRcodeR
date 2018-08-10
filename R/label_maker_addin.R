@@ -88,21 +88,21 @@ make_labels<-function() {
                      shiny::checkboxInput("trunc", "Truncate label text?", value=F),
                      shiny::numericInput("numrow", "Number of label rows on sheet", value = 20, min = 1, max = 100, width=NULL, step = 1),
                      shiny::numericInput("numcol", "Number of label columbs on sheet", value = 4, min = 1, max = 100, width=NULL, step = 1),
-                     shiny::numericInput("height_margin", "Height margin (in)", value = 0.5, min = 0, max = 20, width=NULL, step = 0.05),
+                     shiny::numericInput("page_width", "Page Width (in)", value = 8.5, min = 1, max = 20, width=NULL, step = 0.5),
+                     shiny::numericInput("page_height", "Page Height (in)", value = 11, min = 1, max = 20, width=NULL, step = 0.5),
                      shiny::numericInput("width_margin", "Width margin (in)", value = 0.25, min = 0, max = 20, width=NULL, step = 0.05),
+                     shiny::numericInput("height_margin", "Height margin (in)", value = 0.5, min = 0, max = 20, width=NULL, step = 0.05),
                      shiny::checkboxInput("cust_spacing", "Custom spacing between barcode and text", value=F),
-                     # radioButtons("cust_spacing", "Custom Spacing between barcode and text?", choices = c(Yes = T, No = F), selected = F),
-                     # conditional doesn't work in miniContent panel but doesn't matter
-                     shiny::conditionalPanel(
-                       condition = "input.cust_spacing == T",
-                       shiny::numericInput("x_space", "Space between barcode and text", value = 215, min = 190, max = 250, width=NULL)
-                     )
+                     shiny::numericInput("x_space", "Horizontal Space between barcode and text", value = 215, min = 190, max = 250, width=NULL),
+                     shiny::numericInput("y_space", "Vertical location of text on label", value = 182, min = 90, max = 215)
                          )
                        ),
                        shiny::fillCol(
                          shiny::tagList(shiny::tags$body("Click 'Import Label File' to import and check format of file."),
                      shiny::actionButton("label_check", "Import Label File"),
                      # output elements
+                     shiny::tags$h3("Preview"),
+                     shiny::plotOutput("label_preview", height = "auto", width = "auto"),
                      # label preview datatable
                      DT::DTOutput("check_make_labels"),
                      # code snippet
@@ -152,19 +152,33 @@ make_labels<-function() {
     })
     # preview label file
     output$check_make_labels<-DT::renderDataTable(Labels_pdf(), server = F, selection = list(mode = "single", target = "column", selected = 1))
+    output$label_preview <- renderPlot({
+      plot_image()
+    },
+    width = function(){80 * (input$page_width - 2 * input$width_margin)/input$numcol},
+    height = function(){80 * (input$page_height - 2 * input$height_margin)/input$numrow}
+    )
+    plot_image<-reactive({
+      dmy <- data.frame(x = c(0, 457), y = c(0, 212))
+      label_plot <- barcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr, Fsz = input$font_size, trunc = input$trunc, dummy_df = dmy, x_space = input$x_space, y_space = input$y_space)
+      label_plot
+    })
     # text indicator that pdf finished making
     PDF_done<-shiny::eventReactive(input$make_pdf, {
-      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space)
+      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, page_width = input$page_width, page_height = input$ page_height, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space, y_space = input$y_space)
       status<-"Done"
       status
     })
     PDF_code_snippet<-shiny::reactive({
-      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", height_margin = ", input$height_margin, ", width_margin = ", input$width_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ")"))
+      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
       })
     csv_code_snippet<-shiny::reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
     output$PDF_code_render<-shiny::renderText({
       paste(csv_code_snippet(), PDF_code_snippet(), sep = "\n")
       })
+    # label preview
+
+
     # rendering of pdf indicator
     output$PDF_status<-shiny::renderPrint({print(PDF_done())})
     # server-side for hierarchical values
