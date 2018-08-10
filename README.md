@@ -46,7 +46,7 @@ The Barcode Creation tab contains all the advanced options for page layout. A te
 
 ![Screenshot of Column Selection](man/figures/tab-3-screenshot-2.png)
 
-The first column is highlighted as default. We provide the ability to select the column to use for barcode generation. Users can choose the column by clicking columns on the data table. PDF options can be left as default and fine-tuned after seeing the initial PDF output. 
+The first column is highlighted as default. Users can then preview font size, and layout options. We provide the ability to select the column to use for barcode generation. Users can choose the column by clicking on the data table. PDF options can be left as default and fine-tuned after seeing the initial PDF output. 
 
 Barcode generation of hundreds of barcodes may take a few minutes, depending on the computer, and we have provided a text indicator for completion of the PDF file.
 
@@ -59,13 +59,4 @@ Please load the vignette "Using-baRcodeR" for console use.
 library(baRcodeR)
 vignette("Using-baRcodeR")
 ```
-
-
-
-
-
-
-
-
-
 
