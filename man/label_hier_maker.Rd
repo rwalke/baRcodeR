@@ -8,19 +8,22 @@ label_hier_maker(user = F, hierarchy, end = NULL, digits = 2)
 }
 \arguments{
 \item{user}{logical. Should the function be used interactively? Default is
-false. When true, all other arguments can be empty}
+false. When true, all other arguments can be empty.}
 
 \item{hierarchy}{list. A list with each element consisting of three members
-(string, beginning value, end value). See examples. Used only when
- \code{user=F})}
+a vector of three elements (string, beginning value, end value). See examples.
+Used only when \code{user=F})}
 
 \item{end}{character. A string to be appended to end of each label.}
 
 \item{digits}{numerical. Default is 2. Number of digits to be printed. This
-will apply to all levels when \code{user=F}.}
+will apply to all levels when \code{user=F}. When the numeric value of the
+label has a greater number of digits than \code{digits}, \code{digits} is
+automatically increased for the entire level.}
 }
 \value{
-character labels in a hierarchy
+data frame of text labels in the first column, and level labels in
+separate columns.
 }
 \description{
 Makes hierarchical barcode labels from interactive user input or from list

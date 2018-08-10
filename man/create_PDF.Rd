@@ -17,7 +17,7 @@ create_PDF(user = F, Labels = NULL, name = "LabelsOut", ErrCorr = "H",
 \item{ErrCorr}{the error correction value. Level of damage from low to high:
 L, M, Q, H. Default is \code{"H"}}
 
-\item{Fsz}{numerical. Set font size. A number between 2.2 and 4.7. Depending
+\item{Fsz}{numerical. Sets font size. A number between 2.2 and 4.7. Depending
 on the length of the label, there may not be enough space to print the entire
  label using bigger font sizes. Default font size is 2.5}
 

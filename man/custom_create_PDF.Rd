@@ -2,12 +2,16 @@
 % Please edit documentation in R/hidden_createPDF.R
 \name{custom_create_PDF}
 \alias{custom_create_PDF}
+\alias{barcode_make}
 \title{Make qr codes and print to stickers}
 \usage{
 custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
   ErrCorr = "H", Fsz = 2.5, Across = T, ERows = 0, ECols = 0,
   trunc = T, numrow = 20, numcol = 4, height_margin = 0.5,
-  width_margin = 0.25, cust_spacing = F, x_space = 215)
+  width_margin = 0.25, cust_spacing = F, x_space = 215,
+  page_width = 8.5, page_height = 11)
+
+barcode_make(Labels, trunc, ErrCorr, x_space, y_space, dummy_df, Fsz)
 }
 \arguments{
 \item{user}{logical. Whether to run function as interactive. Default is \code{FALSE}}
@@ -19,16 +23,18 @@ custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
 \item{ErrCorr}{the error correction value. Level of damage from low to high:
 L, M, Q, H. Default is \code{"H"}}
 
-\item{Fsz}{numerical. Set font size. A number between 2.2 and 4.7. Depending
+\item{Fsz}{numerical. Sets font size. A number between 2.2 and 4.7. Depending
 on the length of the label, there may not be enough space to print the entire
  label using bigger font sizes. Default font size is 2.5}
 
 \item{Across}{logical. When true, print labels in rows. When false, print
 labels in columns. Default is \code{TRUE}.}
 
-\item{ERows}{number of rows to skip. Default is 0.}
+\item{ERows}{number of rows to skip. Default is 0. Setting ERows to 6 will put
+the first label at row 7.}
 
-\item{ECols}{number of columns to skip. Default is 0.}
+\item{ECols}{number of columns to skip. Default is 0. Setting ECols to 2 will
+put the first label at column 2.}
 
 \item{trunc}{logical. Text is split into rows to prevent cutoff when labels
 are long. Default is \code{TRUE}.}
@@ -50,14 +56,22 @@ label should be changed.}
 \item{x_space}{numerical. An integer between 190 - 250. This sets the distance
 between the qrcode and the label. Default is 215. This parameter is only
 used when \code{cust_spacing = T}.}
+
+\item{page_width}{Width of page (in inches). Default is set to 8.5 inches.}
+
+\item{page_height}{Height of page (in inches). Default is set to 11 inches.}
 }
 \value{
 pdf file that is saved to the working directory containing QR codes.
 }
 \description{
-This function will take in a vector or data frame of labels and produce a pdf of QR
-codes which can then be printed. The pdf setup is for the ULINE 1.75X1/2
-WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+\code{custom_create_PDF} will take in a vector or data frame of labels and
+produce a pdf of QR codes which can then be printed. The pdf setup is for
+the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+}
+\details{
+\code{barcode_make} is the helper function generating the actual qrcode and
+creating the layout within the label sticker.
 }
 \seealso{
 \code{\link{create_PDF}}

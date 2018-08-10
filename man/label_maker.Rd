@@ -7,19 +7,19 @@
 label_maker(user = F, string = NULL, level, digits = 3)
 }
 \arguments{
-\item{user}{logical. Default is FALSE. If the function is run with user
-prompts or with variables already specified}
+\item{user}{logical. Default is FALSE. Should the function run with user prompts. When \code{user = F}, the user has to specify at least \code{string} and \code{level}.}
 
 \item{string}{character. Text string for label. Default null.}
 
-\item{level}{integer string. Defines the numerical values to be appended
-to the character string. Can be any sequence of numbers, not just sequential}
+\item{level}{integer vector. Defines the numerical values to be appended
+to the character string. Can be any sequence of numbers, not just sequential.}
 
 \item{digits}{integer. The number of digits to print for the numbers
 appended to the text string. Default is 3.}
 }
 \value{
-a string of characters
+a data frame with text labels in the first column, and separated string
+and number values in two different columns.
 }
 \description{
 Takes user prompts or variables to create  text labels consisting of a text
@@ -29,9 +29,9 @@ creates a hierarchical list of labels. The created output can then be fed
 into \code{\link{create_PDF}} to create 2-D labels in PDF.
 }
 \details{
-When the function is used with user prompts, the levels are the sequence
-between the starting and ending number. When \code{user=F}, it is possible
-to set custom sequences of numbers for the levels. See example.
+When the function is used with user prompts \code{user = T}, the levels are
+the sequence between the starting and ending number. When \code{user = F},
+it is possible to set custom sequences of numbers for the levels. See example below.
 }
 \examples{
 
