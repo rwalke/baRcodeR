@@ -28,6 +28,8 @@
 #' @param numrow numerical. Number of rows per page. Default is 20 rows per page.
 #' @param numcol numerical. Number of columns per page. Default is 4 columns
 #' per page.
+#' @param page_width Width of page (in inches). Default is set to 8.5 inches.
+#' @param page_height Height of page (in inches). Default is set to 11 inches.
 #' @param height_margin numerical. The height margin of the page (in inches).
 #' Default is 0.5 inches.
 #' @param width_margin numerical. The width margin of the page (in inches).
@@ -35,10 +37,10 @@
 #' @param cust_spacing logical. Default is \code{FALSE}. If spacing between qrcode and
 #' label should be changed.
 #' @param x_space numerical. An integer between 190 - 250. This sets the distance
-#' between the qrcode and the label. Default is 215. This parameter is only
+#' between the qrcode and the label. Default is 215.
+#' @param y_space numerical. An integer between 80 and 215. Default is 182
 #' used when \code{cust_spacing = T}.
-#' @param page_width Width of page (in inches). Default is set to 8.5 inches.
-#' @param page_height Height of page (in inches). Default is set to 11 inches.
+
 #' @seealso \code{\link{create_PDF}}
 #' @export
 #' @import qrcode
@@ -54,12 +56,14 @@ custom_create_PDF <- function(user = F,
                               trunc = T,
                               numrow = 20,
                               numcol = 4,
+                              page_width = 8.5,
+                              page_height = 11,
                               height_margin = 0.5,
                               width_margin = 0.25,
                               cust_spacing = F,
                               x_space = 215,
-                              page_width = 8.5,
-                              page_height = 11){
+                              y_space = 182
+                              ){
   if (length(Labels) == 0) stop("Labels do not exist. Please pass in Labels")
   # what to do depending on class of Label input
   if(class(Labels) %in% c("character", "integer", "numeric", "factor")){
@@ -75,6 +79,9 @@ custom_create_PDF <- function(user = F,
   } else {
     stop("Label input not a vector or a data frame. Please check your input.")
   }
+  if (any(unlist(lapply(c(numcol, numrow, Fsz, ERows, ECols, trunc, page_width, page_height, height_margin, width_margin, x_space, y_space), class)) != "numeric") == T) {
+    stop("One or more numerica parameters are not numeric")
+  }
   labelLength <- max(nchar(paste(Labels)))
   # clean up any open graphical devices if function fails
   on.exit(grDevices::dev.off())
@@ -87,7 +94,7 @@ custom_create_PDF <- function(user = F,
     name <- readline(paste0("Please enter name for PDF output file: "))
     ## Set font size
     Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
-    while (Fsz < 2.2 || Fsz > 4.7){
+    while (Fsz < 2.2 | Fsz > 4.7){
       noquote(print("Invalid input, please specify a font size within the range 2.2-4.7"))
       Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
     }
@@ -158,11 +165,17 @@ custom_create_PDF <- function(user = F,
         space<-toupper(readline("change distance between qrcode and label? (y/n): "))
       }
       x_space <- 215
+      y_space <- 92.5
       if (space=="Y"){
         x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
-        while((x_space < 190 || x_space > 250)){
+        while((x_space < 190 | x_space > 250)){
           noquote(print("Invalid input"))
           x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
+        }
+        y_space <- as.numeric(readline("Please enter a distance between 90-215: "))
+        while((x_space < 90 | x_space > 215)){
+          noquote(print("Invalid input"))
+          y_space <- as.numeric(readline("Please enter a distance between 90-215: "))
         }
       }
     } ## end of advanced options loop
@@ -175,11 +188,11 @@ custom_create_PDF <- function(user = F,
   width_margin <- 8.5 - width_margin * 2
   height_margin <- 11 - height_margin * 2
   dmy <- data.frame(x = c(0, 457), y = c(0, 212))
-  if (cust_spacing == T) {
-    y_space <- x_space - (as.integer(x_space * 0.5)) - 15
-  } else {
-    y_space <- 182
-  }
+  # if (cust_spacing == T) {
+  #   y_space <- x_space - (as.integer(x_space * 0.5)) - 15
+  # } else {
+  #   y_space <- 182
+  # }
   ### Page Setup
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, width = page_width, height = page_height, onefile = T, family = "Courier") # Standard North American 8.5 x 11
@@ -204,7 +217,7 @@ custom_create_PDF <- function(user = F,
     #print(c(x_pos, y_pos))
     # print the label onto the viewport
     print(label_plots[[i]], vp = grid::viewport(layout.pos.row = x_pos, layout.pos.col = y_pos, x = grid::unit(0,"mm"), y = grid::unit(0,"mm"), clip = F))
-    if (Across == "T" || Across == T){
+    if (Across == "T" | Across == T){
       y_pos <- y_pos + 1
       if (y_pos > numcol) {
         y_pos <- 1
