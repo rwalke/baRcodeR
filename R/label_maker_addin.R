@@ -170,7 +170,7 @@ make_labels<-function() {
       status
     })
     PDF_code_snippet<-shiny::reactive({
-      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = ", input$err_corr, ", Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
+      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = \'", input$err_corr, "\', Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
       })
     csv_code_snippet<-shiny::reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
     output$PDF_code_render<-shiny::renderText({
