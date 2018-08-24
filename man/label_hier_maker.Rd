@@ -7,7 +7,8 @@
 label_hier_maker(user = F, hierarchy, end = NULL, digits = 2)
 }
 \arguments{
-\item{user}{logical. Run function using interactive mode (prompts user for parameter values). Default is \code{FALSE}}
+\item{user}{logical. Run function using interactive mode (prompts user for 
+parameter values). Default is \code{FALSE}}
 
 \item{hierarchy}{list. A list with each element consisting of three members
 a vector of three elements (string, beginning value, end value). See examples.
@@ -15,18 +16,19 @@ Used only when \code{user=F})}
 
 \item{end}{character. A string to be appended to end of each label.}
 
-\item{digits}{numerical. Default is \code{2}. Number of digits to be printed, adding leading 0s as needed. 
-This will apply to all levels when \code{user=F}. When the numeric value of the
-label has a greater number of digits than \code{digits}, \code{digits} is
-automatically increased for the entire level. Default is \code{3}.}
+\item{digits}{numerical. Default is \code{2}. Number of digits to be printed, 
+adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
+When the numeric value of the label has a greater number of digits than 
+\code{digits}, \code{digits} is automatically increased for the entire level.}
 }
 \value{
-data.frame of text labels in the first column, with additional columns for
-each level defined by the user.
+data.frame of text labels in the first column, with additional columns 
+for each level defined by the user.
 }
 \description{
-Generate hierarchical ID codes for barcode labels. Can be run interactively prompting user for input.
-The data.frame output can be used as input for \code{\link{create_PDF}} to create printable barcode labels.
+Generate hierarchical ID codes for barcode labels. Can be run interactively 
+prompting user for input. The data.frame output can be used as input 
+for \code{\link{create_PDF}} to create printable barcode labels.
 }
 \examples{
 

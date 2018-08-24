@@ -7,17 +7,19 @@
 label_maker(user = F, string = NULL, level, digits = 3)
 }
 \arguments{
-\item{user}{logical. Run function using interactive mode (prompts user for parameter values). Default is \code{FALSE}}
+\item{user}{logical. Run function using interactive mode (prompts user for 
+parameter values). Default is \code{FALSE}}
 
-\item{string}{character. Text string for label. Default \code{NULL}.}
+\item{string}{character. Text string for label. Default \code{null}.}
 
-\item{level}{integer vector. Defines numerical values to be appended
+\item{level}{integer vector. Defines the numerical values to be appended
 to the character string. Can be any sequence of numbers, not just sequential (see examples).}
 
-\item{digits}{numerical. Default is \code{2}. Number of digits to be printed, adding leading 0s as needed. 
-This will apply to all levels when \code{user=F}. When the numeric value of the
-label has a greater number of digits than \code{digits}, \code{digits} is
-automatically increased for the entire level. Default is \code{3}.}
+\item{digits}{numerical. Default is \code{2}. Number of digits to be printed, 
+adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
+When the numeric value of the label has a greater number of digits than 
+\code{digits}, \code{digits} is automatically increased for the entire level. 
+Default is \code{3}.}
 }
 \value{
 data.frame with text labels in the first column, and separated string
@@ -25,14 +27,16 @@ and number values in two additional columns.
 }
 \description{
 Create text labels consisting of a text string and numbers (string001, string002 ... ...). 
-Can be run interactively prompting user for input.
-The data.frame output can be used as input for \code{\link{create_PDF}} to create printable barcode labels.
-This function will only create simple text labels. For hierarchical or nested labels see \code{\link{label_hier_maker}}.
+Can be run interactively prompting user for input. The data.frame output 
+can be used as input for \code{\link{create_PDF}} to create printable barcode 
+labels. This function will only create simple text labels. For hierarchical 
+or nested labels see \code{\link{label_hier_maker}}.
 }
 \details{
-When the function is used with user prompts \code{user = T}, a sequence of numbers is
-generated between between the starting and ending number provided by the user. When \code{user = F},
-a vector of custom numbers can be provided. See example below.
+When the function is used with user prompts \code{user = T}, a sequence of 
+numbers is generated between the starting and ending number provided by the 
+user. When \code{user = F}, a vector of custom numbers can be provided. 
+See example below.
 }
 \examples{
 

@@ -14,26 +14,29 @@ custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
 barcode_make(Labels, trunc, ErrCorr, x_space, y_space, dummy_df, Fsz)
 }
 \arguments{
-\item{user}{logical. Run function using interactive mode (prompts user for parameter values). Default is \code{FALSE}}
+\item{user}{logical. Run function using interactive mode (prompts user for 
+parameter values0.) Default is \code{FALSE}}
 
 \item{Labels}{vector or data frame object containing label names.}
 
-\item{name}{character. Name of the pdf output file. Default is \code{"LabelsOut"}}
+\item{name}{character. Name of the pdf output file. Default is \code{"LabelsOut"}.}
 
-\item{ErrCorr}{error correction value. Level of damage from low to high:
+\item{ErrCorr}{error correction value. Level of damage from low to high: 
 \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}}
 
-\item{Fsz}{numerical. Sets font size using a number between \code{2.2} and \code{4.7}. Longer labels may not 
-fit using bigger font sizes. Default font size is \code{2.5}}
+\item{Fsz}{numerical. Sets font size using a number between \code{2.2} and
+\code{4.7}. Longer labels may not fit using bigger font sizes. Default 
+font size is \code{2.5}}
 
-\item{Across}{logical. When true, print labels across rows, left to right. When \code{FALSE}, print
-labels down columns, top to bottom. Default is \code{TRUE}.}
+\item{Across}{logical. When \code{TRUE}, print labels in across rows, left to right.
+When \code{FALSE}, print labels in columns, top to bottom. Default is \code{TRUE}.}
 
-\item{ERows}{number of rows to skip. Default is \code{0}. Example: setting ERows to 6 will 
-begin printing at row 7; useful when printing just a few labels that don't take a full label sheet.}
+\item{ERows}{number of rows to skip. Default is \code{0}. Example: 
+setting ERows to 6 will begin printing at row 7; 
+useful when printing just a few labels that don't take a full label sheet.}
 
-\item{ECols}{number of columns to skip. Default is \code{0}. Example: setting ECols to 2 will
-put the first label at column 3.}
+\item{ECols}{number of columns to skip. Default is \code{0}. Example: 
+setting ECols to 2 will put the first label at column 3.}
 
 \item{trunc}{logical. Text is broken into multiple lines when labels
 are long, to prevent printing off label area. Default is \code{TRUE}.}
@@ -52,13 +55,13 @@ Default is \code{0.25}.}
 \item{height_margin}{numerical. The height margin of the page (in inches).
 Default is \code{0.5}.}
 
-\item{cust_spacing}{logical. Use custom spacing between qrcode and
-label. Default is \code{FALSE}.}
+\item{cust_spacing}{logical. Default is \code{FALSE}. If spacing between qrcode and
+label should be changed.}
 
-\item{x_space}{numerical. An integer between \code{190} to \code{250}. This sets the distance
-between the qrcode and the label. Default is \code{215}.}
+\item{x_space}{numerical. An integer between \code{190} - \code{250}. This 
+sets the distance between the qrcode and the label. Default is \code{215}.}
 
-\item{y_space}{numerical. An integer between \code{80} and \code{215}. Default is \code{182}
+\item{y_space}{numerical. An integer between 80 and 215. Default is 182
 used when \code{cust_spacing = T}.}
 
 \item{dummy_df}{Used for testing. Layout of label.}
@@ -67,9 +70,9 @@ used when \code{cust_spacing = T}.}
 pdf file containing QR codes that is saved to the working directory.
 }
 \description{
-\code{custom_create_PDF} Input a vector or data frame of labels to
-produce a pdf of text labels with QR codes that can then be printed. The pdf setup is for
-the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+Input a vector or data frame of labels to produce a pdf of text labels with 
+QR codes that can then be printed. The pdf setup is for the ULINE 1.75X1/2 
+WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
 }
 \details{
 \code{barcode_make} is the helper function generating the actual qrcode and

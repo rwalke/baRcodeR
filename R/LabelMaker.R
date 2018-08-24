@@ -6,9 +6,10 @@
 #' labels. This function will only create simple text labels. For hierarchical 
 #' or nested labels see \code{\link{label_hier_maker}}.
 #'
-#' When the function is used with user prompts \code{user = T}, the levels are
-#' the sequence between the starting and ending number. When \code{user = F},
-#' it is possible to set custom sequences of numbers for the levels. See example below.
+#' When the function is used with user prompts \code{user = T}, a sequence of 
+#' numbers is generated between the starting and ending number provided by the 
+#' user. When \code{user = F}, a vector of custom numbers can be provided. 
+#' See example below.
 #'
 #' @return data.frame with text labels in the first column, and separated string
 #' and number values in two additional columns.

@@ -1,7 +1,8 @@
-#' Make hierarchical ID
+#' Make hierarchical ID codes
 #'
 #' Generate hierarchical ID codes for barcode labels. Can be run interactively 
-#' prompting user for input. The data.frame output can be used as input for \code{\link{create_PDF}} to create printable barcode labels.
+#' prompting user for input. The data.frame output can be used as input 
+#' for \code{\link{create_PDF}} to create printable barcode labels.
 #'
 #' @param user logical. Run function using interactive mode (prompts user for 
 #' parameter values). Default is \code{FALSE}
@@ -14,7 +15,8 @@
 #' When the numeric value of the label has a greater number of digits than 
 #' \code{digits}, \code{digits} is automatically increased for the entire level. 
 #' @export
-#' @return data.frame of text labels in the first column, with additional columns for each level defined by the user.
+#' @return data.frame of text labels in the first column, with additional columns 
+#' for each level defined by the user.
 #' @examples
 #'
 #' \dontrun{

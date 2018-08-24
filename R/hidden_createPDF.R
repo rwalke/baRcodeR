@@ -1,26 +1,25 @@
 #' Make qr codes and print to stickers
 #'
-#' Input a vvector or data frame of labels to produce a pdf of text labels with 
-#' QR codes that can then be printed. The pdf setup is for 
-#' the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+#' Input a vector or data frame of labels to produce a pdf of text labels with 
+#' QR codes that can then be printed. The pdf setup is for the ULINE 1.75X1/2 
+#' WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
 #'
 #' \code{barcode_make} is the helper function generating the actual qrcode and
 #' creating the layout within the label sticker.
 #'
-#' @return pdf file containing QR codes that is saved to the working directory
+#' @return pdf file containing QR codes that is saved to the working directory.
 #'
 #' @param user logical. Run function using interactive mode (prompts user for 
 #' parameter values0.) Default is \code{FALSE}
 #' @param Labels vector or data frame object containing label names.
-#' @param name character. Name of the pdf output file. Default is \code{LabelsOut}.
+#' @param name character. Name of the pdf output file. Default is \code{"LabelsOut"}.
 #' @param ErrCorr error correction value. Level of damage from low to high: 
 #' \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}
 #' @param Fsz numerical. Sets font size using a number between \code{2.2} and
 #'  \code{4.7}. Longer labels may not fit using bigger font sizes. Default 
 #'  font size is \code{2.5}
-#' @param Across logical. When true, print labels in across rows, left to right, 
-#' from top to bottom. When false, print labels in columns, top to bottom, 
-#' from left to right. Default is \code{TRUE}.
+#' @param Across logical. When \code{TRUE}, print labels in across rows, left to right.
+#' When \code{FALSE}, print labels in columns, top to bottom. Default is \code{TRUE}.
 #' @param ERows number of rows to skip. Default is \code{0}. Example: 
 #' setting ERows to 6 will begin printing at row 7; 
 #' useful when printing just a few labels that don't take a full label sheet.

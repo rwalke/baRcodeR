@@ -1,11 +1,12 @@
 Package: baRcodeR
 Title: Custom R Tools for Collection, Tracking, and Curation of Biological Samples Using 2D Barcodes
 Version: 0.0.2.0000
-Authors@R: c(person("Yihan", "Wu", role="aut", email = "yihan.wu@queensu.ca"), person("Robert", "Colautti", email = "robert.colautti@queensu.ca", role = c("aut", "cre"))
+Authors@R: c(person("Yihan", "Wu", role="aut", email = "yihan.wu@queensu.ca"), person("Robert", "Colautti", email = "robert.colautti@queensu.ca", role = c("aut", "cre")))
 Maintainer: Colautti Lab <colauttilab@gmail.com>
 Description: Tools to generate unique identifiers and printable barcoded labels for sample management. 
-    The creation of unique ID codes and printable pdf files can be initiated by standard commands, user prompts, or through a GUI Addin for R Studio. 
-    Both single-level and hierarchical labels can be created in the command line interactively or non-interactively. 
+    The creation of unique ID codes and printable pdf files can be initiated by standard commands, 
+    user prompts, or through a GUI Addin for R Studio. Both single-level and hierarchical labels can 
+    be created in the command line interactively or non-interactively. 
 Depends: 
     R (>= 3.4.0),
     qrcode
@@ -22,5 +23,5 @@ Imports:
 Suggests: testthat,
     knitr,
     rmarkdown
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr

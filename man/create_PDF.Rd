@@ -4,26 +4,28 @@
 \alias{create_PDF}
 \title{Make qr codes and print to stickers}
 \usage{
-create_PDF(user = F, Labels = NULL, name = "LabelsOut", ErrCorr = "H",
-  Fsz = 2.5, ...)
+create_PDF(user = F, Labels = NULL, name = "LabelsOut",
+  ErrCorr = "H", Fsz = 2.5, ...)
 }
 \arguments{
-\item{user}{logical. Run function using interactive mode (prompts user for parameter values). Default is \code{FALSE}}
+\item{user}{logical. Run function using interactive mode (prompts user for 
+parameter values0.) Default is \code{FALSE}}
 
 \item{Labels}{vector or data frame object containing label names.}
 
-\item{name}{character. Name of the pdf output file. Default is \code{"LabelsOut"}}
+\item{name}{character. Name of the pdf output file. Default is \code{"LabelsOut"}.}
 
-\item{ErrCorr}{error correction value. Level of damage from low to high:
+\item{ErrCorr}{error correction value. Level of damage from low to high: 
 \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}}
 
-\item{Fsz}{numerical. Sets font size using a number between \code{2.2} and \code{4.7}. Longer labels may not 
-fit using bigger font sizes. Default font size is \code{2.5}}
+\item{Fsz}{numerical. Sets font size using a number between \code{2.2} and
+\code{4.7}. Longer labels may not fit using bigger font sizes. Default 
+font size is \code{2.5}}
 
-\item{...}{advanced arguments to modify layout of pdf output. See
+\item{...}{advanced arguments to modify pdf layout. See
 \code{\link{custom_create_PDF}} for arguments. The advanced options can be
  accessed interactively with \code{user = T} and then entering T when prompted to
- modify advanced options.}
+  modify advanced options.}
 }
 \value{
 pdf file that is saved to the working directory containing QR codes.
@@ -33,8 +35,8 @@ printer; Item # S-19297 (uline.ca). The page format can be modified using
 the \code{...} advanced options for other label types.
 }
 \description{
-Input data.frame of labels and produce a pdf of QR
-codes which can then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
+Input vector or data.frame of labels and produce a pdf of QR codes which can 
+then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
 }
 \examples{
 ## data frame

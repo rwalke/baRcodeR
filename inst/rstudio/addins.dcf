@@ -1,4 +1,4 @@
-Name: Generate and Print Barcode Labels
-Description: Simple label making and pdf creation from text file.
+Name: Generate IDs and Barcode Labels
+Description: Simple ID generation and printable label-making.
 Binding: make_labels
 Interactive: true
