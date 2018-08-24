@@ -92,7 +92,6 @@ make_labels<-function() {
                      shiny::numericInput("page_height", "Page Height (in)", value = 11, min = 1, max = 20, width=NULL, step = 0.5),
                      shiny::numericInput("width_margin", "Width margin (in)", value = 0.25, min = 0, max = 20, width=NULL, step = 0.05),
                      shiny::numericInput("height_margin", "Height margin (in)", value = 0.5, min = 0, max = 20, width=NULL, step = 0.05),
-                     shiny::checkboxInput("cust_spacing", "Custom spacing between barcode and text", value=F),
                      shiny::numericInput("x_space", "Horizontal Space between barcode and text", value = 215, min = 190, max = 250, width=NULL),
                      shiny::numericInput("y_space", "Vertical location of text on label", value = 182, min = 90, max = 215)
                          )
@@ -160,17 +159,17 @@ make_labels<-function() {
     )
     plot_image<-shiny::reactive({
       dmy <- data.frame(x = c(0, 457), y = c(0, 212))
-      label_plot <- barcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr, Fsz = input$font_size, trunc = input$trunc, dummy_df = dmy, x_space = input$x_space, y_space = input$y_space)
+      label_plot <- barcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr, Fsz = input$font_size, trunc = input$trunc, x_space = input$x_space, y_space = input$y_space)
       label_plot
     })
     # text indicator that pdf finished making
     PDF_done<-shiny::eventReactive(input$make_pdf, {
-      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, page_width = input$page_width, page_height = input$ page_height, height_margin = input$height_margin, width_margin = input$width_margin, cust_spacing = input$cust_spacing, x_space = input$x_space, y_space = input$y_space)
+      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, page_width = input$page_width, page_height = input$ page_height, height_margin = input$height_margin, width_margin = input$width_margin, x_space = input$x_space, y_space = input$y_space)
       status<-"Done"
       status
     })
     PDF_code_snippet<-shiny::reactive({
-      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = \'", input$err_corr, "\', Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", cust_spacing = ", input$cust_spacing, ", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
+      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = \'", input$err_corr, "\', Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
       })
     csv_code_snippet<-shiny::reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
     output$PDF_code_render<-shiny::renderText({

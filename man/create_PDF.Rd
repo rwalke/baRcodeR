@@ -4,22 +4,22 @@
 \alias{create_PDF}
 \title{Make qr codes and print to stickers}
 \usage{
-create_PDF(user = F, Labels = NULL, name = "LabelsOut",
-  ErrCorr = "H", Fsz = 2.5, ...)
+create_PDF(user = F, Labels = NULL, name = "LabelsOut", ErrCorr = "H",
+  Fsz = 2.5, ...)
 }
 \arguments{
-\item{user}{logical. Run function using interactive mode (prompts user for 
+\item{user}{logical. Run function using interactive mode (prompts user for
 parameter values0.) Default is \code{FALSE}}
 
 \item{Labels}{vector or data frame object containing label names.}
 
 \item{name}{character. Name of the pdf output file. Default is \code{"LabelsOut"}.}
 
-\item{ErrCorr}{error correction value. Level of damage from low to high: 
+\item{ErrCorr}{error correction value. Level of damage from low to high:
 \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}}
 
 \item{Fsz}{numerical. Sets font size using a number between \code{2.2} and
-\code{4.7}. Longer labels may not fit using bigger font sizes. Default 
+\code{4.7}. Longer labels may not fit using bigger font sizes. Default
 font size is \code{2.5}}
 
 \item{...}{advanced arguments to modify pdf layout. See

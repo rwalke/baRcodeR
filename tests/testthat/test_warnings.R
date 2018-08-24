@@ -13,4 +13,9 @@ test_that("input errors are produced", {
   expect_warning(label_hier_maker(hierarchy = list(c("a",3,6), c("b",100,103)), digits = 2), "Digits specified less than max level number")
   expect_error(create_PDF(), "Labels do not exist. Please pass in Labels")
   expect_error(create_PDF(Labels = matrix(data=c(1:15), nrow=3, ncol = 5)), "Label input not a vector or a data frame")
+  expect_error(custom_create_PDF(Labels = c(1, 2), x_space = 21), "ERROR: x_space value out of bounds.")
+  expect_error(custom_create_PDF(Labels = c(1, 2), x_space = 251), "ERROR: x_space value out of bounds.")
+  expect_error(custom_create_PDF(Labels = c(1, 2), y_space = 21), "ERROR: y_space value out of bounds.")
+  expect_error(custom_create_PDF(Labels = c(1, 2), y_space = 251), "ERROR: y_space value out of bounds.")
+  
 })
