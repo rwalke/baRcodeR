@@ -1,43 +1,45 @@
 #' Make qr codes and print to stickers
 #'
-#' \code{custom_create_PDF} will take in a vector or data frame of labels and
-#' produce a pdf of QR codes which can then be printed. The pdf setup is for
+#' Input a vvector or data frame of labels to produce a pdf of text labels with 
+#' QR codes that can then be printed. The pdf setup is for 
 #' the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
 #'
 #' \code{barcode_make} is the helper function generating the actual qrcode and
 #' creating the layout within the label sticker.
 #'
-#' @return pdf file that is saved to the working directory containing QR codes.
+#' @return pdf file containing QR codes that is saved to the working directory
 #'
-#' @param user logical. Whether to run function as interactive. Default is \code{FALSE}
-#' @param Labels vector or data frame.
-#' @param name character. Name of pdf output file. Default is "LabelsOut"
-#' @param ErrCorr the error correction value. Level of damage from low to high:
-#' L, M, Q, H. Default is \code{"H"}
-#' @param Fsz numerical. Sets font size. A number between 2.2 and 4.7. Depending
-#' on the length of the label, there may not be enough space to print the entire
-#'  label using bigger font sizes. Default font size is 2.5
-#' @param Across logical. When true, print labels in rows. When false, print
-#' labels in columns. Default is \code{TRUE}.
-#' @param ERows number of rows to skip. Default is 0. Setting ERows to 6 will put
-#'  the first label at row 7.
-#' @param ECols number of columns to skip. Default is 0. Setting ECols to 2 will
-#' put the first label at column 2.
-#' @param trunc logical. Text is split into rows to prevent cutoff when labels
-#' are long. Default is \code{TRUE}.
-#' @param numrow numerical. Number of rows per page. Default is 20 rows per page.
-#' @param numcol numerical. Number of columns per page. Default is 4 columns
-#' per page.
-#' @param page_width Width of page (in inches). Default is set to 8.5 inches.
-#' @param page_height Height of page (in inches). Default is set to 11 inches.
+#' @param user logical. Run function using interactive mode (prompts user for 
+#' parameter values0.) Default is \code{FALSE}
+#' @param Labels vector or data frame object containing label names.
+#' @param name character. Name of the pdf output file. Default is \code{LabelsOut}.
+#' @param ErrCorr error correction value. Level of damage from low to high: 
+#' \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}
+#' @param Fsz numerical. Sets font size using a number between \code{2.2} and
+#'  \code{4.7}. Longer labels may not fit using bigger font sizes. Default 
+#'  font size is \code{2.5}
+#' @param Across logical. When true, print labels in across rows, left to right, 
+#' from top to bottom. When false, print labels in columns, top to bottom, 
+#' from left to right. Default is \code{TRUE}.
+#' @param ERows number of rows to skip. Default is \code{0}. Example: 
+#' setting ERows to 6 will begin printing at row 7; 
+#' useful when printing just a few labels that don't take a full label sheet.
+#' @param ECols number of columns to skip. Default is \code{0}. Example: 
+#' setting ECols to 2 will put the first label at column 3.
+#' @param trunc logical. Text is broken into multiple lines when labels
+#' are long, to prevent printing off label area. Default is \code{TRUE}.
+#' @param numrow numerical. Number of rows per page. Default is \code{20}.
+#' @param numcol numerical. Number of columns per page. Default is \code{4}.
+#' @param page_width Width of page (in inches). Default is set to \code{8.5}.
+#' @param page_height Height of page (in inches). Default is set to \code{11}.
 #' @param height_margin numerical. The height margin of the page (in inches).
-#' Default is 0.5 inches.
+#' Default is \code{0.5}.
 #' @param width_margin numerical. The width margin of the page (in inches).
-#' Default is 0.25 inches.
+#' Default is \code{0.25}.
 #' @param cust_spacing logical. Default is \code{FALSE}. If spacing between qrcode and
 #' label should be changed.
-#' @param x_space numerical. An integer between 190 - 250. This sets the distance
-#' between the qrcode and the label. Default is 215.
+#' @param x_space numerical. An integer between \code{190} - \code{250}. This 
+#' sets the distance between the qrcode and the label. Default is \code{215}.
 #' @param y_space numerical. An integer between 80 and 215. Default is 182
 #' used when \code{cust_spacing = T}.
 #' @param dummy_df Used for testing. Layout of label.

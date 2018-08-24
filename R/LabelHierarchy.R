@@ -1,21 +1,20 @@
-#' Make hierarchical barcode labels
+#' Make hierarchical ID
 #'
-#' Makes hierarchical barcode labels from interactive user input or from list
-#'  with string input, beginning and ending numerical values.
+#' Generate hierarchical ID codes for barcode labels. Can be run interactively 
+#' prompting user for input. The data.frame output can be used as input for \code{\link{create_PDF}} to create printable barcode labels.
 #'
-#' @param user logical. Should the function be used interactively? Default is
-#' false. When true, all other arguments can be empty.
+#' @param user logical. Run function using interactive mode (prompts user for 
+#' parameter values). Default is \code{FALSE}
 #' @param hierarchy list. A list with each element consisting of three members
 #'  a vector of three elements (string, beginning value, end value). See examples.
 #'  Used only when \code{user=F})
 #' @param end character. A string to be appended to end of each label.
-#' @param digits numerical. Default is 2. Number of digits to be printed. This
-#' will apply to all levels when \code{user=F}. When the numeric value of the
-#' label has a greater number of digits than \code{digits}, \code{digits} is
-#' automatically increased for the entire level.
+#' @param digits numerical. Default is \code{2}. Number of digits to be printed, 
+#' adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
+#' When the numeric value of the label has a greater number of digits than 
+#' \code{digits}, \code{digits} is automatically increased for the entire level. 
 #' @export
-#' @return data frame of text labels in the first column, and level labels in
-#' separate columns.
+#' @return data.frame of text labels in the first column, with additional columns for each level defined by the user.
 #' @examples
 #'
 #' \dontrun{

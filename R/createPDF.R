@@ -1,18 +1,18 @@
 #' Make qr codes and print to stickers
 #'
-#' This function will take in a data frame of labels and produce a pdf of QR
-#' codes which can then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
+#' Input vector or data.frame of labels and produce a pdf of QR codes which can 
+#' then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
 #'
 #' @return pdf file that is saved to the working directory containing QR codes.
 #'
 #' The pdf setup is for the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser
 #' printer; Item # S-19297 (uline.ca). The page format can be modified using
-#' the \code{...} options.
+#' the \code{...} advanced options for other label types.
 #'
 #' @inheritParams custom_create_PDF
-#' @param ... more advanced arguments to modify layout of pdf output. See
+#' @param ... advanced arguments to modify pdf layout. See
 #'  \code{\link{custom_create_PDF}} for arguments. The advanced options can be
-#'   accessed interactively when \code{user = T} by entering T when prompted to
+#'   accessed interactively with \code{user = T} and then entering T when prompted to
 #'    modify advanced options.
 #' @export
 #' @examples
@@ -22,14 +22,18 @@
 #' \dontrun{
 #' ## run with default options, pdf file will be "example.pdf"
 #' create_PDF(Labels = example_vector, name = "example")
+#' 
 #' ## run interactively. Overrides default pdf options
 #' create_PDF(user = T, Labels = example_vector)
+#' 
 #' ## run using a data frame, automatically choosing the "label" column
 #' example_df <- data.frame("level1" = c("a1", "a2"), "label" = c("a1-b1",
 #' "a1-b2"), "level2" = c("b1", "b1"))
 #' create_PDF(user = F, Labels = example_df)
+#' 
 #' ## run using an unnamed data frame
 #' example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
+#' 
 #' ## specify column from data frame
 #' create_PDF(user = F, Labels = example_df[,2])
 #' }

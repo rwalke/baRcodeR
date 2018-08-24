@@ -8,33 +8,32 @@ create_PDF(user = F, Labels = NULL, name = "LabelsOut", ErrCorr = "H",
   Fsz = 2.5, ...)
 }
 \arguments{
-\item{user}{logical. Whether to run function as interactive. Default is \code{FALSE}}
+\item{user}{logical. Run function using interactive mode (prompts user for parameter values). Default is \code{FALSE}}
 
-\item{Labels}{vector or data frame.}
+\item{Labels}{vector or data frame object containing label names.}
 
-\item{name}{character. Name of pdf output file. Default is "LabelsOut"}
+\item{name}{character. Name of the pdf output file. Default is \code{"LabelsOut"}}
 
-\item{ErrCorr}{the error correction value. Level of damage from low to high:
-L, M, Q, H. Default is \code{"H"}}
+\item{ErrCorr}{error correction value. Level of damage from low to high:
+\code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}}
 
-\item{Fsz}{numerical. Sets font size. A number between 2.2 and 4.7. Depending
-on the length of the label, there may not be enough space to print the entire
- label using bigger font sizes. Default font size is 2.5}
+\item{Fsz}{numerical. Sets font size using a number between \code{2.2} and \code{4.7}. Longer labels may not 
+fit using bigger font sizes. Default font size is \code{2.5}}
 
-\item{...}{more advanced arguments to modify layout of pdf output. See
+\item{...}{advanced arguments to modify layout of pdf output. See
 \code{\link{custom_create_PDF}} for arguments. The advanced options can be
- accessed interactively when \code{user = T} by entering T when prompted to
-  modify advanced options.}
+ accessed interactively with \code{user = T} and then entering T when prompted to
+ modify advanced options.}
 }
 \value{
 pdf file that is saved to the working directory containing QR codes.
 
 The pdf setup is for the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser
 printer; Item # S-19297 (uline.ca). The page format can be modified using
-the \code{...} options.
+the \code{...} advanced options for other label types.
 }
 \description{
-This function will take in a data frame of labels and produce a pdf of QR
+Input data.frame of labels and produce a pdf of QR
 codes which can then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
 }
 \examples{
@@ -44,14 +43,18 @@ example_vector <- as.data.frame(c("ao1", "a02", "a03"))
 \dontrun{
 ## run with default options, pdf file will be "example.pdf"
 create_PDF(Labels = example_vector, name = "example")
+
 ## run interactively. Overrides default pdf options
 create_PDF(user = T, Labels = example_vector)
+
 ## run using a data frame, automatically choosing the "label" column
 example_df <- data.frame("level1" = c("a1", "a2"), "label" = c("a1-b1",
 "a1-b2"), "level2" = c("b1", "b1"))
 create_PDF(user = F, Labels = example_df)
+
 ## run using an unnamed data frame
 example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
+
 ## specify column from data frame
 create_PDF(user = F, Labels = example_df[,2])
 }
