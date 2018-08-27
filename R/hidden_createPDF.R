@@ -1,7 +1,7 @@
 #' Make qr codes and print to stickers
 #'
-#' Input a vector or data frame of labels to produce a pdf of text labels with 
-#' QR codes that can then be printed. The pdf setup is for the ULINE 1.75X1/2 
+#' Input a vector or data frame of labels to produce a pdf of text labels with
+#' QR codes that can then be printed. The pdf setup is for the ULINE 1.75X1/2
 #' WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
 #'
 #' \code{barcode_make} is the helper function generating the actual qrcode and
@@ -9,21 +9,21 @@
 #'
 #' @return pdf file containing QR codes that is saved to the working directory.
 #'
-#' @param user logical. Run function using interactive mode (prompts user for 
+#' @param user logical. Run function using interactive mode (prompts user for
 #' parameter values0.) Default is \code{FALSE}
 #' @param Labels vector or data frame object containing label names.
 #' @param name character. Name of the pdf output file. Default is \code{"LabelsOut"}.
-#' @param ErrCorr error correction value. Level of damage from low to high: 
+#' @param ErrCorr error correction value. Level of damage from low to high:
 #' \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}
 #' @param Fsz numerical. Sets font size using a number between \code{2.2} and
-#'  \code{4.7}. Longer labels may not fit using bigger font sizes. Default 
+#'  \code{4.7}. Longer labels may not fit using bigger font sizes. Default
 #'  font size is \code{2.5}
 #' @param Across logical. When \code{TRUE}, print labels in across rows, left to right.
 #' When \code{FALSE}, print labels in columns, top to bottom. Default is \code{TRUE}.
-#' @param ERows number of rows to skip. Default is \code{0}. Example: 
-#' setting ERows to 6 will begin printing at row 7; 
+#' @param ERows number of rows to skip. Default is \code{0}. Example:
+#' setting ERows to 6 will begin printing at row 7;
 #' useful when printing just a few labels that don't take a full label sheet.
-#' @param ECols number of columns to skip. Default is \code{0}. Example: 
+#' @param ECols number of columns to skip. Default is \code{0}. Example:
 #' setting ECols to 2 will put the first label at column 3.
 #' @param trunc logical. Text is broken into multiple lines when labels
 #' are long, to prevent printing off label area. Default is \code{TRUE}.
@@ -35,13 +35,10 @@
 #' Default is \code{0.5}.
 #' @param width_margin numerical. The width margin of the page (in inches).
 #' Default is \code{0.25}.
-#' @param cust_spacing logical. Default is \code{FALSE}. If spacing between qrcode and
-#' label should be changed.
-#' @param x_space numerical. An integer between \code{190} - \code{250}. This 
+#' @param x_space numerical. An integer between \code{190} - \code{250}. This
 #' sets the distance between the qrcode and the label. Default is \code{215}.
 #' @param y_space numerical. An integer between 80 and 215. Default is 182
 #' used when \code{cust_spacing = T}.
-#' @param dummy_df Used for testing. Layout of label.
 
 #' @seealso \code{\link{create_PDF}}
 #' @export
@@ -62,7 +59,6 @@ custom_create_PDF <- function(user = F,
                               page_height = 11,
                               width_margin = 0.25,
                               height_margin = 0.5,
-                              cust_spacing = F,
                               x_space = 215,
                               y_space = 182
                               ){
@@ -85,6 +81,8 @@ custom_create_PDF <- function(user = F,
     stop("One or more numerica parameters are not numeric")
   }
   labelLength <- max(nchar(paste(Labels)))
+  if (x_space > 250 | x_space < 190) stop("ERROR: x_space value out of bounds. Must be between 190 - 250")
+  if (y_space < 80 | y_space > 215) stop("ERROR: y_space value out of bounds. Must be between 80 - 215")
   # clean up any open graphical devices if function fails
   on.exit(grDevices::dev.off())
   # if user prompt has been set to true
@@ -174,10 +172,10 @@ custom_create_PDF <- function(user = F,
           noquote(print("Invalid input"))
           x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
         }
-        y_space <- as.numeric(readline("Please enter a distance between 90-215: "))
-        while((x_space < 90 | x_space > 215)){
+        y_space <- as.numeric(readline("Please enter a distance between 80-215: "))
+        while((x_space < 80 | x_space > 215)){
           noquote(print("Invalid input"))
-          y_space <- as.numeric(readline("Please enter a distance between 90-215: "))
+          y_space <- as.numeric(readline("Please enter a distance between 80-215: "))
         }
       }
     } ## end of advanced options loop
@@ -189,7 +187,6 @@ custom_create_PDF <- function(user = F,
   if (Fsz >= 2.2 && Fsz <= 2.5 && labelLength >= 27) stop("ERROR: not enought space to print full label, please decrease font size")
   width_margin <- 8.5 - width_margin * 2
   height_margin <- 11 - height_margin * 2
-  dmy <- data.frame(x = c(0, 457), y = c(0, 212))
   # if (cust_spacing == T) {
   #   y_space <- x_space - (as.integer(x_space * 0.5)) - 15
   # } else {
@@ -201,7 +198,7 @@ custom_create_PDF <- function(user = F,
   grid::grid.newpage() # Open a new page on grid device
   grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
 
-  label_plots<- lapply(Labels, barcode_make, trunc = trunc, ErrCorr = ErrCorr, x_space = x_space, y_space = y_space, dummy_df= dmy, Fsz = Fsz)
+  label_plots <- lapply(Labels, barcode_make, trunc = trunc, ErrCorr = ErrCorr, x_space = x_space, y_space = y_space, Fsz = Fsz)
 
   x_pos <- ERows + 1
   y_pos <- ECols + 1
@@ -241,7 +238,8 @@ custom_create_PDF <- function(user = F,
 
 #' @rdname custom_create_PDF
 #' @export
-barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, dummy_df, Fsz){
+barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
+  dummy_df <- data.frame(x = c(0, 457), y = c(0, 212))
   # Create text label
   Xtxt<-paste(gsub("\\\\n", "\\\n", Labels), collapse="")
   # Split label to count characters
