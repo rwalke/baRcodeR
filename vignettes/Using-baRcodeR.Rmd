@@ -186,7 +186,7 @@ level_three <- c("c", 10, 12)
 hier_list <- list(level_one, level_two, level_three)
 ```
 
-You can specify the ending string for all labels through the `end` argument and the number of digits to print for all levels through the `digits` argument. It is not possible at this time to vary the number of digits printed for each level, however this is possible in interactive mode using the prompts. 
+You can specify the ending string for all labels through the `end` argument and the number of digits to print for all levels through the `digits` argument. It is not possible at this time to vary the number of digits printed for each level, however this is possible in interactive mode using the prompts.
 
 The list can then be passed into `label_hier_maker`.
 
@@ -206,8 +206,6 @@ Labels can then be saved using:
 ```{r eval=F, include=T}
 write.csv(Labels, "Labels.csv")
 ```
-
-
 
 # Create barcodes {#create-barcodes}
 
@@ -295,7 +293,7 @@ Arguments can be passed from `create_PDF` to `custom_create_PDF` as `create_PDF`
 
 ```{r eval=F, include=T}
 
-## This will create a pdf sheet where the labels are printed in columns then rows. It will skip 3 rows from the top and one column from the left. 
+## This will create a pdf sheet where the labels are printed in columns then rows. It will skip 3 rows from the top and 1 column from the left. 
 create_PDF(Labels = Labels, name = "example_advanced", ErrCorr = "Q", Fsz = 2.5, Across = F, ERows = 3, ECol = 1)
 ```
 
