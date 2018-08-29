@@ -1,5 +1,5 @@
 ---
-title: "baRcodeR - label generation for tracking biological samples"
+title: "baRcodeR - Open-source label generation for tracking biological samples"
 author: "Yihan Wu"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
