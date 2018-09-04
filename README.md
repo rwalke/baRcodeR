@@ -6,6 +6,10 @@ Yihan Wu and Robert I. Colautti
 
 A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
 
+## Overview
+
+![Flowchart of major functions](man/figures/Flowchart.png)
+
 ## Quick Start:
 
 ```
