@@ -1,6 +1,10 @@
 # baRcodeR
 
-Yihan Wu, Emily Bao and Robert I. Colautti
+Yihan Wu and Robert I. Colautti
+
+## Cheat Sheet
+
+A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
 
 ## Quick Start:
 
