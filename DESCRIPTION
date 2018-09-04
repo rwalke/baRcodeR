@@ -1,6 +1,6 @@
 Package: baRcodeR
 Title: Custom R Tools for Collection, Tracking, and Curation of Biological Samples Using 2D Barcodes
-Version: 0.0.2.0000
+Version: 0.1.0.0000
 Authors@R: c(person("Yihan", "Wu", role="aut", email = "yihan.wu@queensu.ca"), person("Robert", "Colautti", email = "robert.colautti@queensu.ca", role = c("aut", "cre")))
 Maintainer: Robert Colautti <robert.colautti@queensu.ca>
 Description: Tools to generate unique identifiers and printable barcoded labels for sample management. 
