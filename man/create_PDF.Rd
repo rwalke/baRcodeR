@@ -4,8 +4,8 @@
 \alias{create_PDF}
 \title{Make qr codes and print to stickers}
 \usage{
-create_PDF(user = F, Labels = NULL, name = "LabelsOut", ErrCorr = "H",
-  Fsz = 2.5, ...)
+create_PDF(user = F, Labels = NULL, name = "LabelsOut",
+  ErrCorr = "H", Fsz = 2.5, ...)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for
