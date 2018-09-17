@@ -1,4 +1,4 @@
-#' Make qr codes and print to stickers
+#' Make QR codes and print to stickers
 #'
 #' Input vector or data.frame of labels and produce a pdf of QR codes which can 
 #' then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
