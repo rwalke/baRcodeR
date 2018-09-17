@@ -30,23 +30,23 @@
 #'
 #'
 #' ## sequential string of numbers in label
-#' Labels <- label_maker(string = "string", level = c(1:5), digits = 2)
+#' Labels <- uniqID_maker(string = "string", level = c(1:5), digits = 2)
 #' Labels
 #' 
 #' ## can also use nonsequential strings in input for levels
 #' level <- c(1:5, 8:10, 999:1000)
-#' Labels <- label_maker(string = "string", level = level, digits = 4)
+#' Labels <- uniqID_maker(string = "string", level = level, digits = 4)
 #' Labels
 #'
 #' \dontrun{
 #' ## function using user prompt does not use any of the other parameters
-#' Labels <- label_maker(user = T)
+#' Labels <- uniqID_maker(user = T)
 #' Labels
 #' }
 
 
 
-label_maker <- function(user = F, string = NULL, level, digits = 3){
+uniqID_maker <- function(user = F, string = NULL, level, digits = 3){
   if (user == T) {
     ## asks for string
     string <- readline(paste0("Please enter string for level: "))
