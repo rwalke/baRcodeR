@@ -4,7 +4,7 @@
 #' Can be run interactively prompting user for input. The data.frame output 
 #' can be used as input for \code{\link{create_PDF}} to create printable barcode 
 #' labels. This function will only create simple text labels. For hierarchical 
-#' or nested labels see \code{\link{label_hier_maker}}.
+#' or nested labels see \code{\link{uniqID_hier_maker}}.
 #'
 #' When the function is used with user prompts \code{user = T}, a sequence of 
 #' numbers is generated between the starting and ending number provided by the 
@@ -24,7 +24,7 @@
 #' \code{digits}, \code{digits} is automatically increased for the entire level. 
 #' Default is \code{3}.
 #'
-#' @seealso \code{\link{label_hier_maker}}
+#' @seealso \code{\link{uniqID_hier_maker}}
 #' @export
 #' @examples
 #'
