@@ -193,16 +193,15 @@ custom_create_PDF <- function(user = F,
   #   y_space <- 182
   # }
   ### Page Setup
+  label_plots <- lapply(Labels, barcode_make, trunc = trunc, ErrCorr = ErrCorr, x_space = x_space, y_space = y_space, Fsz = Fsz)
+  
+  x_pos <- ERows + 1
+  y_pos <- ECols + 1
+  
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, width = page_width, height = page_height, onefile = T, family = "Courier") # Standard North American 8.5 x 11
   grid::grid.newpage() # Open a new page on grid device
   grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
-
-  label_plots <- lapply(Labels, barcode_make, trunc = trunc, ErrCorr = ErrCorr, x_space = x_space, y_space = y_space, Fsz = Fsz)
-
-  x_pos <- ERows + 1
-  y_pos <- ECols + 1
-  # create data frame of coord positions
 
   for (i in 1:length(label_plots)){
     # print(c("in", x_pos, y_pos))
@@ -266,7 +265,7 @@ barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
   Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels), ErrorCorrectionLevel = ErrCorr, dataOutput = T, plotQRcode = F, mask = 3) - 1), interpolate = F)
   # Create tag (QR code + text label)
   Xplt <-
-    ggplot2::ggplot(data = dummy_df, ggplot2::aes(x = 0, y = 0)) + ggplot2::annotation_custom(Xpng, xmin = 30, xmax = 180, ymin = 60, ymax = 180) + ggplot2::coord_cartesian(xlim = c(0, 457), ylim = c(0, 212)) + theme_empty() +
+    ggplot2::ggplot(data = dummy_df, ggplot2::aes(x = 0, y = 0)) + ggplot2::theme_void() + ggplot2::annotation_custom(Xpng, xmin = 30, xmax = 180, ymin = 60, ymax = 180) + ggplot2::coord_cartesian(xlim = c(0, 457), ylim = c(0, 212)) + 
     ggplot2::geom_text(ggplot2::aes(x = x_space, y = y_space, label = Xtxt, hjust = 0, vjust = 1), size = Fsz)
   return(Xplt)
 }
