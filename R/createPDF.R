@@ -20,8 +20,12 @@
 #' example_vector <- as.data.frame(c("ao1", "a02", "a03"))
 #'
 #' \dontrun{
-#' ## run with default options, pdf file will be "example.pdf"
-#' create_PDF(Labels = example_vector, name = "example")
+#' ## run with default options
+#' pdf file will be "example.pdf" saved into a temp directory
+#' create_PDF(Labels = example_vector, name = file.path(tempdir(), "example"))
+#' 
+#' ## view example output from temp folder
+#' system(paste0('open "', file.path(tempdir(), "example.pdf"), '"'))
 #' 
 #' ## run interactively. Overrides default pdf options
 #' create_PDF(user = T, Labels = example_vector)
