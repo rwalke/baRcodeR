@@ -2,10 +2,10 @@
 % Please edit documentation in R/createPDF.R
 \name{create_PDF}
 \alias{create_PDF}
-\title{Make qr codes and print to stickers}
+\title{Make QR codes and print to stickers}
 \usage{
-create_PDF(user = F, Labels = NULL, name = "LabelsOut",
-  ErrCorr = "H", Fsz = 2.5, ...)
+create_PDF(user = F, Labels = NULL, name = "LabelsOut", ErrCorr = "H",
+  Fsz = 2.5, ...)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for
@@ -43,8 +43,13 @@ then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
 example_vector <- as.data.frame(c("ao1", "a02", "a03"))
 
 \dontrun{
-## run with default options, pdf file will be "example.pdf"
-create_PDF(Labels = example_vector, name = "example")
+## run with default options
+## pdf file will be "example.pdf" saved into a temp directory
+
+create_PDF(Labels = example_vector, name = file.path(tempdir(), "example"))
+
+## view example output from temp folder
+system(paste0('open "', file.path(tempdir(), "example"), ".pdf"))
 
 ## run interactively. Overrides default pdf options
 create_PDF(user = T, Labels = example_vector)
@@ -52,13 +57,13 @@ create_PDF(user = T, Labels = example_vector)
 ## run using a data frame, automatically choosing the "label" column
 example_df <- data.frame("level1" = c("a1", "a2"), "label" = c("a1-b1",
 "a1-b2"), "level2" = c("b1", "b1"))
-create_PDF(user = F, Labels = example_df)
+create_PDF(user = F, Labels = example_df, name = file.path(tempdir(), "example_2"))
 
 ## run using an unnamed data frame
 example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
 
 ## specify column from data frame
-create_PDF(user = F, Labels = example_df[,2])
+create_PDF(user = F, Labels = example_df[,2], name = file.path(tempdir(), "example_3"))
 }
 }
 \seealso{

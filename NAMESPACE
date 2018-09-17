@@ -3,6 +3,6 @@
 export(barcode_make)
 export(create_PDF)
 export(custom_create_PDF)
-export(label_hier_maker)
-export(label_maker)
+export(uniqID_hier_maker)
+export(uniqID_maker)
 import(qrcode)

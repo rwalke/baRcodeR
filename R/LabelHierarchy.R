@@ -18,9 +18,9 @@
 #' @export
 #' @return data.frame of text labels in the first column, with additional columns 
 #' for each level defined by the user.
-#' @examples
+#' 
 #' @seealso \code{\link{uniqID_maker}}
-#'
+#' @examples
 #' \dontrun{
 #' ## for interactive mode
 #' uniqID_hier_maker(user = T)

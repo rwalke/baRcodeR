@@ -75,7 +75,7 @@ make_labels<-function() {
                      shiny::fillRow(
                        shiny::fillCol(
                          shiny::tagList(
-                           shiny::fileInput("labels", "Choose a text file of ID odes.", multiple=F,
+                           shiny::fileInput("labels", "Choose a text file of ID codes.", multiple=F,
                                accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
                      shiny::checkboxInput("header", "Header in file?", value=T),
                      # radioButtons("header", "Header in file?", choices = c(Yes = T, No = F), selected = T),
@@ -251,7 +251,7 @@ make_labels<-function() {
   }
   # Run the application
   # shinyApp(ui = ui, server = server)
-  viewer <- shiny::dialogViewer("Subset", width = 800, height = 1000)
+  viewer <- shiny::dialogViewer("baRcodeR", width = 800, height = 1000)
   shiny::runGadget(ui, server, viewer = viewer)
 
 }
