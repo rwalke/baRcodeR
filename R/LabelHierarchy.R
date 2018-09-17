@@ -1,6 +1,7 @@
 #' Make hierarchical ID codes
 #'
-#' Generate hierarchical ID codes for barcode labels. Can be run interactively 
+#' Generate hierarchical ID codes for barcode labels. Use \code{\link{uniqID_maker}} 
+#' for sequential single-level labels. Can be run interactively 
 #' prompting user for input. The data.frame output can be used as input 
 #' for \code{\link{create_PDF}} to create printable barcode labels.
 #'
@@ -18,10 +19,11 @@
 #' @return data.frame of text labels in the first column, with additional columns 
 #' for each level defined by the user.
 #' @examples
+#' @seealso \code{\link{uniqID_maker}}
 #'
 #' \dontrun{
 #' ## for interactive mode
-#' label_hier_maker(user = T)
+#' uniqID_hier_maker(user = T)
 #' }
 #'
 #' ## how to make hierarchy list
@@ -32,16 +34,16 @@
 #' a <- c("a", 3, 6)
 #' b <- c("b", 1, 3)
 #' c <- list(a, b)
-#' Labels <- label_hier_maker(hierarchy = c)
+#' Labels <- uniqID_hier_maker(hierarchy = c)
 #' Labels
 #'
 #' ## add string at end of each label
-#' Labels <- label_hier_maker(hierarchy = c, end = "end")
+#' Labels <- uniqID_hier_maker(hierarchy = c, end = "end")
 #' Labels
 #'
 
 
-label_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
+uniqID_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
   # user interaction code
   if(user == T){
     hlevels <- readline("What is the # of levels in hierarchy: ")
@@ -83,7 +85,7 @@ label_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
     }
   } # end user input
   # hierarchy format check
-  if (is.list(hierarchy) == F) stop("hierarchy is not in list format. See ?label_hier_maker")
+  if (is.list(hierarchy) == F) stop("hierarchy is not in list format. See ?uniqID_hier_maker")
   if (length(unique(sapply(hierarchy, length))) != 1) stop("hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
   # loop through hierarchy to generate text
   for(i in 1:length(hierarchy)){
