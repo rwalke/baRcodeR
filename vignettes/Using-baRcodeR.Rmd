@@ -17,16 +17,16 @@ A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/1
 
 # Overview
 
-The baRcodeR package will generate unique IDs with 2-dimensional barcode tags in a pdf output format that can be printed using a laser printer and sticker sheets. Each function can be run interactively with prompts to guide label and barcode creation. 
+The baRcodeR package will generate unique IDs with 2-dimensional barcode tags in a pdf output format that can be printed using a laser printer and sticker sheets. Each function can be run interactively with prompts to guide unique ID code and barcode label creation. 
 
 > NOTE: When printing from pdf, ensure that 'anti-aliasing' or 'smoothing' options are turned OFF, and that you are not using 'fit to page' or similar options that will re-scale the output.
 
 Creating unique, scannable 2-D barcodes involves two steps:
 
-  1. Generate unique ID labels with `label_maker()` or `label_hier_maker()`
-  2. Create a pdf file containing unique ID labels coupled with 2D barcode with `create_PDF()`
+  1. Generate unique ID codes with `uniqID_maker()` or `uniqID_hier_maker()`
+  2. Create a pdf file containing unique ID codes coupled with 2D barcode with `create_PDF()`
 
-If you already have labels in a text file, skip step #1 and import labels into a `data.frame()` object for step #2: see [Create barcodes](#create-barcodes).
+If you already have ID codes in a text file, skip step #1 and import them into a `data.frame()` object for step #2: see [Create barcodes](#create-barcodes).
 
 # Required packages 
 
@@ -37,9 +37,9 @@ install.packages(c("ggplot2", "grDevices", "grid", "qrcode"))
 ```
 
 
-# Create simple labels {#label-maker}
+# Create simple ID codes {#uniqID-maker}
 
-Simple one-level ID labels can be created using the 'label_maker()' function. One-level labels consist of two parts, a leading string shared by all samples and a number unique to each sample. 
+Simple one-level ID codes can be created using the 'uniqID_maker()' function. One-level ID codes consist of two parts, a leading string shared by all samples and a number unique to each sample. 
 
 For example, if we want to generate scannable barcode labels for 5 individuals:
 
@@ -60,19 +60,19 @@ library(baRcodeR)
 
 ```
 
-## By user prompt {#label-maker-user-prompt}
+## By user prompt {#uniqID-maker-user-prompt}
 
 Run the `label_make(r))` function in interactive mode.
 
 ```{r eval=F, include=T}
-Labels <- label_maker(user = T)
+Labels <- uniqID_maker(user = T)
 ```
 
-User prompts will be shown in the console. Inputs received from the user are passed as parameters to the `label_maker()` to create the object `Labels`, which is a `data.frame()` object containing a vector of unique IDs in the first column, and additional columns for strings and individual numbers provided by the user. 
+User prompts will be shown in the console. Inputs received from the user are passed as parameters to the `uniqID_maker()` to create the object `Labels`, which is a `data.frame()` object containing a vector of unique IDs in the first column, and additional columns for strings and individual numbers provided by the user. 
 
 >  \> Please enter string for level: 
 
-The string entered here defines the leading part of the label that will be the same for every label produced. This can be the name of a population, a species or a location. In this example, the string entered by the user into the console as denoted by the `>` symbol is "example".
+The string entered here defines the leading part of the ID code that will be the same for every label produced. This can be the name of a population, a species or a location. In this example, the string entered by the user into the console as denoted by the `>` symbol is "example".
 
 >  \> Please enter string for level: example
 
@@ -88,7 +88,7 @@ The third user prompt is:
 
 >  \> Enter the ending number for level: 
 
-The prompt asks for the ending number. Unique IDs are generated sequentially from the starting number to the ending number. Note that a higher number can be used as the starting number to generate a reverse order. It is possible to generate IDs that are not sequentially numbered by passing a vector through `label_maker()` (e.g. `seq()`) (see [By arguments](#label-maker-arguments)) 
+The prompt asks for the ending number. Unique IDs are generated sequentially from the starting number to the ending number. Note that a higher number can be used as the starting number to generate a reverse order. It is possible to generate IDs that are not sequentially numbered by passing a vector through `uniqID_maker()` (e.g. `seq()`) (see [By arguments](#label-maker-arguments)) 
 
 >  \> Enter the ending number for level: 10
 
@@ -96,17 +96,17 @@ After the starting and ending numbers are set, the function generates a series o
 
 >  \> Number of digits to print for level:
 
-This number must be >= the maximum number of digits in the Unique ID code and will add leading zeros and is particularly useful for generating IDs that are a small subset of a larger sample.
+This number must be >= the maximum number of digits in the unique ID code and will add leading zeros and is particularly useful for generating IDs that are a small subset of a larger sample.
 
 >  \> Number of digits to print for level: 3 
 
 
 ## By arguments {#label-maker-arguments}
 
-It is also possible to create unique ID labels without user prompts by defining parameters directly in `label_maker`. The interactive example above can be reproduced by the code:
+It is also possible to create unique ID codes without user prompts by defining parameters directly in `uniqID_maker`. The interactive example above can be reproduced by the code:
 
 ```{r eval=T, include=T}
-Labels <- label_maker(string = "example", level = 5:10, digits = 3)
+Labels <- uniqID_maker(string = "example", level = 5:10, digits = 3)
 Labels
 ```
 
@@ -114,7 +114,7 @@ More complicated, non-sequential ID label codes can be generated via the `levels
 
 ```{r eval=T, include=T}
 number_sequence <- seq(1, 10, 2)
-Labels <- label_maker(string = "example", level = number_sequence, digits = 3)
+Labels <- uniqID_maker(string = "example", level = number_sequence, digits = 3)
 ```
 
 The output will then be:
@@ -130,9 +130,9 @@ write.csv(Labels, "Labels.csv")
 ```
 
 
-# Create hierarchical labels {#label_hier_maker}
+# Create hierarchical labels {#uniqID_hier_maker}
 
-`label_hier_maker` is used to make unique ID codes that follow a hierarchical or nested structure. Similar to `label_maker`, this function can be run interactively or by directly defining parameters. In contrast to `label_maker`, `label_hier_maker` is used to generate nested pairs of strings and unique ID codes. Below is an example of a list of hierarchical labels with three levels (a, b, c) and varying numbers of individuals for each level (a=3, b=2, c=2). 
+`uniqID_hier_maker` is used to make unique ID codes that follow a hierarchical or nested structure. Similar to `uniqID_maker`, this function can be run interactively or by directly defining parameters. In contrast to `uniqID_maker`, `uniqID_hier_maker` is used to generate nested pairs of strings and unique ID codes. Below is an example of a list of hierarchical labels with three levels (a, b, c) and varying numbers of individuals for each level (a=3, b=2, c=2). 
 
 ```
 a1-b1-c1
@@ -151,12 +151,12 @@ a3-b2-c2
 
 
 
-## By user prompts {#label-hier-maker-user-prompt}
+## By user prompts {#uniqID-hier-maker-user-prompt}
 
 To create the hierarchical ID labels using prompts, start with the argument `user=T` in the function.
 
 ```{r eval=F, include=T}
-Labels <- label_hier_maker(user = T)
+Labels <- uniqID_hier_maker(user = T)
 ```
 
 The prompt that appears in the console is:
@@ -179,11 +179,11 @@ In this example, there is no ending string.
 
 >  \> String at end of barcode? (y/n): n
 
-For each level, there will be a series of prompts. The user will be able to set the string, the starting number, and the ending number for each level similar to the questions in `label_maker`(see [label_maker](#label-maker-user-prompt) for step by step instructions). The number of digits to print can also vary for each level. 
+For each level, there will be a series of prompts. The user will be able to set the string, the starting number, and the ending number for each level similar to the questions in `uniqID_maker`(see [uniqID_maker](#uniqID-maker-user-prompt) for step by step instructions). The number of digits to print can also vary for each level. 
 
 ## By argument
 
-Instead of interactive mode, it is possible to specify arguments directly into `label_hier_maker`. Unlike `label_maker`, a `list` object containing hierarchy parameters has to be input. Vectors should be created for each level in the hierarchy, and each vector should contain three parameters: the leading string, the start value, and the end value. The vectors should be input to a `list` object in the order of their hierarchy. For the example below, 'c' is nested within 'b' within 'a'. 
+Instead of interactive mode, it is possible to specify arguments directly into `uniqID_hier_maker`. Unlike `uniqID_maker`, a `list` object containing hierarchy parameters has to be input. Vectors should be created for each level in the hierarchy, and each vector should contain three parameters: the leading string, the start value, and the end value. The vectors should be input to a `list` object in the order of their hierarchy. For the example below, 'c' is nested within 'b' within 'a'. 
 
 ```{r}
 level_one <- c("a", 1, 3)
@@ -194,10 +194,10 @@ hier_list <- list(level_one, level_two, level_three)
 
 You can specify the ending string for all labels through the `end` argument and the number of digits to print for all levels through the `digits` argument. It is not possible at this time to vary the number of digits printed for each level, however this is possible in interactive mode using the prompts.
 
-The list can then be passed into `label_hier_maker`.
+The list can then be passed into `uniqID_hier_maker`.
 
 ```{r, eval=T, include=T}
-Labels <- label_hier_maker(hierarchy = hier_list, digits = 1)
+Labels <- uniqID_hier_maker(hierarchy = hier_list, digits = 1)
 ```
 
 The output will be:
@@ -215,11 +215,11 @@ write.csv(Labels, "Labels.csv")
 
 # Create barcodes {#create-barcodes}
 
-2D barcodes are created from a set of text labels. Users can manually create their own labels in a the first column of a `data.frame()` object or create labels using `label_maker` or `label_hier_maker`. 
+2D barcodes are created from a set of text labels. Users can manually create their own labels in a the first column of a `data.frame()` object or create labels using `uniqID_maker` or `uniqID_hier_maker`. 
 
 The function `create_PDF()` produces a pdf file containing barcodes that fit to the dimensions of ULINE Premium Laser Printer Labels #S-19297 (80 labels per sheet, 1.75" x 0.5"). If needed, the page setup can be modified using advanced options in [custom_create_PDF](#custom-create-pdf). 
 
-The first step is to read in the labels, whether from a csv file or the output of `label_maker` or `label_hier_maker`. 
+The first step is to read in the labels, whether from a csv file or the output of `uniqID_maker` or `uniqID_hier_maker`. 
 
 ```{r eval=F, include=T}
 # Reading in from a csv file
