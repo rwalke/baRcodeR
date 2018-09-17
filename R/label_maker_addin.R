@@ -131,7 +131,7 @@ make_labels<-function() {
         shiny::need(input$end_number != "", "Please enter an ending value"),
         shiny::need(input$digits != "", "Please enter the number of digits")
       )
-      baRcodeR::label_maker(user=F, string = input$prefix, level = seq(input$start_number, input$end_number), digits = input$digits)
+      baRcodeR::uniqID_maker(user=F, string = input$prefix, level = seq(input$start_number, input$end_number), digits = input$digits)
     })
     # preview of simple labels
     output$label_df<-DT::renderDataTable(Labels())
@@ -141,7 +141,7 @@ make_labels<-function() {
       utils::write.csv(Labels(), file = file.path(getwd(), fileName), row.names=F)
 
     })
-    output$label_code<-shiny::renderPrint(noquote(paste0("label_maker(user = F, string = \'", input$prefix, "\', ", "level = c(", input$start_number, ",", input$end_number, "), digits = ", input$digits, ")")))
+    output$label_code<-shiny::renderPrint(noquote(paste0("uniqID_maker(user = F, string = \'", input$prefix, "\', ", "level = c(", input$start_number, ",", input$end_number, "), digits = ", input$digits, ")")))
     # pdf making server side
     # check label file
     Labels_pdf<-shiny::eventReactive(input$label_check, {
@@ -215,14 +215,14 @@ make_labels<-function() {
         shiny::need(nrow(values$df) != 0, "Please add a level")
       )
       hierarchy <- split(values$df, seq(nrow(values$df)))
-      hier_Labels <- baRcodeR::label_hier_maker(user=F, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
+      hier_Labels <- baRcodeR::uniqID_hier_maker(user=F, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
       hier_Labels
     })
     hier_code_snippet_obj<-shiny::reactive({
       begin_string<-noquote(strsplit(paste(split(values$df, seq(nrow(values$df))), collapse=', '), ' ')[[1]])
       replace_string<-gsub(pattern = "list\\(", replacement = "c\\(", begin_string)
       replace_string<-paste(replace_string, sep="", collapse="")
-      noquote(paste0("label_hier_maker(user = F, hierarchy = list(", replace_string, "), end = NULL, digits = ", input$hier_digits, ")"))
+      noquote(paste0("uniqID_hier_maker(user = F, hierarchy = list(", replace_string, "), end = NULL, digits = ", input$hier_digits, ")"))
 
       })
     output$hier_code<-shiny::renderText(hier_code_snippet_obj())
