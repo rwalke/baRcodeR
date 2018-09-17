@@ -18,12 +18,12 @@ make_labels<-function() {
     miniUI::gadgetTitleBar("baRcodeR"),
     miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
                               # simple label tab
-      miniUI::miniTabPanel("Simple Label Generation", value = graphics::title, icon = shiny::icon("bars"),
+      miniUI::miniTabPanel("Simple ID Code Generation", value = graphics::title, icon = shiny::icon("bars"),
                    miniUI::miniContentPanel(
                      shiny::fillRow(
                        shiny::fillCol(shiny::tagList(# user input elements
-                         shiny::tags$h1("Simple Labels", id = "title"),
-                         shiny::textInput("prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
+                         shiny::tags$h1("Simple ID Codes", id = "title"),
+                         shiny::textInput("prefix", "ID String", value = "", width=NULL, placeholder="Type in ... ..."),
                          shiny::numericInput("start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
                          shiny::numericInput("end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
                          shiny::numericInput("digits", "digits", value = 3, min = 1, max = Inf, width=NULL),
@@ -39,14 +39,14 @@ make_labels<-function() {
 
                                    )),
       # hierarchy label tab
-      miniUI::miniTabPanel("Hierarchical Label Generation", value = graphics::title, icon = shiny::icon("sitemap"),
+      miniUI::miniTabPanel("Hierarchical ID Code Generation", value = graphics::title, icon = shiny::icon("sitemap"),
                            miniUI::miniContentPanel(
                              shiny::fillRow(
                                shiny::fillCol(shiny::tagList(
                                  # ui elements
-                                 shiny::tags$h1("Hierarchical Labels", id = "title"),
+                                 shiny::tags$h1("Hierarchical ID Codes", id = "title"),
                                  shiny::numericInput("hier_digits", "digits", value = 2, min = 1, max = Inf, width=NULL),
-                                 shiny::textInput("hier_prefix", "Label String", value = "", width=NULL, placeholder="Type in ... ..."),
+                                 shiny::textInput("hier_prefix", "ID String", value = "", width=NULL, placeholder="Type in ... ..."),
                                  shiny::numericInput("hier_start_number", "From (integer)", value = NULL, min = 1, max = Inf, width=NULL),
                                  shiny::numericInput("hier_end_number", "To (integer)", value = NULL, min = 1, max = Inf, width=NULL),
                                  shiny::actionButton('insertBtn', 'Add level'),
@@ -75,7 +75,7 @@ make_labels<-function() {
                      shiny::fillRow(
                        shiny::fillCol(
                          shiny::tagList(
-                           shiny::fileInput("labels", "Choose a text file of labels.", multiple=F,
+                           shiny::fileInput("labels", "Choose a text file of ID odes.", multiple=F,
                                accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
                      shiny::checkboxInput("header", "Header in file?", value=T),
                      # radioButtons("header", "Header in file?", choices = c(Yes = T, No = F), selected = T),
@@ -97,8 +97,8 @@ make_labels<-function() {
                          )
                        ),
                        shiny::fillCol(
-                         shiny::tagList(shiny::tags$body("Click 'Import Label File' to import and check format of file."),
-                     shiny::actionButton("label_check", "Import Label File"),
+                         shiny::tagList(shiny::tags$body("Click 'Import ID Code File' to import and check format of file."),
+                     shiny::actionButton("label_check", "Import ID Code File"),
                      # output elements
                      shiny::tags$h3("Preview"),
                      shiny::plotOutput("label_preview", height = "auto", width = "auto"),
