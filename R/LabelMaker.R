@@ -89,7 +89,7 @@ label_maker <- function(user = F, string = NULL, level, digits = 3){
   line <- paste0(string, "%0", digits, "d")
   label <- sprintf(line, rep(level))
   ind_string <- rep(string, length(rep(level)))
-  ind_number <- rep(level)
+  ind_number <- sprintf(paste0("%0", digits, "d"), rep(level))
   return(data.frame(label, ind_string, ind_number))
 
 }
