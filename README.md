@@ -20,7 +20,7 @@ install.packages("baRcodeR")
 library(baRcodeR)
 ```
 
-OR install the pre-release access to the latest version:
+OR install the pre-release of the latest version:
 
 ```
 devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
