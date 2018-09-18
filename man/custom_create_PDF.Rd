@@ -3,7 +3,7 @@
 \name{custom_create_PDF}
 \alias{custom_create_PDF}
 \alias{barcode_make}
-\title{Make qr codes and print to stickers}
+\title{Make QR codes and print labels}
 \usage{
 custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
   ErrCorr = "H", Fsz = 2.5, Across = T, ERows = 0, ECols = 0,
@@ -15,39 +15,40 @@ barcode_make(Labels, trunc, ErrCorr, x_space, y_space, Fsz)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for
-parameter values0.) Default is \code{FALSE}}
+parameter values) Default is \code{FALSE}}
 
-\item{Labels}{vector or data frame object containing label names.}
+\item{Labels}{vector or data frame object containing label names (i.e. unique ID codes).}
 
-\item{name}{character. Name of the pdf output file. Default is \code{"LabelsOut"}.}
+\item{name}{character. Name of the PDF output file. Default is \code{"LabelsOut"}.}
 
 \item{ErrCorr}{error correction value. Level of damage from low to high:
 \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}}
 
 \item{Fsz}{numerical. Sets font size using a number between \code{2.2} and
-\code{4.7}. Longer labels may not fit using bigger font sizes. Default
-font size is \code{2.5}}
+ \code{4.7}. Longer ID codes may not fit on the labels using larger font sizes. 
+Default font size is \code{2.5}}
 
-\item{Across}{logical. When \code{TRUE}, print labels in across rows, left to right.
-When \code{FALSE}, print labels in columns, top to bottom. Default is \code{TRUE}.}
+\item{Across}{logical. When \code{TRUE}, print labels across rows, left to right.
+When \code{FALSE}, print labels down columns, top to bottom. Default is \code{TRUE}.}
 
 \item{ERows}{number of rows to skip. Default is \code{0}. Example:
-setting ERows to 6 will begin printing at row 7;
-useful when printing just a few labels that don't take a full label sheet.}
+setting ERows to 6 will begin printing at row 7.
+ERows and ECols are useful for printing on partially-used label sheets.}
 
 \item{ECols}{number of columns to skip. Default is \code{0}. Example:
-setting ECols to 2 will put the first label at column 3.}
+setting ECols to 2 will put the first label at column 3.
+ERows and ECols are useful for printing on partially-used label sheets.}
 
-\item{trunc}{logical. Text is broken into multiple lines when labels
-are long, to prevent printing off label area. Default is \code{TRUE}.}
+\item{trunc}{logical. Text is broken into multiple lines for longer ID codes,
+to prevent printing off of the label area. Default is \code{TRUE}.}
 
 \item{numrow}{numerical. Number of rows per page. Default is \code{20}.}
 
 \item{numcol}{numerical. Number of columns per page. Default is \code{4}.}
 
-\item{page_width}{Width of page (in inches). Default is set to \code{8.5}.}
+\item{page_width}{numerical. Width of page (in inches). Default is set to \code{8.5}.}
 
-\item{page_height}{Height of page (in inches). Default is set to \code{11}.}
+\item{page_height}{numerical. Height of page (in inches). Default is set to \code{11}.}
 
 \item{width_margin}{numerical. The width margin of the page (in inches).
 Default is \code{0.25}.}
@@ -56,22 +57,22 @@ Default is \code{0.25}.}
 Default is \code{0.5}.}
 
 \item{x_space}{numerical. An integer between \code{190} - \code{250}. This
-sets the distance between the qrcode and the label. Default is \code{215}.}
+sets the distance between the QR code and text of each label. Default is \code{215}.}
 
 \item{y_space}{numerical. An integer between 80 and 215. Default is 182
 used when \code{cust_spacing = T}.}
 }
 \value{
-pdf file containing QR codes that is saved to the working directory.
+a PDF file containing QR-coded labels, saved to the default directory.
 }
 \description{
-Input a vector or data frame of labels to produce a pdf of text labels with
-QR codes that can then be printed. The pdf setup is for the ULINE 1.75X1/2
-WEATHER RESISTANT LABEL for laser printer; Item # S-19297 (uline.ca)
+Input a vector or data frame of ID codes to produce a PDF of QR-coded labels 
+that can then be printed. The PDF setup is for the ULINE 1.75" * 0.5"
+WEATHER RESISTANT LABEL for laser printer; item # S-19297 (uline.ca)
 }
 \details{
-\code{barcode_make} is the helper function generating the actual qrcode and
-creating the layout within the label sticker.
+\code{barcode_make} is the helper function generating the actual QR code and
+creating the page layout for printed labels.
 }
 \seealso{
 \code{\link{create_PDF}}

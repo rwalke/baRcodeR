@@ -1,16 +1,16 @@
-#' Make QR codes and print to stickers
+#' Make QR codes and print labels
 #'
-#' Input vector or data.frame of labels and produce a pdf of QR codes which can 
-#' then be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
+#' Input vector or data.frame of ID codes to produce a PDF of QR codes which can 
+#' be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
 #'
-#' @return pdf file that is saved to the working directory containing QR codes.
+#' @return a PDF file containing QR-coded labels, saved to the default directory.
 #'
-#' The pdf setup is for the ULINE 1.75X1/2 WEATHER RESISTANT LABEL for laser
-#' printer; Item # S-19297 (uline.ca). The page format can be modified using
-#' the \code{...} advanced options for other label types.
+#' The default PDF setup is for ULINE 1.75" * 0.5" WEATHER RESISTANT LABEL for laser
+#' printer; item # S-19297 (uline.ca). The page format can be modified using
+#' the \code{...} (advanced arguments) for other label types.
 #'
 #' @inheritParams custom_create_PDF
-#' @param ... advanced arguments to modify pdf layout. See
+#' @param ... advanced arguments to modify the PDF layout. See
 #'  \code{\link{custom_create_PDF}} for arguments. The advanced options can be
 #'   accessed interactively with \code{user = T} and then entering T when prompted to
 #'    modify advanced options.
