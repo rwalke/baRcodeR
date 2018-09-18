@@ -75,10 +75,11 @@ make_labels<-function() {
                      shiny::fillRow(
                        shiny::fillCol(
                          shiny::tagList(
-                           shiny::fileInput("labels", "Choose a text file of ID codes.", multiple=F,
+                           shiny::fileInput("labels", "1. Choose a text file of ID codes.", multiple=F,
                                accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
                      shiny::checkboxInput("header", "Header in file?", value=T),
                      # radioButtons("header", "Header in file?", choices = c(Yes = T, No = F), selected = T),
+                     shiny::tags$h3("2. (Optional) Modify PDF from default values"),
                      shiny::textInput("filename", "PDF file name", value = "LabelsOut"),
                      shiny::selectInput(inputId = "err_corr", label = "Error Correction", choices = c("L (up to 7% damage)"="L", "M (up to 15% damage)"= "M", "Q (up to 25% damage)" = "Q", "H (up to 30% damage)" = "H"), multiple=F),
                      shiny::numericInput("font_size", "Font Size", value = 2.5, min = 2.2, max = 4.7, width=NULL),
@@ -97,7 +98,7 @@ make_labels<-function() {
                          )
                        ),
                        shiny::fillCol(
-                         shiny::tagList(shiny::tags$body("Click 'Import ID Code File' to import and check format of file."),
+                         shiny::tagList(shiny::tags$h3("3. Click 'Import ID Code File' to import and check format of file."),
                      shiny::actionButton("label_check", "Import ID Code File"),
                      # output elements
                      shiny::tags$h3("Preview"),

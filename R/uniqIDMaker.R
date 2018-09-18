@@ -1,23 +1,23 @@
-#' Makes list of ID codes in environment
+#' Generate a list of ID codes
 #'
-#' Create text labels consisting of a text string and numbers (string001, string002 ... ...). 
-#' Can be run interactively prompting user for input. The data.frame output 
-#' can be used as input for \code{\link{create_PDF}} to create printable barcode 
-#' labels. This function will only create simple text labels. For hierarchical 
-#' or nested labels see \code{\link{uniqID_hier_maker}}.
+#' Create ID codes consisting of a text string and uniqe numbers (string001, string002, ...). 
+#' Can be run in interactive mode, prompting user for input. The data.frame 
+#' output can be saved as CSV for (i) the \code{\link{create_PDF}} function 
+#' to generate printable QR-coded labels; and (ii) to downstream data 
+#' collection software (spreadsheets, relational databases, etc.)
 #'
-#' When the function is used with user prompts \code{user = T}, a sequence of 
+#' When the function is called with \code{user = T}, a sequence of 
 #' numbers is generated between the starting and ending number provided by the 
 #' user. When \code{user = F}, a vector of custom numbers can be provided. 
 #' See example below.
 #'
-#' @return data.frame with text labels in the first column, and separated string
-#' and number values in two additional columns.
+#' @return data.frame with text labels in the first column, along with string
+#' and numeric values in two additional columns. 
 #' @param user logical. Run function using interactive mode (prompts user for 
 #' parameter values). Default is \code{FALSE}
 #' @param string character. Text string for label. Default \code{null}.
 #' @param level integer vector. Defines the numerical values to be appended
-#' to the character string. Can be any sequence of numbers, not just sequential (see examples).
+#' to the character string. Can be any sequence of numbers (see examples).
 #' @param digits numerical. Default is \code{2}. Number of digits to be printed, 
 #' adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
 #' When the numeric value of the label has a greater number of digits than 
@@ -80,7 +80,7 @@ uniqID_maker <- function(user = F, string = NULL, level, digits = 3){
     }
     level <-c(startNum:endNum)
   }
-  if (is.numeric(level) == F) stop("level is not a string of numbers")
+  if (is.numeric(level) == F) stop("Level is not a string of numbers")
   if (is.numeric(digits) == F) stop("Digits is not a numerical value")
   if (nchar(paste(max(level))) > digits){
     warning("Digits specified less than max number. Increasing number of digits.")

@@ -1,23 +1,28 @@
 #' Make hierarchical ID codes
 #'
-#' Generate hierarchical ID codes for barcode labels. Use \code{\link{uniqID_maker}} 
-#' for sequential single-level labels. Can be run interactively 
-#' prompting user for input. The data.frame output can be used as input 
-#' for \code{\link{create_PDF}} to create printable barcode labels.
+#' Generate hierarchical ID codes for barcode labels. 
+#' Hierarchical codes have a nested structure: e.g. Y subsamples from 
+#' each of X individuals. Use \code{\link{uniqID_maker}} 
+#' for sequential single-level labels. Can be run in interactive mode, 
+#' prompting user for input. The data.frame can be saved as CSV for 
+#' (i) the \code{\link{create_PDF}} function to generate printable 
+#' QR-coded labels; and (ii) to downstream data collection using spreadsheet, 
+#' relational database, etc.
 #'
 #' @param user logical. Run function using interactive mode (prompts user for 
 #' parameter values). Default is \code{FALSE}
 #' @param hierarchy list. A list with each element consisting of three members
 #'  a vector of three elements (string, beginning value, end value). See examples.
 #'  Used only when \code{user=F})
-#' @param end character. A string to be appended to end of each label.
+#' @param end character. A string to be appended to the end of each label.
 #' @param digits numerical. Default is \code{2}. Number of digits to be printed, 
 #' adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
-#' When the numeric value of the label has a greater number of digits than 
-#' \code{digits}, \code{digits} is automatically increased for the entire level. 
+#' When the max number of digits in the ID code is greater than number of digits 
+#' defined in \code{digits}, then \code{digits} is automatically increased 
+#' to avoid errors. 
 #' @export
 #' @return data.frame of text labels in the first column, with additional columns 
-#' for each level defined by the user.
+#' for each level in the hierarchy list, as defined by the user.
 #' 
 #' @seealso \code{\link{uniqID_maker}}
 #' @examples
@@ -85,8 +90,8 @@ uniqID_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
     }
   } # end user input
   # hierarchy format check
-  if (is.list(hierarchy) == F) stop("hierarchy is not in list format. See ?uniqID_hier_maker")
-  if (length(unique(sapply(hierarchy, length))) != 1) stop("hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
+  if (is.list(hierarchy) == F) stop("Hierarchy is not in list format. See ?uniqID_hier_maker")
+  if (length(unique(sapply(hierarchy, length))) != 1) stop("Hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
   # loop through hierarchy to generate text
   for(i in 1:length(hierarchy)){
     str <- hierarchy[[i]][1]
