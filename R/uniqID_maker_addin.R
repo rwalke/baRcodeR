@@ -3,8 +3,10 @@
 #' @description This addin will allow you to interactive create ID codes and generate PDF files
 #' of QR codes.
 #' @export
+#' @import qrcode
 #' @examples 
 #' \dontrun{
+#' library(baRcodeR)
 #' make_labels()
 #' }
 
