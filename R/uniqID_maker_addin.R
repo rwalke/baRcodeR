@@ -1,3 +1,14 @@
+#' @title baRcodeR GUI 
+#' 
+#' @description This addin will allow you to interactive create ID codes and generate PDF files
+#' of QR codes.
+#' @export
+#' @examples 
+#' \dontrun{
+#' make_labels()
+#' }
+
+
 make_labels<-function() {
   # user interface
   # base::library(qrcode)
