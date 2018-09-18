@@ -108,7 +108,8 @@ make_labels<-function() {
                      # code snippet
                      shiny::tags$h3("Reproducible Code"),
                      shiny::verbatimTextOutput("PDF_code_render"),
-                     shiny::tags$body("Click 'Make PDF' and wait for 'Done' to show up before opening PDF file"),
+                     shiny::tags$h3("4. Click 'Make PDF'"),
+                     shiny::tags$body("Wait for 'Done' to show up before opening PDF file"),
                      shiny::actionButton("make_pdf", "Make PDF"),
                      # status of pdf making
                      shiny::textOutput("PDF_status"))
