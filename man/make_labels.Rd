@@ -12,6 +12,7 @@ of QR codes.
 }
 \examples{
 \dontrun{
+library(baRcodeR)
 make_labels()
 }
 }
