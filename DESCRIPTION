@@ -1,5 +1,5 @@
 Package: baRcodeR
-Title: Open-source R Tools to Assist With Labelling, Collecting, Tracking, and Collecting Data From Biological Samples
+Title: Open-Source R Tools for Labelling, Collecting, Tracking, and Collecting Data from Biological Samples
 Version: 0.1.0
 Authors@R: c(person("Yihan", "Wu", role="aut", email = "yihan.wu@queensu.ca"), person("Robert", "Colautti", email = "robert.colautti@queensu.ca", role = c("aut", "cre")))
 Maintainer: Robert Colautti <robert.colautti@queensu.ca>
