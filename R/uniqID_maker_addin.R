@@ -1,15 +1,15 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+#' @title baRcodeR GUI 
+#' 
+#' @description This addin will allow you to interactive create ID codes and generate PDF files
+#' of QR codes.
+#' @export
+#' @import qrcode
+#' @examples 
+#' \dontrun{
+#' library(baRcodeR)
+#' make_labels()
+#' }
 
-#library(shiny)
-#library(miniUI)
-#library(baRcodeR)
 
 make_labels<-function() {
   # user interface
@@ -108,7 +108,8 @@ make_labels<-function() {
                      # code snippet
                      shiny::tags$h3("Reproducible Code"),
                      shiny::verbatimTextOutput("PDF_code_render"),
-                     shiny::tags$body("Click 'Make PDF' and wait for 'Done' to show up before opening PDF file"),
+                     shiny::tags$h3("4. Click 'Make PDF'"),
+                     shiny::tags$body("Wait for 'Done' to show up before opening PDF file"),
                      shiny::actionButton("make_pdf", "Make PDF"),
                      # status of pdf making
                      shiny::textOutput("PDF_status"))
