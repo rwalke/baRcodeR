@@ -13,10 +13,10 @@
 #' parameter values). Default is \code{FALSE}
 #' @param hierarchy list. A list with each element consisting of three members
 #'  a vector of three elements (string, beginning value, end value). See examples.
-#'  Used only when \code{user=F})
+#'  Used only when \code{user=FALSE})
 #' @param end character. A string to be appended to the end of each label.
 #' @param digits numerical. Default is \code{2}. Number of digits to be printed, 
-#' adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
+#' adding leading 0s as needed. This will apply to all levels when \code{user=FALSE}. 
 #' When the max number of digits in the ID code is greater than number of digits 
 #' defined in \code{digits}, then \code{digits} is automatically increased 
 #' to avoid errors. 
@@ -26,9 +26,9 @@
 #' 
 #' @seealso \code{\link{uniqID_maker}}
 #' @examples
-#' \dontrun{
+#' if(interactive()){
 #' ## for interactive mode
-#' uniqID_hier_maker(user = T)
+#' uniqID_hier_maker(user = TRUE)
 #' }
 #'
 #' ## how to make hierarchy list
@@ -48,9 +48,9 @@
 #'
 
 
-uniqID_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
+uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   # user interaction code
-  if(user == T){
+  if(user == TRUE){
     hlevels <- readline("What is the # of levels in hierarchy: ")
     hlevels <- as.numeric(hlevels)
     # possible inputs
@@ -67,7 +67,7 @@ uniqID_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
       end <- ""
     }
     digits <- as.numeric(readline(paste0("Number of digits to print: ")))
-    while(is.na(as.numeric(digits)) == T){
+    while(is.na(as.numeric(digits)) == TRUE){
       print("Invalid input. Please only enter an integer.")
       digits <- as.numeric(readline(paste0("Number of digits to print: ")))
     }
@@ -76,12 +76,12 @@ uniqID_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
       str <- readline(paste0("Please enter string for level ",i,": "))
       # startNum must be smaller than endNum
       startNum <- as.numeric(readline(paste0("Enter the starting number for level ",i,": ")))
-      while(is.na(startNum) == T) {
+      while(is.na(startNum) == TRUE) {
         print("Invalid input. Please enter an integer.")
         startNum <- as.numeric(readline(paste0("Enter the starting number for level ",i,": ")))
       }
       endNum <- as.numeric(readline(paste0("Enter the ending number for level ",i,": ")))
-      while(is.na(endNum) == T){
+      while(is.na(endNum) == TRUE){
         print("Invalid input. Please enter an integer.")
         endNum <- as.numeric(readline(paste0("Enter the ending number for level ",i,": ")))
       }
@@ -90,17 +90,18 @@ uniqID_hier_maker <- function(user = F, hierarchy, end = NULL, digits = 2){
     }
   } # end user input
   # hierarchy format check
-  if (is.list(hierarchy) == F) stop("Hierarchy is not in list format. See ?uniqID_hier_maker")
+  if (is.list(hierarchy) == FALSE) stop("Hierarchy is not in list format. See ?uniqID_hier_maker")
   if (length(unique(sapply(hierarchy, length))) != 1) stop("Hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
+  if (length(hierarchy) == 1) stop("Input list has only one level. Are you sure you are not looking for uniqIDMaker()?")
   # loop through hierarchy to generate text
   for(i in 1:length(hierarchy)){
     str <- hierarchy[[i]][1]
     startNum <- as.numeric(hierarchy[[i]][2])
     endNum <- as.numeric(hierarchy[[i]][3])
-    if (is.na(startNum) == T ){
+    if (is.na(startNum) == TRUE){
       stop(paste0("Invalid starting number on level", i, ". Please doublecheck your input"))
     }
-    if (is.na(endNum) == T ){
+    if (is.na(endNum) == TRUE){
       stop(paste0("Invalid ending number on level", i, ". Please doublecheck your input"))
     }
     maxNum <- max(startNum, endNum)
