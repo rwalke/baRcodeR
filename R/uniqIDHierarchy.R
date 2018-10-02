@@ -92,7 +92,7 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   # hierarchy format check
   if (is.list(hierarchy) == FALSE) stop("Hierarchy is not in list format. See ?uniqID_hier_maker")
   if (length(unique(sapply(hierarchy, length))) != 1) stop("Hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
-  if (length(hierarchy) == 1) stop("Input list has only one level. Are you sure you are not looking for uniqIDMaker()?")
+  if (length(hierarchy) == 1) stop("Input list has only one level. Did you forget a level or are you sure you are not looking for uniqIDMaker()?")
   # loop through hierarchy to generate text
   for(i in 1:length(hierarchy)){
     str <- hierarchy[[i]][1]
