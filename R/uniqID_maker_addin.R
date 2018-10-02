@@ -5,7 +5,7 @@
 #' @export
 #' @import qrcode
 #' @examples 
-#' \dontrun{
+#' if(interactive()){
 #' library(baRcodeR)
 #' make_labels()
 #' }
@@ -75,18 +75,18 @@ make_labels<-function() {
                      shiny::fillRow(
                        shiny::fillCol(
                          shiny::tagList(
-                           shiny::fileInput("labels", "1. Choose a text file of ID codes.", multiple=F,
+                           shiny::fileInput("labels", "1. Choose a text file of ID codes.", multiple=FALSE,
                                accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
-                     shiny::checkboxInput("header", "Header in file?", value=T),
-                     # radioButtons("header", "Header in file?", choices = c(Yes = T, No = F), selected = T),
+                     shiny::checkboxInput("header", "Header in file?", value=TRUE),
+                     # radioButtons("header", "Header in file?", choices = c(Yes = TRUE, No = F), selected = TRUE),
                      shiny::tags$h3("2. (Optional) Modify PDF from default values"),
                      shiny::textInput("filename", "PDF file name", value = "LabelsOut"),
-                     shiny::selectInput(inputId = "err_corr", label = "Error Correction", choices = c("L (up to 7% damage)"="L", "M (up to 15% damage)"= "M", "Q (up to 25% damage)" = "Q", "H (up to 30% damage)" = "H"), multiple=F),
+                     shiny::selectInput(inputId = "err_corr", label = "Error Correction", choices = c("L (up to 7% damage)"="L", "M (up to 15% damage)"= "M", "Q (up to 25% damage)" = "Q", "H (up to 30% damage)" = "H"), multiple=FALSE),
                      shiny::numericInput("font_size", "Font Size", value = 2.5, min = 2.2, max = 4.7, width=NULL),
-                     shiny::radioButtons("across", "Print across?", choices = c(Yes = T, No = F), selected = T),
+                     shiny::radioButtons("across", "Print across?", choices = c(Yes = TRUE, No = FALSE), selected = TRUE),
                      shiny::numericInput("erow", "# of rows to skip", value = 0, min = 0, max = 20, width=NULL),
                      shiny::numericInput("ecol", "# of columns to skip", value = 0, min = 0, max = 20, width=NULL),
-                     shiny::checkboxInput("trunc", "Truncate label text?", value=F),
+                     shiny::checkboxInput("trunc", "Truncate label text?", value=FALSE),
                      shiny::numericInput("numrow", "Number of label rows on sheet", value = 20, min = 1, max = 100, width=NULL, step = 1),
                      shiny::numericInput("numcol", "Number of label columbs on sheet", value = 4, min = 1, max = 100, width=NULL, step = 1),
                      shiny::numericInput("page_width", "Page Width (in)", value = 8.5, min = 1, max = 20, width=NULL, step = 0.5),
@@ -133,17 +133,17 @@ make_labels<-function() {
         shiny::need(input$end_number != "", "Please enter an ending value"),
         shiny::need(input$digits != "", "Please enter the number of digits")
       )
-      baRcodeR::uniqID_maker(user=F, string = input$prefix, level = seq(input$start_number, input$end_number), digits = input$digits)
+      baRcodeR::uniqID_maker(user=FALSE, string = input$prefix, level = seq(input$start_number, input$end_number), digits = input$digits)
     })
     # preview of simple labels
     output$label_df<-DT::renderDataTable(Labels())
     # writing simple labels
     shiny::observeEvent(input$make, {
       fileName<-sprintf("Labels_%s.csv", Sys.Date())
-      utils::write.csv(Labels(), file = file.path(getwd(), fileName), row.names=F)
+      utils::write.csv(Labels(), file = file.path(getwd(), fileName), row.names=FALSE)
 
     })
-    output$label_code<-shiny::renderPrint(noquote(paste0("uniqID_maker(user = F, string = \'", input$prefix, "\', ", "level = c(", input$start_number, ",", input$end_number, "), digits = ", input$digits, ")")))
+    output$label_code<-shiny::renderPrint(noquote(paste0("uniqID_maker(user = FALSE, string = \'", input$prefix, "\', ", "level = c(", input$start_number, ",", input$end_number, "), digits = ", input$digits, ")")))
     # pdf making server side
     # check label file
     Labels_pdf<-shiny::eventReactive(input$label_check, {
@@ -152,7 +152,7 @@ make_labels<-function() {
       Labels
     })
     # preview label file
-    output$check_make_labels<-DT::renderDataTable(Labels_pdf(), server = F, selection = list(mode = "single", target = "column", selected = 1))
+    output$check_make_labels<-DT::renderDataTable(Labels_pdf(), server = FALSE, selection = list(mode = "single", target = "column", selected = 1))
     output$label_preview <- shiny::renderPlot({
       plot_image()
     },
@@ -166,12 +166,12 @@ make_labels<-function() {
     })
     # text indicator that pdf finished making
     PDF_done<-shiny::eventReactive(input$make_pdf, {
-      baRcodeR::custom_create_PDF(user=F, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, page_width = input$page_width, page_height = input$ page_height, height_margin = input$height_margin, width_margin = input$width_margin, x_space = input$x_space, y_space = input$y_space)
+      baRcodeR::custom_create_PDF(user=FALSE, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, page_width = input$page_width, page_height = input$ page_height, height_margin = input$height_margin, width_margin = input$width_margin, x_space = input$x_space, y_space = input$y_space)
       status<-"Done"
       status
     })
     PDF_code_snippet<-shiny::reactive({
-      noquote(paste0("custom_create_PDF(user=F, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = \'", input$err_corr, "\', Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
+      noquote(paste0("custom_create_PDF(user=FALSE, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = \'", input$err_corr, "\', Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
       })
     csv_code_snippet<-shiny::reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
     output$PDF_code_render<-shiny::renderText({
@@ -186,7 +186,7 @@ make_labels<-function() {
     # set reactiveValues to store the level inputs
     values<-shiny::reactiveValues()
     # set up data frame within reactiveValue function
-    values$df<-data.frame(Prefix = character(0), start=integer(), end=integer(), stringsAsFactors = F)
+    values$df<-data.frame(Prefix = character(0), start=integer(), end=integer(), stringsAsFactors = FALSE)
     # delete row from the df if button is pressed.
     shiny::observeEvent(input$removeBtn, {
       shiny::isolate(values$df<-values$df[-(nrow(values$df)),])
@@ -217,14 +217,14 @@ make_labels<-function() {
         shiny::need(nrow(values$df) != 0, "Please add a level")
       )
       hierarchy <- split(values$df, seq(nrow(values$df)))
-      hier_Labels <- baRcodeR::uniqID_hier_maker(user=F, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
+      hier_Labels <- baRcodeR::uniqID_hier_maker(user=FALSE, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
       hier_Labels
     })
     hier_code_snippet_obj<-shiny::reactive({
       begin_string<-noquote(strsplit(paste(split(values$df, seq(nrow(values$df))), collapse=', '), ' ')[[1]])
       replace_string<-gsub(pattern = "list\\(", replacement = "c\\(", begin_string)
       replace_string<-paste(replace_string, sep="", collapse="")
-      noquote(paste0("uniqID_hier_maker(user = F, hierarchy = list(", replace_string, "), end = NULL, digits = ", input$hier_digits, ")"))
+      noquote(paste0("uniqID_hier_maker(user = FALSE, hierarchy = list(", replace_string, "), end = NULL, digits = ", input$hier_digits, ")"))
 
       })
     output$hier_code<-shiny::renderText(hier_code_snippet_obj())
@@ -235,7 +235,7 @@ make_labels<-function() {
     # make the csv file
     shiny::observeEvent(input$hier_label_make, {
       fileName<-sprintf("Labels_%s.csv", Sys.Date())
-      utils::write.csv(hier_label_df(), file = file.path(getwd(), fileName), row.names=F)
+      utils::write.csv(hier_label_df(), file = file.path(getwd(), fileName), row.names=FALSE)
     })
 
     # Listen for the 'done' event. This event will be fired when a user

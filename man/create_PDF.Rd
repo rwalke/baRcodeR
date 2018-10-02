@@ -4,7 +4,7 @@
 \alias{create_PDF}
 \title{Make QR codes and print labels}
 \usage{
-create_PDF(user = F, Labels = NULL, name = "LabelsOut",
+create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
   ErrCorr = "H", Fsz = 2.5, ...)
 }
 \arguments{
@@ -24,7 +24,7 @@ Default font size is \code{2.5}}
 
 \item{...}{advanced arguments to modify the PDF layout. See
 \code{\link{custom_create_PDF}} for arguments. The advanced options can be
- accessed interactively with \code{user = T} and then entering T when prompted to
+ accessed interactively with \code{user = TRUE} and then entering TRUE when prompted to
   modify advanced options.}
 }
 \value{
@@ -50,20 +50,25 @@ create_PDF(Labels = example_vector, name = file.path(tempdir(), "example"))
 
 ## view example output from temp folder
 system(paste0('open "', file.path(tempdir(), "example"), ".pdf"))
+}
 
 ## run interactively. Overrides default pdf options
-create_PDF(user = T, Labels = example_vector)
+if(interactive()){
+    create_PDF(user = TRUE, Labels = example_vector)
+}
 
+\donttest{
 ## run using a data frame, automatically choosing the "label" column
 example_df <- data.frame("level1" = c("a1", "a2"), "label" = c("a1-b1",
 "a1-b2"), "level2" = c("b1", "b1"))
-create_PDF(user = F, Labels = example_df, name = file.path(tempdir(), "example_2"))
+create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(), "example_2"))
+}
 
+\donttest{
 ## run using an unnamed data frame
 example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
-
 ## specify column from data frame
-create_PDF(user = F, Labels = example_df[,2], name = file.path(tempdir(), "example_3"))
+create_PDF(user = FALSE, Labels = example_df[,2], name = file.path(tempdir(), "example_3"))
 }
 }
 \seealso{

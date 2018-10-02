@@ -5,9 +5,9 @@
 \alias{barcode_make}
 \title{Make QR codes and print labels}
 \usage{
-custom_create_PDF(user = F, Labels = NULL, name = "LabelsOut",
-  ErrCorr = "H", Fsz = 2.5, Across = T, ERows = 0, ECols = 0,
-  trunc = T, numrow = 20, numcol = 4, page_width = 8.5,
+custom_create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
+  ErrCorr = "H", Fsz = 2.5, Across = TRUE, ERows = 0, ECols = 0,
+  trunc = TRUE, numrow = 20, numcol = 4, page_width = 8.5,
   page_height = 11, width_margin = 0.25, height_margin = 0.5,
   x_space = 215, y_space = 182)
 

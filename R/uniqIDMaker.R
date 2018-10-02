@@ -6,9 +6,9 @@
 #' to generate printable QR-coded labels; and (ii) to downstream data 
 #' collection software (spreadsheets, relational databases, etc.)
 #'
-#' When the function is called with \code{user = T}, a sequence of 
+#' When the function is called with \code{user = TRUE}, a sequence of 
 #' numbers is generated between the starting and ending number provided by the 
-#' user. When \code{user = F}, a vector of custom numbers can be provided. 
+#' user. When \code{user = FALSE}, a vector of custom numbers can be provided. 
 #' See example below.
 #'
 #' @return data.frame with text labels in the first column, along with string
@@ -19,7 +19,7 @@
 #' @param level integer vector. Defines the numerical values to be appended
 #' to the character string. Can be any sequence of numbers (see examples).
 #' @param digits numerical. Default is \code{2}. Number of digits to be printed, 
-#' adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
+#' adding leading 0s as needed. This will apply to all levels when \code{user=FALSE}. 
 #' When the numeric value of the label has a greater number of digits than 
 #' \code{digits}, \code{digits} is automatically increased for the entire level. 
 #' Default is \code{3}.
@@ -38,27 +38,27 @@
 #' Labels <- uniqID_maker(string = "string", level = level, digits = 4)
 #' Labels
 #'
-#' \dontrun{
+#' if(interactive()){
 #' ## function using user prompt does not use any of the other parameters
-#' Labels <- uniqID_maker(user = T)
+#' Labels <- uniqID_maker(user = TRUE)
 #' Labels
 #' }
 
 
 
-uniqID_maker <- function(user = F, string = NULL, level, digits = 3){
-  if (user == T) {
+uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3){
+  if (user == TRUE) {
     ## asks for string
     string <- readline(paste0("Please enter string for level: "))
     ## first value of level
     startNum <- as.numeric(readline(paste0("Enter the starting number for level: ")))
-    while(is.na(startNum) == T) {
+    while(is.na(startNum) == TRUE) {
       print("Invalid input. Please enter an integer.")
       startNum <- as.numeric(readline(paste0("Enter the starting number for level: ")))
     }
     ## ending value of level
     endNum <- as.numeric(readline(paste0("Enter the ending number for level: ")))
-    while(is.na(endNum) == T){
+    while(is.na(endNum) == TRUE){
       print("Invalid input. Please enter an integer.")
       endNum <- as.numeric(readline(paste0("Enter the ending number for level: ")))
     }
@@ -69,7 +69,7 @@ uniqID_maker <- function(user = F, string = NULL, level, digits = 3){
     ## asks for how many digits to print
     digits <- as.numeric(readline(paste0("Number of digits to print for level: ")))
     # check input
-    while(is.na(as.numeric(digits)) == T){
+    while(is.na(as.numeric(digits)) == TRUE){
       print("Invalid input. Please only enter an integer.")
       digits <- as.numeric(readline(paste0("Number of digits to print: ")))
     }
@@ -80,8 +80,8 @@ uniqID_maker <- function(user = F, string = NULL, level, digits = 3){
     }
     level <-c(startNum:endNum)
   }
-  if (is.numeric(level) == F) stop("Level is not a string of numbers")
-  if (is.numeric(digits) == F) stop("Digits is not a numerical value")
+  if (is.numeric(level) == FALSE) stop("Level is not a string of numbers")
+  if (is.numeric(digits) == FALSE) stop("Digits is not a numerical value")
   if (nchar(paste(max(level))) > digits){
     warning("Digits specified less than max number. Increasing number of digits.")
     digits <- nchar(paste(max(level)))

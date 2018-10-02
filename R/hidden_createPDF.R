@@ -38,22 +38,21 @@
 #' Default is \code{0.25}.
 #' @param x_space numerical. An integer between \code{190} - \code{250}. This
 #' sets the distance between the QR code and text of each label. Default is \code{215}.
-#' @param y_space numerical. An integer between 80 and 215. Default is 182
-#' used when \code{cust_spacing = T}.
+#' @param y_space numerical. An integer between 80 and 215. Default is 182.
 
 #' @seealso \code{\link{create_PDF}}
 #' @export
 #' @import qrcode
 
-custom_create_PDF <- function(user = F,
+custom_create_PDF <- function(user = FALSE,
                               Labels = NULL,
                               name = "LabelsOut",
                               ErrCorr = "H",
                               Fsz = 2.5,
-                              Across = T,
+                              Across = TRUE,
                               ERows = 0,
                               ECols = 0,
-                              trunc = T,
+                              trunc = TRUE,
                               numrow = 20,
                               numcol = 4,
                               page_width = 8.5,
@@ -78,7 +77,7 @@ custom_create_PDF <- function(user = F,
   } else {
     stop("Label input not a vector or a data frame. Please check your input.")
   }
-  if (any(unlist(lapply(c(numcol, numrow, Fsz, ERows, ECols, trunc, page_width, page_height, height_margin, width_margin, x_space, y_space), class)) != "numeric") == T) {
+  if (any(unlist(lapply(c(numcol, numrow, Fsz, ERows, ECols, trunc, page_width, page_height, height_margin, width_margin, x_space, y_space), class)) != "numeric") == TRUE) {
     stop("One or more numerica parameters are not numeric")
   }
   labelLength <- max(nchar(paste(Labels)))
@@ -87,7 +86,7 @@ custom_create_PDF <- function(user = F,
   # clean up any open graphical devices if function fails
   on.exit(grDevices::dev.off())
   # if user prompt has been set to true
-  if (user == T){
+  if (user == TRUE){
     # possible inputs
     inputCheck <- c("T", "t", "F", "f")
     yesNo <- c("Y", "N")
@@ -141,27 +140,27 @@ custom_create_PDF <- function(user = F,
       ERows <- noquote(as.numeric(readline("Number of rows to skip? (enter 0 for default): ")))
       ECols <- noquote(as.numeric(readline("Number of cols to skip? (enter 0 for default): ")))
       numrow <- as.numeric(readline("# of rows per page: "))
-      while(is.numeric(numrow) == F) {
+      while(is.numeric(numrow) == FALSE) {
         noquote(print("Invalid input"))
         numrow <- as.numeric(readline("# of rows per page: "))
       }
       numcol <- as.numeric(readline("# of col per page: "))
-      while(is.numeric(numcol) == F) {
+      while(is.numeric(numcol) == FALSE) {
         noquote(print("Invalid input"))
         numcol <- as.numeric(readline("# of col per page: "))
       }
       height_margin <- as.numeric(readline("Please enter the height margin of page (in inch): "))
-      while(is.numeric(height_margin) == F){
+      while(is.numeric(height_margin) == FALSE){
         noquote(print("Invalid input"))
         height_margin <- as.numeric(readline("Please enter the height margin of page (in inch): "))
       }
       width_margin <- as.numeric(readline("Please enter the width margin of page (in inch): "))
-      while(is.numeric(width_margin) == F){
+      while(is.numeric(width_margin) == FALSE){
         noquote(print("Invalid input"))
         width_margin <- as.numeric(readline("Please enter the width margin of page (in inch): "))
       }
       space <- toupper(readline("change distance between qrcode and label? (y/n): "))
-      while((space %in% yesNo) == F){
+      while((space %in% yesNo) == FALSE){
         noquote(print("Invalid input"))
         space<-toupper(readline("change distance between qrcode and label? (y/n): "))
       }
@@ -200,7 +199,7 @@ custom_create_PDF <- function(user = F,
   y_pos <- ECols + 1
   
   oname <- paste0(name, ".pdf")
-  grDevices::pdf(oname, width = page_width, height = page_height, onefile = T, family = "Courier") # Standard North American 8.5 x 11
+  grDevices::pdf(oname, width = page_width, height = page_height, onefile = TRUE, family = "Courier") # Standard North American 8.5 x 11
   grid::grid.newpage() # Open a new page on grid device
   grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
 
@@ -215,8 +214,8 @@ custom_create_PDF <- function(user = F,
     }
     #print(c(x_pos, y_pos))
     # print the label onto the viewport
-    print(label_plots[[i]], vp = grid::viewport(layout.pos.row = x_pos, layout.pos.col = y_pos, x = grid::unit(0,"mm"), y = grid::unit(0,"mm"), clip = F))
-    if (Across == "T" | Across == T){
+    print(label_plots[[i]], vp = grid::viewport(layout.pos.row = x_pos, layout.pos.col = y_pos, x = grid::unit(0,"mm"), y = grid::unit(0,"mm"), clip = FALSE))
+    if (Across == "T" | Across == TRUE){
       y_pos <- y_pos + 1
       if (y_pos > numcol) {
         y_pos <- 1
@@ -245,7 +244,7 @@ barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
   # Split label to count characters
   Xsplt <- strsplit(Xtxt, "")[[1]]
 
-  if(trunc == T){  # Truncate string across lines if trunc==T
+  if(trunc == TRUE){  # Truncate string across lines if trunc==T
     if(length(Xsplt) > 27){Xsplt <- Xsplt[1:27]}
     # If remaining string is > 8 characters, split into separate lines
     if(length(Xsplt) > 8){
@@ -263,7 +262,7 @@ barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
     }
   }
   # Create qrcode
-  Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels), ErrorCorrectionLevel = ErrCorr, dataOutput = T, plotQRcode = F, mask = 3) - 1), interpolate = F)
+  Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels), ErrorCorrectionLevel = ErrCorr, dataOutput = TRUE, plotQRcode = FALSE, mask = 3) - 1), interpolate = FALSE)
   # Create tag (QR code + text label)
   Xplt <-
     ggplot2::ggplot(data = dummy_df, ggplot2::aes(x = 0, y = 0)) + ggplot2::theme_void() + ggplot2::annotation_custom(Xpng, xmin = 30, xmax = 180, ymin = 60, ymax = 180) + ggplot2::coord_cartesian(xlim = c(0, 457), ylim = c(0, 212)) + 

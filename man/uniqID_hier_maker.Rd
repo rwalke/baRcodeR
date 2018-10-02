@@ -4,7 +4,7 @@
 \alias{uniqID_hier_maker}
 \title{Make hierarchical ID codes}
 \usage{
-uniqID_hier_maker(user = F, hierarchy, end = NULL, digits = 2)
+uniqID_hier_maker(user = FALSE, hierarchy, end = NULL, digits = 2)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for 
@@ -37,7 +37,7 @@ QR-coded labels; and (ii) to downstream data collection using spreadsheet,
 relational database, etc.
 }
 \examples{
-\dontrun{
+if(interactive()){
 ## for interactive mode
 uniqID_hier_maker(user = T)
 }

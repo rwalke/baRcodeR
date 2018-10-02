@@ -4,7 +4,7 @@
 \alias{uniqID_maker}
 \title{Generate a list of ID codes}
 \usage{
-uniqID_maker(user = F, string = NULL, level, digits = 3)
+uniqID_maker(user = FALSE, string = NULL, level, digits = 3)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for 
@@ -50,7 +50,7 @@ level <- c(1:5, 8:10, 999:1000)
 Labels <- uniqID_maker(string = "string", level = level, digits = 4)
 Labels
 
-\dontrun{
+if(interactive()){
 ## function using user prompt does not use any of the other parameters
 Labels <- uniqID_maker(user = T)
 Labels
