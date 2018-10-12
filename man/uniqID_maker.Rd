@@ -26,7 +26,7 @@ data.frame with text labels in the first column, along with string
 and numeric values in two additional columns.
 }
 \description{
-Create ID codes consisting of a text string and uniqe numbers (string001, string002, ...). 
+Create ID codes consisting of a text string and unique numbers (string001, string002, ...). 
 Can be run in interactive mode, prompting user for input. The data.frame 
 output can be saved as CSV for (i) the \code{\link{create_PDF}} function 
 to generate printable QR-coded labels; and (ii) to downstream data 

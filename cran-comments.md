@@ -24,4 +24,6 @@ additional changes advised by Swetlana Herbrandt
 ### Oct 12, 2018
 
 A few changes from Oct 4 were not included in the last upload.
-Additionally, fixed a minor text error where 'collection' occurred twice in DESCRIPTION
+Additionally, fixed a minor text errors:
+1. 'collection' occurred twice in DESCRIPTION
+2. 'unique' was mis-spelled in documentation of uniqID_maker
