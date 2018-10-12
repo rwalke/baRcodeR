@@ -13,8 +13,15 @@ This is our second submission. From first submission on September 10, 2018, we m
 
 3. We fixed a minor bug in the preview of one of the Addins tabs and we clarified explanations in the vignette and documentation.
 
-### Oct 4, 2018 -- a few additional changes advised by Swetlana Herbrandt
+### Oct 4, 2018 
+
+additional changes advised by Swetlana Herbrandt
 
 1. Removed 'Open-Source R Tools for' in the title
 2. Replaced T and F with TRUE and FALSE throughout
 3. Repaced \dontrun{} with if(interactive()){} or \donttest{}
+
+### Oct 12, 2018
+
+A few changes from Oct 4 were not included in the last upload.
+Additionally, fixed a minor text error where 'collection' occurred twice in DESCRIPTION
