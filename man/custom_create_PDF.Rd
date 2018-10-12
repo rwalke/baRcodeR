@@ -59,8 +59,7 @@ Default is \code{0.5}.}
 \item{x_space}{numerical. An integer between \code{190} - \code{250}. This
 sets the distance between the QR code and text of each label. Default is \code{215}.}
 
-\item{y_space}{numerical. An integer between 80 and 215. Default is 182
-used when \code{cust_spacing = T}.}
+\item{y_space}{numerical. An integer between 80 and 215. Default is 182.}
 }
 \value{
 a PDF file containing QR-coded labels, saved to the default directory.

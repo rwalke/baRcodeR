@@ -16,7 +16,7 @@ parameter values). Default is \code{FALSE}}
 to the character string. Can be any sequence of numbers (see examples).}
 
 \item{digits}{numerical. Default is \code{2}. Number of digits to be printed, 
-adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
+adding leading 0s as needed. This will apply to all levels when \code{user=FALSE}. 
 When the numeric value of the label has a greater number of digits than 
 \code{digits}, \code{digits} is automatically increased for the entire level. 
 Default is \code{3}.}
@@ -33,9 +33,9 @@ to generate printable QR-coded labels; and (ii) to downstream data
 collection software (spreadsheets, relational databases, etc.)
 }
 \details{
-When the function is called with \code{user = T}, a sequence of 
+When the function is called with \code{user = TRUE}, a sequence of 
 numbers is generated between the starting and ending number provided by the 
-user. When \code{user = F}, a vector of custom numbers can be provided. 
+user. When \code{user = FALSE}, a vector of custom numbers can be provided. 
 See example below.
 }
 \examples{
@@ -52,7 +52,7 @@ Labels
 
 if(interactive()){
 ## function using user prompt does not use any of the other parameters
-Labels <- uniqID_maker(user = T)
+Labels <- uniqID_maker(user = TRUE)
 Labels
 }
 }

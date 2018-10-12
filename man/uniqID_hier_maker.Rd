@@ -12,12 +12,12 @@ parameter values). Default is \code{FALSE}}
 
 \item{hierarchy}{list. A list with each element consisting of three members
 a vector of three elements (string, beginning value, end value). See examples.
-Used only when \code{user=F})}
+Used only when \code{user=FALSE})}
 
 \item{end}{character. A string to be appended to the end of each label.}
 
 \item{digits}{numerical. Default is \code{2}. Number of digits to be printed, 
-adding leading 0s as needed. This will apply to all levels when \code{user=F}. 
+adding leading 0s as needed. This will apply to all levels when \code{user=FALSE}. 
 When the max number of digits in the ID code is greater than number of digits 
 defined in \code{digits}, then \code{digits} is automatically increased 
 to avoid errors.}
@@ -39,7 +39,7 @@ relational database, etc.
 \examples{
 if(interactive()){
 ## for interactive mode
-uniqID_hier_maker(user = T)
+uniqID_hier_maker(user = TRUE)
 }
 
 ## how to make hierarchy list
