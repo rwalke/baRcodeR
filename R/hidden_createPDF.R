@@ -27,18 +27,24 @@
 #' setting ECols to 2 will put the first label at column 3.
 #' ERows and ECols are useful for printing on partially-used label sheets.
 #' @param trunc logical. Text is broken into multiple lines for longer ID codes,
-#' to prevent printing off of the label area. Default is \code{TRUE}.
+#' to prevent printing off of the label area. Default is \code{TRUE}. If \code{trunc = F}, 
+#' and text is larger than the physical label, the text will be shrunk down automatically.
 #' @param numrow numerical. Number of rows per page. Default is \code{20}.
 #' @param numcol numerical. Number of columns per page. Default is \code{4}.
 #' @param page_width numerical. Width of page (in inches). Default is set to \code{8.5}.
 #' @param page_height numerical. Height of page (in inches). Default is set to \code{11}.
-#' @param height_margin numerical. The height margin of the page (in inches).
-#' Default is \code{0.5}.
 #' @param width_margin numerical. The width margin of the page (in inches).
 #' Default is \code{0.25}.
-#' @param x_space numerical. An integer between \code{190} - \code{250}. This
-#' sets the distance between the QR code and text of each label. Default is \code{215}.
-#' @param y_space numerical. An integer between 80 and 215. Default is 182.
+#' @param height_margin numerical. The height margin of the page (in inches).
+#' Default is \code{0.5}.
+#' @param label_width numerical. The width of label (in inches). Will be calculated as
+#' \code{(page_width - 2 * width_margin)/numcol} if \code{label_width} is set as \code{NULL}.
+#' @param label_height numerical. The height of the label (in inches). Will be calculated as
+#' \code{(page_height - 2 * height_margin)/numrow} if \code{label_height} is set as \code{NULL}.
+#' @param x_space numerical. A value between \code{0} and \code {1}. This
+#' sets the distance between the QR code and text of each label. Default is \code{0}.
+#' @param y_space numerical. The height position of the text on the physical label as a 
+#' proportion of the label height. A value between \code{0} and \code{1}.
 
 #' @seealso \code{\link{create_PDF}}
 #' @export
@@ -59,8 +65,10 @@ custom_create_PDF <- function(user = FALSE,
                               page_height = 11,
                               width_margin = 0.25,
                               height_margin = 0.5,
-                              x_space = 215,
-                              y_space = 182
+                              label_width = NULL,
+                              label_height = NULL,
+                              x_space = 0,
+                              y_space = 0.5
                               ){
   if (length(Labels) == 0) stop("Labels do not exist. Please pass in Labels")
   # what to do depending on class of Label input
@@ -78,11 +86,11 @@ custom_create_PDF <- function(user = FALSE,
     stop("Label input not a vector or a data frame. Please check your input.")
   }
   if (any(unlist(lapply(c(numcol, numrow, Fsz, ERows, ECols, trunc, page_width, page_height, height_margin, width_margin, x_space, y_space), class)) != "numeric") == TRUE) {
-    stop("One or more numerica parameters are not numeric")
+    stop("One or more numerical parameters are not numeric")
   }
   labelLength <- max(nchar(paste(Labels)))
-  if (x_space > 250 | x_space < 190) stop("ERROR: x_space value out of bounds. Must be between 190 - 250")
-  if (y_space < 80 | y_space > 215) stop("ERROR: y_space value out of bounds. Must be between 80 - 215")
+  if (x_space > 1 | x_space < 0) stop("ERROR: x_space value out of bounds. Must be between 0 and 1")
+  if (y_space < 0 | y_space > 1) stop("ERROR: y_space value out of bounds. Must be between 0 and 1")
   # clean up any open graphical devices if function fails
   on.exit(grDevices::dev.off())
   # if user prompt has been set to true
@@ -96,19 +104,6 @@ custom_create_PDF <- function(user = FALSE,
     Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
     while (Fsz < 2.2 | Fsz > 4.7){
       noquote(print("Invalid input, please specify a font size within the range 2.2-4.7"))
-      Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
-    }
-
-    while (Fsz >= 2.2 && Fsz <= 2.5 && labelLength >= 27){
-      noquote(print("ERROR: not enought space to print full label, please decrease font size"))
-      Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
-    }
-    while (Fsz >= 2.6 && Fsz <= 4.0 && labelLength >= 18){
-      noquote(print("ERROR: not enought space to print full label, please decrease font size"))
-      Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
-    }
-    while(Fsz >= 4.1 && Fsz <= 4.7 && labelLength >= 9){
-      noquote(print("ERROR: not enought space to print full label, please decrease font size"))
       Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
     }
     ## Error correction
@@ -159,23 +154,33 @@ custom_create_PDF <- function(user = FALSE,
         noquote(print("Invalid input"))
         width_margin <- as.numeric(readline("Please enter the width margin of page (in inch): "))
       }
+      label_width <- as.numeric(readline("Please enter the width of the label (in inch): "))
+      while(is.numeric(label_width) == FALSE){
+        noquote(print("Invalid input"))
+        label_width <- as.numeric(readline("Please enter the width of the label (in inch): "))
+      }
+      label_height <- as.numeric(readline("Please enter the height of the label (in inch): "))
+      while(is.numeric(label_height) == FALSE){
+        noquote(print("Invalid input"))
+        label_height <- as.numeric(readline("Please enter the height of the label (in inch): "))
+      }
       space <- toupper(readline("change distance between qrcode and label? (y/n): "))
       while((space %in% yesNo) == FALSE){
         noquote(print("Invalid input"))
         space<-toupper(readline("change distance between qrcode and label? (y/n): "))
       }
-      x_space <- 215
-      y_space <- 92.5
+      x_space <- 0
+      y_space <- 0.5
       if (space=="Y"){
-        x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
-        while((x_space < 190 | x_space > 250)){
+        x_space <- as.numeric(readline("Please enter a distance between 0 and 1: "))
+        while((x_space < 1 | x_space > 0)){
           noquote(print("Invalid input"))
-          x_space <- as.numeric(readline("Please enter a distance between 190-250: "))
+          x_space <- as.numeric(readline("Please enter a distance between 0 and 1: "))
         }
-        y_space <- as.numeric(readline("Please enter a distance between 80-215: "))
-        while((x_space < 80 | x_space > 215)){
+        y_space <- as.numeric(readline("Please enter a value between 0 and 1: "))
+        while((x_space < 0 | x_space > 1)){
           noquote(print("Invalid input"))
-          y_space <- as.numeric(readline("Please enter a distance between 80-215: "))
+          y_space <- as.numeric(readline("Please enter a distance between 0 and 1:"))
         }
       }
     } ## end of advanced options loop
@@ -184,52 +189,85 @@ custom_create_PDF <- function(user = FALSE,
   } # user ask == T
   # Dummy data.frame for plotting
 
-  if (Fsz >= 2.2 && Fsz <= 2.5 && labelLength >= 27) stop("ERROR: not enought space to print full label, please decrease font size")
-  width_margin <- 8.5 - width_margin * 2
-  height_margin <- 11 - height_margin * 2
+  # if (Fsz >= 2.2 && Fsz <= 2.5 && labelLength >= 27) stop("ERROR: not enought space to print full label, please decrease font size")
+
+  width_margin <- page_width - width_margin * 2
+  height_margin <- page_height - height_margin * 2
+  if(is.null(label_width)){label_width <- width_margin/numcol}
+  if(is.null(label_height)){label_height <- height_margin/numrow}
+  if(!is.numeric(c(label_width, label_height))) stop("label_width and label_height should be set to NULL or a numeric value.")
   # if (cust_spacing == T) {
   #   y_space <- x_space - (as.integer(x_space * 0.5)) - 15
   # } else {
   #   y_space <- 182
   # }
-  ### Page Setup
-  label_plots <- lapply(Labels, barcode_make, trunc = trunc, ErrCorr = ErrCorr, x_space = x_space, y_space = y_space, Fsz = Fsz)
-  
+  column_space = (width_margin - label_width * numcol)/(numcol-1)
+  row_space = (height_margin - label_height * numrow)/(numrow-1)
+  # Viewport Setup
+  ## grid for page, the layout is set up so last row and column do not include the spacers for the other columns
+  barcode_layout=grid.layout(numrow, numcol, widths = unit(c(rep(label_width + column_space, numcol-1), label_width), "in"), heights = unit(c(rep(label_height + row_space, numrow-1), label_height), "in"))
+  ## vp for the qrcode within the grid layout
+  qr_vp = viewport(x=unit(0.05, "npc"), y=unit(0.8, "npc"), width = unit(0.3 *label_width, "in"), height = unit(0.6 * label_height, "in"), just=c("left", "top"))
+  ## vp for the text label within the grid layout, scaling the x_space by 0.6 makes sure it will not overlap with the qrcode
+  label_vp=viewport(x=unit((0.4 + 0.6*x_space)*label_width, "in"), y=unit(y_space, "npc"), width = unit(0.4, "npc"), height = unit(0.8, "npc"), just=c("left", "center"))
+  # generate qr, most time intensive part
+  label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
+  # File Creation
   x_pos <- ERows + 1
   y_pos <- ECols + 1
-  
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, width = page_width, height = page_height, onefile = TRUE, family = "Courier") # Standard North American 8.5 x 11
-  grid::grid.newpage() # Open a new page on grid device
-  grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre", "centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
-
+  bc_vp = viewport(layout = barcode_layout)
+  pushViewport(bc_vp)
+  
   for (i in 1:length(label_plots)){
+    # Split label to count characters
+    # Xsplt <- strsplit(names(list_of_grobs[i]), "")[[1]]
+    Xsplt <- names(list_of_grobs[i])
+    if(trunc == TRUE){  # Truncate string across lines if trunc==T
+      if(nchar(Xsplt) > 27){Xsplt <- Xsplt[1:27]}
+      # If remaining string is > 8 characters, split into separate lines
+      if(nchar(Xsplt) > 12){
+        Xsplt <- paste0(substring(Xsplt, seq(1, nchar(Xsplt), 12), seq(12, nchar(Xsplt)+12-1, 12)), collapse = "\n")
+      }
+    }
     # print(c("in", x_pos, y_pos))
     # reset if any of the values are greater than page limits
-    if (x_pos > numrow | y_pos > numcol){
-      grid::grid.newpage() # Open a new page on grid device
-      grid::pushViewport(grid::viewport(width = grid::unit(width_margin, "in"), height = grid::unit(height_margin, "in"), just = c("centre","centre"), layout = grid::grid.layout(numrow, numcol))) # Margins: left/right:10mm x top/bottom:22mm
+    if (x_pos > numcol | y_pos > numrow){
+      grid.newpage()
+      pushViewport(viewport(width = unit(page_width, "in"), height = unit(page_height, "in")))
+      # barcode_layout=grid.layout(numrow, numcol, widths = widths, heights = heights)
+      pushViewport(bc_vp)
       x_pos = 1
       y_pos = 1
     }
     #print(c(x_pos, y_pos))
     # print the label onto the viewport
-    print(label_plots[[i]], vp = grid::viewport(layout.pos.row = x_pos, layout.pos.col = y_pos, x = grid::unit(0,"mm"), y = grid::unit(0,"mm"), clip = FALSE))
+    pushViewport(viewport(layout.pos.row=y_pos, layout.pos.col=x_pos))
+    # grid.rect()
+    pushViewport(qr_vp)
+    grid.draw(list_of_grobs[[i]])
+    popViewport()
+    pushViewport(label_vp)
+    grid.text(label = Xsplt, gp = gpar(fontsize= 2 * Fsz, lineheight=0.8))
+    popViewport(2)
     if (Across == "T" | Across == TRUE){
-      y_pos <- y_pos + 1
-      if (y_pos > numcol) {
-        y_pos <- 1
-        x_pos <- x_pos + 1
-      }
-    } else {
       x_pos <- x_pos + 1
-      if (x_pos > numrow) {
+      if (x_pos > numcol) {
         x_pos <- 1
         y_pos <- y_pos + 1
+      }
+      
+    } else {
+      y_pos <- y_pos + 1
+      if (y_pos > numrow) {
+        y_pos <- 1
+        x_pos <- x_pos + 1
       }
     }
     # print(c("out", x_pos, y_pos))
   }
+
 
   #end if
 } #end create_PDF()
@@ -241,6 +279,7 @@ barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
   dummy_df <- data.frame(x = c(0, 457), y = c(0, 212))
   # Create text label
   Xtxt<-paste(gsub("\\\\n", "\\\n", Labels), collapse="")
+  Xtxt <- gsub("_", "-", Xtxt)
   # Split label to count characters
   Xsplt <- strsplit(Xtxt, "")[[1]]
 
@@ -252,7 +291,7 @@ barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
       count <- 0
       for(j in 1:length(Xsplt)){
         count <- count + 1
-        Xnew <- c(Xnew, Xsplt[j])
+       Xnew <- c(Xnew, Xsplt[j])
         if(count > 8){
           count<- 0
           Xnew <- c(Xnew,"\n")
@@ -262,7 +301,7 @@ barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
     }
   }
   # Create qrcode
-  Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Labels), ErrorCorrectionLevel = ErrCorr, dataOutput = TRUE, plotQRcode = FALSE, mask = 3) - 1), interpolate = FALSE)
+  Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Xtxt), ErrorCorrectionLevel = ErrCorr, dataOutput = TRUE, plotQRcode = FALSE, mask = 3) - 1), interpolate = FALSE)
   # Create tag (QR code + text label)
   Xplt <-
     ggplot2::ggplot(data = dummy_df, ggplot2::aes(x = 0, y = 0)) + ggplot2::theme_void() + ggplot2::annotation_custom(Xpng, xmin = 30, xmax = 180, ymin = 60, ymax = 180) + ggplot2::coord_cartesian(xlim = c(0, 457), ylim = c(0, 212)) + 
@@ -270,3 +309,12 @@ barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
   return(Xplt)
 }
 
+#' @rdname  custom_create_PDF
+#' @export
+qrcode_make<-function(Labels, ErrCorr){
+  # Create text label
+  Xtxt<-gsub("_", "-", Labels)
+  # Create qrcode
+  Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Xtxt), ErrorCorrectionLevel = ErrCorr, dataOutput = TRUE, plotQRcode = FALSE, mask = 3) - 1), interpolate = FALSE)
+  return(Xpng)
+}
