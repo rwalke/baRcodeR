@@ -67,7 +67,7 @@ Default is \code{0.5}.}
 \item{label_height}{numerical. The height of the label (in inches). Will be calculated as
 \code{(page_height - 2 * height_margin)/numrow} if \code{label_height} is set as \code{NULL}.}
 
-\item{x_space}{numerical. A value between \code{0} and \code {1}. This
+\item{x_space}{numerical. A value between \code{0} and \code{1}. This
 sets the distance between the QR code and text of each label. Default is \code{0}.}
 
 \item{y_space}{numerical. The height position of the text on the physical label as a 

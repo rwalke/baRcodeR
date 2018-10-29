@@ -41,7 +41,7 @@
 #' \code{(page_width - 2 * width_margin)/numcol} if \code{label_width} is set as \code{NULL}.
 #' @param label_height numerical. The height of the label (in inches). Will be calculated as
 #' \code{(page_height - 2 * height_margin)/numrow} if \code{label_height} is set as \code{NULL}.
-#' @param x_space numerical. A value between \code{0} and \code {1}. This
+#' @param x_space numerical. A value between \code{0} and \code{1}. This
 #' sets the distance between the QR code and text of each label. Default is \code{0}.
 #' @param y_space numerical. The height position of the text on the physical label as a 
 #' proportion of the label height. A value between \code{0} and \code{1}.
@@ -205,11 +205,11 @@ custom_create_PDF <- function(user = FALSE,
   row_space = (height_margin - label_height * numrow)/(numrow-1)
   # Viewport Setup
   ## grid for page, the layout is set up so last row and column do not include the spacers for the other columns
-  barcode_layout=grid.layout(numrow, numcol, widths = unit(c(rep(label_width + column_space, numcol-1), label_width), "in"), heights = unit(c(rep(label_height + row_space, numrow-1), label_height), "in"))
+  barcode_layout=grid::grid.layout(numrow, numcol, widths = grid::unit(c(rep(label_width + column_space, numcol-1), label_width), "in"), heights = grid::unit(c(rep(label_height + row_space, numrow-1), label_height), "in"))
   ## vp for the qrcode within the grid layout
-  qr_vp = viewport(x=unit(0.05, "npc"), y=unit(0.8, "npc"), width = unit(0.3 *label_width, "in"), height = unit(0.6 * label_height, "in"), just=c("left", "top"))
+  qr_vp = grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 *label_width, "in"), height = grid::unit(0.6 * label_height, "in"), just=c("left", "top"))
   ## vp for the text label within the grid layout, scaling the x_space by 0.6 makes sure it will not overlap with the qrcode
-  label_vp=viewport(x=unit((0.4 + 0.6*x_space)*label_width, "in"), y=unit(y_space, "npc"), width = unit(0.4, "npc"), height = unit(0.8, "npc"), just=c("left", "center"))
+  label_vp=grid::viewport(x=grid::unit((0.4 + 0.6*x_space)*label_width, "in"), y=grid::unit(y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
   # generate qr, most time intensive part
   label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
   # File Creation
@@ -217,13 +217,12 @@ custom_create_PDF <- function(user = FALSE,
   y_pos <- ECols + 1
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, width = page_width, height = page_height, onefile = TRUE, family = "Courier") # Standard North American 8.5 x 11
-  bc_vp = viewport(layout = barcode_layout)
-  pushViewport(bc_vp)
+  bc_vp = grid::viewport(layout = barcode_layout)
+  grid::pushViewport(bc_vp)
   
   for (i in 1:length(label_plots)){
     # Split label to count characters
-    # Xsplt <- strsplit(names(list_of_grobs[i]), "")[[1]]
-    Xsplt <- names(list_of_grobs[i])
+    Xsplt <- names(label_plots[i])
     if(trunc == TRUE){  # Truncate string across lines if trunc==T
       if(nchar(Xsplt) > 27){Xsplt <- Xsplt[1:27]}
       # If remaining string is > 8 characters, split into separate lines
@@ -234,23 +233,23 @@ custom_create_PDF <- function(user = FALSE,
     # print(c("in", x_pos, y_pos))
     # reset if any of the values are greater than page limits
     if (x_pos > numcol | y_pos > numrow){
-      grid.newpage()
-      pushViewport(viewport(width = unit(page_width, "in"), height = unit(page_height, "in")))
+      grid::grid.newpage()
+      grid::pushViewport(grid::viewport(width = grid::unit(page_width, "in"), height = grid::unit(page_height, "in")))
       # barcode_layout=grid.layout(numrow, numcol, widths = widths, heights = heights)
-      pushViewport(bc_vp)
+      grid::pushViewport(bc_vp)
       x_pos = 1
       y_pos = 1
     }
     #print(c(x_pos, y_pos))
     # print the label onto the viewport
-    pushViewport(viewport(layout.pos.row=y_pos, layout.pos.col=x_pos))
+    grid::pushViewport(grid::viewport(layout.pos.row=y_pos, layout.pos.col=x_pos))
     # grid.rect()
-    pushViewport(qr_vp)
-    grid.draw(list_of_grobs[[i]])
-    popViewport()
-    pushViewport(label_vp)
-    grid.text(label = Xsplt, gp = gpar(fontsize= 2 * Fsz, lineheight=0.8))
-    popViewport(2)
+    grid::pushViewport(qr_vp)
+    grid::grid.draw(label_plots[[i]])
+    grid::popViewport()
+    grid::pushViewport(label_vp)
+    grid::grid.text(label = Xsplt, gp = grid::gpar(fontsize= 2 * Fsz, lineheight=0.8))
+    grid::popViewport(2)
     if (Across == "T" | Across == TRUE){
       x_pos <- x_pos + 1
       if (x_pos > numcol) {
