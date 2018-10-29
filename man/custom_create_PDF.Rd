@@ -3,15 +3,19 @@
 \name{custom_create_PDF}
 \alias{custom_create_PDF}
 \alias{barcode_make}
+\alias{qrcode_make}
 \title{Make QR codes and print labels}
 \usage{
 custom_create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
   ErrCorr = "H", Fsz = 2.5, Across = TRUE, ERows = 0, ECols = 0,
   trunc = TRUE, numrow = 20, numcol = 4, page_width = 8.5,
   page_height = 11, width_margin = 0.25, height_margin = 0.5,
-  x_space = 215, y_space = 182)
+  label_width = NULL, label_height = NULL, x_space = 0,
+  y_space = 0.5)
 
 barcode_make(Labels, trunc, ErrCorr, x_space, y_space, Fsz)
+
+qrcode_make(Labels, ErrCorr)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for
@@ -40,7 +44,8 @@ setting ECols to 2 will put the first label at column 3.
 ERows and ECols are useful for printing on partially-used label sheets.}
 
 \item{trunc}{logical. Text is broken into multiple lines for longer ID codes,
-to prevent printing off of the label area. Default is \code{TRUE}.}
+to prevent printing off of the label area. Default is \code{TRUE}. If \code{trunc = F}, 
+and text is larger than the physical label, the text will be shrunk down automatically.}
 
 \item{numrow}{numerical. Number of rows per page. Default is \code{20}.}
 
@@ -56,10 +61,17 @@ Default is \code{0.25}.}
 \item{height_margin}{numerical. The height margin of the page (in inches).
 Default is \code{0.5}.}
 
-\item{x_space}{numerical. An integer between \code{190} - \code{250}. This
-sets the distance between the QR code and text of each label. Default is \code{215}.}
+\item{label_width}{numerical. The width of label (in inches). Will be calculated as
+\code{(page_width - 2 * width_margin)/numcol} if \code{label_width} is set as \code{NULL}.}
 
-\item{y_space}{numerical. An integer between 80 and 215. Default is 182.}
+\item{label_height}{numerical. The height of the label (in inches). Will be calculated as
+\code{(page_height - 2 * height_margin)/numrow} if \code{label_height} is set as \code{NULL}.}
+
+\item{x_space}{numerical. A value between \code{0} and \code {1}. This
+sets the distance between the QR code and text of each label. Default is \code{0}.}
+
+\item{y_space}{numerical. The height position of the text on the physical label as a 
+proportion of the label height. A value between \code{0} and \code{1}.}
 }
 \value{
 a PDF file containing QR-coded labels, saved to the default directory.
