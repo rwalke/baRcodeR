@@ -2,18 +2,14 @@
 % Please edit documentation in R/hidden_createPDF.R
 \name{custom_create_PDF}
 \alias{custom_create_PDF}
-\alias{barcode_make}
 \alias{qrcode_make}
 \title{Make QR codes and print labels}
 \usage{
 custom_create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
-  ErrCorr = "H", Fsz = 2.5, Across = TRUE, ERows = 0, ECols = 0,
+  ErrCorr = "H", Fsz = 5, Across = TRUE, ERows = 0, ECols = 0,
   trunc = TRUE, numrow = 20, numcol = 4, page_width = 8.5,
   page_height = 11, width_margin = 0.25, height_margin = 0.5,
-  label_width = NULL, label_height = NULL, x_space = 0,
-  y_space = 0.5)
-
-barcode_make(Labels, trunc, ErrCorr, x_space, y_space, Fsz)
+  label_width = NA, label_height = NA, x_space = 0, y_space = 0.5)
 
 qrcode_make(Labels, ErrCorr)
 }
@@ -28,9 +24,8 @@ parameter values) Default is \code{FALSE}}
 \item{ErrCorr}{error correction value. Level of damage from low to high:
 \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}}
 
-\item{Fsz}{numerical. Sets font size using a number between \code{2.2} and
- \code{4.7}. Longer ID codes may not fit on the labels using larger font sizes. 
-Default font size is \code{2.5}}
+\item{Fsz}{numerical. Sets font size in points. Longer ID codes may be shrunk to fit if trunaction is not used. 
+Default font size is \code{5}}
 
 \item{Across}{logical. When \code{TRUE}, print labels across rows, left to right.
 When \code{FALSE}, print labels down columns, top to bottom. Default is \code{TRUE}.}

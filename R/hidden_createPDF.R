@@ -15,9 +15,8 @@
 #' @param name character. Name of the PDF output file. Default is \code{"LabelsOut"}.
 #' @param ErrCorr error correction value. Level of damage from low to high:
 #' \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}
-#' @param Fsz numerical. Sets font size using a number between \code{2.2} and
-#'  \code{4.7}. Longer ID codes may not fit on the labels using larger font sizes. 
-#' Default font size is \code{2.5}
+#' @param Fsz numerical. Sets font size in points. Longer ID codes may be shrunk to fit if trunaction is not used. 
+#' Default font size is \code{5}
 #' @param Across logical. When \code{TRUE}, print labels across rows, left to right.
 #' When \code{FALSE}, print labels down columns, top to bottom. Default is \code{TRUE}.
 #' @param ERows number of rows to skip. Default is \code{0}. Example:
@@ -54,7 +53,7 @@ custom_create_PDF <- function(user = FALSE,
                               Labels = NULL,
                               name = "LabelsOut",
                               ErrCorr = "H",
-                              Fsz = 2.5,
+                              Fsz = 5,
                               Across = TRUE,
                               ERows = 0,
                               ECols = 0,
@@ -65,8 +64,8 @@ custom_create_PDF <- function(user = FALSE,
                               page_height = 11,
                               width_margin = 0.25,
                               height_margin = 0.5,
-                              label_width = NULL,
-                              label_height = NULL,
+                              label_width = NA,
+                              label_height = NA,
                               x_space = 0,
                               y_space = 0.5
                               ){
@@ -101,10 +100,10 @@ custom_create_PDF <- function(user = FALSE,
     ## ask for name
     name <- readline(paste0("Please enter name for PDF output file: "))
     ## Set font size
-    Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
-    while (Fsz < 2.2 | Fsz > 4.7){
-      noquote(print("Invalid input, please specify a font size within the range 2.2-4.7"))
-      Fsz <- noquote(as.numeric(readline("Please enter a font size (2.2-4.7): ")))
+    Fsz <- noquote(as.numeric(readline("Please enter a font size ")))
+    while (Fsz <= 0){
+      noquote(print("Invalid input, please specify a font size greater than 0"))
+      Fsz <- noquote(as.numeric(readline("Please enter a font size greater than 0: ")))
     }
     ## Error correction
     ErrCorr <- noquote(toupper(readline("Specify an error correction - L, M, Q, H: ")))
@@ -193,23 +192,23 @@ custom_create_PDF <- function(user = FALSE,
 
   width_margin <- page_width - width_margin * 2
   height_margin <- page_height - height_margin * 2
-  if(is.null(label_width)){label_width <- width_margin/numcol}
-  if(is.null(label_height)){label_height <- height_margin/numrow}
+  if(is.na(label_width)){label_width <- width_margin/numcol}
+  if(is.na(label_height)){label_height <- height_margin/numrow}
   if(!is.numeric(c(label_width, label_height))) stop("label_width and label_height should be set to NULL or a numeric value.")
   # if (cust_spacing == T) {
   #   y_space <- x_space - (as.integer(x_space * 0.5)) - 15
   # } else {
   #   y_space <- 182
   # }
-  column_space = (width_margin - label_width * numcol)/(numcol-1)
-  row_space = (height_margin - label_height * numrow)/(numrow-1)
+  column_space <- (width_margin - label_width * numcol)/(numcol-1)
+  row_space <- (height_margin - label_height * numrow)/(numrow-1)
   # Viewport Setup
   ## grid for page, the layout is set up so last row and column do not include the spacers for the other columns
-  barcode_layout=grid::grid.layout(numrow, numcol, widths = grid::unit(c(rep(label_width + column_space, numcol-1), label_width), "in"), heights = grid::unit(c(rep(label_height + row_space, numrow-1), label_height), "in"))
+  barcode_layout <- grid::grid.layout(numrow, numcol, widths = grid::unit(c(rep(label_width + column_space, numcol-1), label_width), "in"), heights = grid::unit(c(rep(label_height + row_space, numrow-1), label_height), "in"))
   ## vp for the qrcode within the grid layout
-  qr_vp = grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 *label_width, "in"), height = grid::unit(0.6 * label_height, "in"), just=c("left", "top"))
+  qr_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 *label_width, "in"), height = grid::unit(0.6 * label_height, "in"), just=c("left", "top"))
   ## vp for the text label within the grid layout, scaling the x_space by 0.6 makes sure it will not overlap with the qrcode
-  label_vp=grid::viewport(x=grid::unit((0.4 + 0.6*x_space)*label_width, "in"), y=grid::unit(y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
+  label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6*x_space)*label_width, "in"), y=grid::unit(y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
   # generate qr, most time intensive part
   label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
   # File Creation
@@ -248,7 +247,7 @@ custom_create_PDF <- function(user = FALSE,
     grid::grid.draw(label_plots[[i]])
     grid::popViewport()
     grid::pushViewport(label_vp)
-    grid::grid.text(label = Xsplt, gp = grid::gpar(fontsize= 2 * Fsz, lineheight=0.8))
+    grid::grid.text(label = Xsplt, gp = grid::gpar(fontsize = Fsz, lineheight = 0.8))
     grid::popViewport(2)
     if (Across == "T" | Across == TRUE){
       x_pos <- x_pos + 1
@@ -271,42 +270,6 @@ custom_create_PDF <- function(user = FALSE,
   #end if
 } #end create_PDF()
 
-
-#' @rdname custom_create_PDF
-#' @export
-barcode_make<-function(Labels, trunc, ErrCorr, x_space, y_space, Fsz){
-  dummy_df <- data.frame(x = c(0, 457), y = c(0, 212))
-  # Create text label
-  Xtxt<-paste(gsub("\\\\n", "\\\n", Labels), collapse="")
-  Xtxt <- gsub("_", "-", Xtxt)
-  # Split label to count characters
-  Xsplt <- strsplit(Xtxt, "")[[1]]
-
-  if(trunc == TRUE){  # Truncate string across lines if trunc==T
-    if(length(Xsplt) > 27){Xsplt <- Xsplt[1:27]}
-    # If remaining string is > 8 characters, split into separate lines
-    if(length(Xsplt) > 8){
-      Xnew <- {}
-      count <- 0
-      for(j in 1:length(Xsplt)){
-        count <- count + 1
-       Xnew <- c(Xnew, Xsplt[j])
-        if(count > 8){
-          count<- 0
-          Xnew <- c(Xnew,"\n")
-        }
-      }
-      Xtxt <- paste(Xnew, collapse="")
-    }
-  }
-  # Create qrcode
-  Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Xtxt), ErrorCorrectionLevel = ErrCorr, dataOutput = TRUE, plotQRcode = FALSE, mask = 3) - 1), interpolate = FALSE)
-  # Create tag (QR code + text label)
-  Xplt <-
-    ggplot2::ggplot(data = dummy_df, ggplot2::aes(x = 0, y = 0)) + ggplot2::theme_void() + ggplot2::annotation_custom(Xpng, xmin = 30, xmax = 180, ymin = 60, ymax = 180) + ggplot2::coord_cartesian(xlim = c(0, 457), ylim = c(0, 212)) + 
-    ggplot2::geom_text(ggplot2::aes(x = x_space, y = y_space, label = Xtxt, hjust = 0, vjust = 1), size = Fsz)
-  return(Xplt)
-}
 
 #' @rdname  custom_create_PDF
 #' @export
