@@ -1,4 +1,5 @@
 # baRcodeR
+[![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
 
 ## Open-source label generation for more repeatable workflows with biological samples
 
