@@ -159,7 +159,7 @@ make_labels<-function() {
       qr_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 * (input$page_width - 2 * input$width_margin)/input$numcol, "in"), height = grid::unit(0.6 * (input$page_height - 2 * input$height_margin)/input$numrow, "in"), just=c("left", "top"))
       label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6 * input$x_space)* (input$page_width - 2 * input$width_margin)/input$numcol, "in"), y=grid::unit(input$y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
       outputfile <- tempfile(fileext=".png")
-      label_plot <- baRcodeR::qrcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr)
+      label_plot <- baRcodeR:::qrcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr)
       grDevices::png(outputfile, width = (input$page_width - 2 * input$width_margin)/input$numcol, (input$page_height - 2 * input$height_margin)/input$numrow, units = "in", res=100)
       # grid::grid.rect()
       grid::pushViewport(qr_vp)
