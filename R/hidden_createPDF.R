@@ -271,7 +271,6 @@ custom_create_PDF <- function(user = FALSE,
 } #end create_PDF()
 
 
-#' @rdname  custom_create_PDF
 qrcode_make<-function(Labels, ErrCorr){
   # Create text label
   Xtxt<-gsub("_", "-", Labels)
@@ -280,18 +279,17 @@ qrcode_make<-function(Labels, ErrCorr){
   return(Xpng)
 }
 
-#' @rdname custom_create_PDF
-code_128_binary <- function(Label){
+code_128_binary <- function(Labels){
   ## labels is a character string
   ## read in dict 
-  Barcodes <- baRcodeR:::barcodes128
+  Barcodes <- barcodes128
   start_code <- 209
-  lab_chars <- unlist(strsplit(Label, split = ""))
+  lab_chars <- unlist(strsplit(Labels, split = ""))
   lab_values <- sapply(lab_chars, function(x) utf8ToInt(x))
   # ascii to code 128 is just a difference of 32, this line keeps clarity
   code_values <- lab_values - 32
   # 104 is the start value for start code b, hardcoded right now
-  check_sum <- 104 + sum(code_values * 1:length(ascii_values))
+  check_sum <- 104 + sum(code_values * 1:length(code_values))
   check_character <- check_sum %% 103
   Binary_code <- sapply(lab_values, function(x, Barcodes) Barcodes$Barcode[x == Barcodes$ASCII], Barcodes = Barcodes)
   ## create quiet zone
