@@ -305,3 +305,12 @@ code_128_binary <- function(Labels){
                         collapse = "", sep ="")
   return(binary_label)
 }
+
+code_128_grob <- function(Labels){
+  line_width <- 1 / nchar(Labels)
+  draw_df <- data.frame("Code" = unlist(strsplit(Labels, split = "")), x_pos = seq(from = 0, to = 1 - line_width, by = line_width), y_pos = 0, width = line_width)
+  draw_df$color <- ifelse(draw_df$Code == 0, "#ffffff", "#000000")
+  label_grob <- apply(draw_df, 1, function(x) rectGrob(x = x[2], y = x[3], width = x[4], height = 1, just = c("left", "bottom"),  gp = gpar(fill = x[5], col = x[5])))
+  grid.newpage()
+  lapply(label_grob, function(x) grid.draw(x))
+}
