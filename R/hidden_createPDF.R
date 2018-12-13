@@ -272,11 +272,38 @@ custom_create_PDF <- function(user = FALSE,
 
 
 #' @rdname  custom_create_PDF
-#' @export
 qrcode_make<-function(Labels, ErrCorr){
   # Create text label
   Xtxt<-gsub("_", "-", Labels)
   # Create qrcode
   Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Xtxt), ErrorCorrectionLevel = ErrCorr, dataOutput = TRUE, plotQRcode = FALSE, mask = 3) - 1), interpolate = FALSE)
   return(Xpng)
+}
+
+#' @rdname custom_create_PDF
+code_128_binary <- function(Label){
+  ## labels is a character string
+  ## read in dict 
+  Barcodes <- baRcodeR:::barcodes128
+  start_code <- 209
+  lab_chars <- unlist(strsplit(Label, split = ""))
+  lab_values <- sapply(lab_chars, function(x) utf8ToInt(x))
+  # ascii to code 128 is just a difference of 32, this line keeps clarity
+  code_values <- lab_values - 32
+  # 104 is the start value for start code b, hardcoded right now
+  check_sum <- 104 + sum(code_values * 1:length(ascii_values))
+  check_character <- check_sum %% 103
+  Binary_code <- sapply(lab_values, function(x, Barcodes) Barcodes$Barcode[x == Barcodes$ASCII], Barcodes = Barcodes)
+  ## create quiet zone
+  quiet_zone <- paste(c(1:(10)*0),collapse="")
+  ## paste together in order: quiet zone, start code binary, binary label, checksum character
+  ## stop code, and quiet zone
+  binary_label <- paste(quiet_zone, 
+                        Barcodes$Barcode[Barcodes$ASCII == start_code],
+                        paste(Binary_code, collapse=""),
+                        Barcodes$Barcode[Barcodes$ASCII == check_character + 32],
+                        "1100011101011",
+                        quiet_zone,
+                        collapse = "", sep ="")
+  return(binary_label)
 }
