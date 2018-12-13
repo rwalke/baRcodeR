@@ -44,6 +44,7 @@ for (i in 1:nrow(Labels)){  # Create binary representation of barcode for each l
   CheckCalc<-0 # Need this to keep track of characters to calculate check code
   LabChars<-unlist(strsplit(as.character(Labels[i,1]),split=""))
   for (j in 1:length(LabChars)){ # For each character in Labels[i]
+    # the  - 1 is used as a short cut to get the code 128 value from the row number. IE, a space character has ascii value 33, and is in row 1, but its value is actually 0 in code 128
     CheckCalc<-CheckCalc+(grep(utf8ToInt(LabChars[j]),Barcodes[,1])-1)*j
     # Convert Character to UTF-8 ASCII code and find corresponding binary in Barcodes file
     DrawCode<-Barcodes[grep(utf8ToInt(LabChars[j]),Barcodes[,1]),2]
