@@ -1,49 +1,65 @@
 #' Make QR codes and print labels
 #'
-#' Input a vector or data frame of ID codes to produce a PDF of QR-coded labels 
-#' that can then be printed. The PDF setup is for the ULINE 1.75" * 0.5"
-#' WEATHER RESISTANT LABEL for laser printer; item # S-19297 (uline.ca)
+#' Input a vector or data frame of ID codes to produce a PDF of QR-coded labels
+#' that can then be printed. The PDF setup is for the ULINE 1.75" * 0.5" WEATHER
+#' RESISTANT LABEL for laser printer; item # S-19297 (uline.ca)
 #'
 #' \code{barcode_make} is the helper function generating the actual QR code and
 #' creating the page layout for printed labels.
 #'
-#' @return a PDF file containing QR-coded labels, saved to the default directory.
+#' @return a PDF file containing QR-coded labels, saved to the default
+#'   directory.
 #'
 #' @param user logical. Run function using interactive mode (prompts user for
-#' parameter values) Default is \code{FALSE}
-#' @param Labels vector or data frame object containing label names (i.e. unique ID codes).
-#' @param name character. Name of the PDF output file. Default is \code{"LabelsOut"}.
-#' @param ErrCorr error correction value. Level of damage from low to high:
-#' \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}
-#' @param Fsz numerical. Sets font size in points. Longer ID codes may be shrunk to fit if trunaction is not used. 
-#' Default font size is \code{5}
-#' @param Across logical. When \code{TRUE}, print labels across rows, left to right.
-#' When \code{FALSE}, print labels down columns, top to bottom. Default is \code{TRUE}.
-#' @param ERows number of rows to skip. Default is \code{0}. Example:
-#' setting ERows to 6 will begin printing at row 7.
-#' ERows and ECols are useful for printing on partially-used label sheets.
-#' @param ECols number of columns to skip. Default is \code{0}. Example:
-#' setting ECols to 2 will put the first label at column 3.
-#' ERows and ECols are useful for printing on partially-used label sheets.
+#'   parameter values) Default is \code{FALSE}
+#' @param Labels vector or data frame object containing label names (i.e. unique
+#'   ID codes).
+#' @param name character. Name of the PDF output file. Default is
+#'   \code{"LabelsOut"}.
+#' @param type character. Choice of \code{"linear"} code 128 or \code{"matrix"}
+#'   QR code labels. Default is \code{"matrix"}.
+#' @param ErrCorr error correction value for matrix labels only. Level of damage
+#'   from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
+#'   is \code{"H"}.
+#' @param Fsz numerical. Sets font size in points. Longer ID codes may be shrunk
+#'   to fit if truncation is not used for matrix labels. Default font size is
+#'   \code{5}. ID codes are also shrunk automatically to fit on the label if
+#'   actual size is bigger than label dimensions.
+#' @param Across logical. When \code{TRUE}, print labels across rows, left to
+#'   right. When \code{FALSE}, print labels down columns, top to bottom. Default
+#'   is \code{TRUE}.
+#' @param ERows number of rows to skip. Default is \code{0}. Example: setting
+#'   ERows to 6 will begin printing at row 7. ERows and ECols are useful for
+#'   printing on partially-used label sheets.
+#' @param ECols number of columns to skip. Default is \code{0}. Example: setting
+#'   ECols to 2 will put the first label at column 3. ERows and ECols are useful
+#'   for printing on partially-used label sheets.
 #' @param trunc logical. Text is broken into multiple lines for longer ID codes,
-#' to prevent printing off of the label area. Default is \code{TRUE}. If \code{trunc = F}, 
-#' and text is larger than the physical label, the text will be shrunk down automatically.
+#'   to prevent printing off of the label area. Default is \code{TRUE}. If
+#'   \code{trunc = F}, and text is larger than the physical label, the text will
+#'   be shrunk down automatically.
 #' @param numrow numerical. Number of rows per page. Default is \code{20}.
 #' @param numcol numerical. Number of columns per page. Default is \code{4}.
-#' @param page_width numerical. Width of page (in inches). Default is set to \code{8.5}.
-#' @param page_height numerical. Height of page (in inches). Default is set to \code{11}.
+#' @param page_width numerical. Width of page (in inches). Default is set to
+#'   \code{8.5}.
+#' @param page_height numerical. Height of page (in inches). Default is set to
+#'   \code{11}.
 #' @param width_margin numerical. The width margin of the page (in inches).
-#' Default is \code{0.25}.
+#'   Default is \code{0.25}.
 #' @param height_margin numerical. The height margin of the page (in inches).
-#' Default is \code{0.5}.
-#' @param label_width numerical. The width of label (in inches). Will be calculated as
-#' \code{(page_width - 2 * width_margin)/numcol} if \code{label_width} is set as \code{NULL}.
-#' @param label_height numerical. The height of the label (in inches). Will be calculated as
-#' \code{(page_height - 2 * height_margin)/numrow} if \code{label_height} is set as \code{NULL}.
-#' @param x_space numerical. A value between \code{0} and \code{1}. This
-#' sets the distance between the QR code and text of each label. Default is \code{0}.
-#' @param y_space numerical. The height position of the text on the physical label as a 
-#' proportion of the label height. A value between \code{0} and \code{1}.
+#'   Default is \code{0.5}.
+#' @param label_width numerical. The width of label (in inches). Will be
+#'   calculated as \code{(page_width - 2 * width_margin)/numcol} if
+#'   \code{label_width} is set as \code{NULL}.
+#' @param label_height numerical. The height of the label (in inches). Will be
+#'   calculated as \code{(page_height - 2 * height_margin)/numrow} if
+#'   \code{label_height} is set as \code{NULL}.
+#' @param x_space numerical. A value between \code{0} and \code{1}. This sets
+#'   the distance between the QR code and text of each label. Default is
+#'   \code{0}.
+#' @param y_space numerical. The height position of the text on the physical
+#'   label as a proportion of the label height. A value between \code{0} and
+#'   \code{1}.
 
 #' @seealso \code{\link{create_PDF}}
 #' @export
@@ -52,6 +68,7 @@
 custom_create_PDF <- function(user = FALSE,
                               Labels = NULL,
                               name = "LabelsOut",
+                              type = "matrix",
                               ErrCorr = "H",
                               Fsz = 5,
                               Across = TRUE,
@@ -205,12 +222,21 @@ custom_create_PDF <- function(user = FALSE,
   # Viewport Setup
   ## grid for page, the layout is set up so last row and column do not include the spacers for the other columns
   barcode_layout <- grid::grid.layout(numrow, numcol, widths = grid::unit(c(rep(label_width + column_space, numcol-1), label_width), "in"), heights = grid::unit(c(rep(label_height + row_space, numrow-1), label_height), "in"))
-  ## vp for the qrcode within the grid layout
-  qr_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 *label_width, "in"), height = grid::unit(0.6 * label_height, "in"), just=c("left", "top"))
-  ## vp for the text label within the grid layout, scaling the x_space by 0.6 makes sure it will not overlap with the qrcode
-  label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6*x_space)*label_width, "in"), y=grid::unit(y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
-  # generate qr, most time intensive part
-  label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
+  ## change viewport and barcode generator depending on qr or 1d barcodes
+  if(type == "linear"){
+    code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.9 *label_width, "in"), height = grid::unit(0.8 * label_height, "in"), just=c("left", "top"))
+    text_height <- ifelse(Fsz / 72 > label_height * 0.3, label_height * 0.3, Fsz/72)
+    label_vp <- grid::viewport(x=grid::unit(0.5, "npc"), y = grid::unit(1, "npc"), width = grid::unit(1, "npc"), height = grid::unit(text_height, "in"), just = c("centre", "top"))
+    Fsz <- ifelse(Fsz / 72 > label_height * 0.3, label_height * 72 * 0.3 , Fsz)
+    label_plots <- sapply(as.character(Labels), code_128_make , USE.NAMES = T, simplify = F)
+  } else if (type =="matrix"){
+    ## vp for the qrcode within the grid layout
+    code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 *label_width, "in"), height = grid::unit(0.6 * label_height, "in"), just=c("left", "top"))
+    ## vp for the text label within the grid layout, scaling the x_space by 0.6 makes sure it will not overlap with the qrcode
+    label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6*x_space)*label_width, "in"), y=grid::unit(y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
+    # generate qr, most time intensive part
+    label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
+  }
   # File Creation
   x_pos <- ERows + 1
   y_pos <- ECols + 1
@@ -242,11 +268,14 @@ custom_create_PDF <- function(user = FALSE,
     #print(c(x_pos, y_pos))
     # print the label onto the viewport
     grid::pushViewport(grid::viewport(layout.pos.row=y_pos, layout.pos.col=x_pos))
-    # grid.rect()
-    grid::pushViewport(qr_vp)
+    # grid::grid.rect()
+    grid::pushViewport(code_vp)
     grid::grid.draw(label_plots[[i]])
     grid::popViewport()
     grid::pushViewport(label_vp)
+    if(type =="linear"){
+      grid.rect(gp = gpar(col = NA, fill = "white"))
+    }
     grid::grid.text(label = Xsplt, gp = grid::gpar(fontsize = Fsz, lineheight = 0.8))
     grid::popViewport(2)
     if (Across == "T" | Across == TRUE){
