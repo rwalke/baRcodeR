@@ -279,10 +279,10 @@ qrcode_make<-function(Labels, ErrCorr){
   return(Xpng)
 }
 
-code_128_binary <- function(Labels){
+code_128_make <- function(Labels){
   ## labels is a character string
   ## read in dict 
-  Barcodes <- barcodes128
+  Barcodes <- baRcodeR:::barcodes128
   start_code <- 209
   lab_chars <- unlist(strsplit(Labels, split = ""))
   lab_values <- sapply(lab_chars, function(x) utf8ToInt(x))
@@ -303,14 +303,10 @@ code_128_binary <- function(Labels){
                         "1100011101011",
                         quiet_zone,
                         collapse = "", sep ="")
-  return(binary_label)
+  ## split binary apart for 
+  bar_values <- as.numeric(unlist(strsplit(binary_label, split = "")))
+  barcode_bars <- rasterGrob(t(!as.matrix(bar_values)), width = 1, height = 1, interpolate = F)
+  return(barcode_bars)
 }
 
-code_128_grob <- function(Labels){
-  line_width <- 1 / nchar(Labels)
-  draw_df <- data.frame("Code" = unlist(strsplit(Labels, split = "")), x_pos = seq(from = 0, to = 1 - line_width, by = line_width), y_pos = 0, width = line_width)
-  draw_df$color <- ifelse(draw_df$Code == 0, "#ffffff", "#000000")
-  label_grob <- apply(draw_df, 1, function(x) rectGrob(x = x[2], y = x[3], width = x[4], height = 1, just = c("left", "bottom"),  gp = gpar(fill = x[5], col = x[5])))
-  grid.newpage()
-  lapply(label_grob, function(x) grid.draw(x))
-}
+
