@@ -2,7 +2,7 @@
 % Please edit documentation in R/createPDF.R
 \name{create_PDF}
 \alias{create_PDF}
-\title{Make QR codes and print labels}
+\title{Make barcodes and print labels}
 \usage{
 create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
   ErrCorr = "H", Fsz = 2.5, ...)
