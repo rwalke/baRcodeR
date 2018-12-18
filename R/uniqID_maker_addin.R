@@ -157,17 +157,24 @@ make_labels<-function() {
     # preview label file
     output$check_make_labels<-DT::renderDataTable(Labels_pdf(), server = FALSE, selection = list(mode = "single", target = "column", selected = 1))
     output$label_preview <- shiny::renderImage({
-      qr_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 * (input$page_width - 2 * input$width_margin)/input$numcol, "in"), height = grid::unit(0.6 * (input$page_height - 2 * input$height_margin)/input$numrow, "in"), just=c("left", "top"))
-      label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6 * input$x_space)* (input$page_width - 2 * input$width_margin)/input$numcol, "in"), y=grid::unit(input$y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
+      if(input$type == "matrix") {
+        code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 * (input$page_width - 2 * input$width_margin)/input$numcol, "in"), height = grid::unit(0.6 * (input$page_height - 2 * input$height_margin)/input$numrow, "in"), just=c("left", "top"))
+        label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6 * input$x_space)* (input$page_width - 2 * input$width_margin)/input$numcol, "in"), y=grid::unit(input$y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
+        label_plot <- baRcodeR:::qrcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr)
+      } else {
+        code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.9 * (input$page_width - 2 * input$width_margin)/input$numcol, "in"), height = grid::unit(0.8 * (input$page_height - 2 * input$height_margin)/input$numrow, "in"), just=c("left", "top"))
+        #text_height <- ifelse(input$Fsz / 72 > (input$page_height - 2 * input$height_margin)/input$numrow * 0.3, (input$page_height - 2 * input$height_margin)/input$numrow * 0.3, input$Fsz/72)
+        #label_vp <- grid::viewport(x=grid::unit(0.5, "npc"), y = grid::unit(1, "npc"), width = grid::unit(1, "npc"), height = grid::unit(text_height, "in"), just = c("centre", "top"))
+        label_plot <- baRcodeR:::code_128_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected])
+      }
       outputfile <- tempfile(fileext=".png")
-      label_plot <- qrcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], ErrCorr = input$err_corr)
       grDevices::png(outputfile, width = (input$page_width - 2 * input$width_margin)/input$numcol, (input$page_height - 2 * input$height_margin)/input$numrow, units = "in", res=100)
       # grid::grid.rect()
-      grid::pushViewport(qr_vp)
+      grid::pushViewport(code_vp)
       grid::grid.draw(label_plot)
       grid::popViewport()
-      grid::pushViewport(label_vp)
-      grid::grid.text(label = Labels_pdf()[1, input$check_make_labels_columns_selected], gp = grid::gpar(fontsize = 2 * input$font_size, lineheight = 0.8))
+      #grid::pushViewport(label_vp)
+      #grid::grid.text(label = Labels_pdf()[1, input$check_make_labels_columns_selected], gp = grid::gpar(fontsize = input$font_size, lineheight = 0.8))
       grDevices::dev.off()
       list(src = outputfile,
            width = 80 * (input$page_width - 2 * input$width_margin)/input$numcol, 
