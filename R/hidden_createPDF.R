@@ -280,7 +280,7 @@ custom_create_PDF <- function(user = FALSE,
     grid::popViewport()
     grid::pushViewport(label_vp)
     if(type =="linear"){
-      grid.rect(gp = gpar(col = NA, fill = "white"))
+      grid::grid.rect(gp = grid::gpar(col = NA, fill = "white"))
     }
     grid::grid.text(label = Xsplt, gp = grid::gpar(fontsize = Fsz, lineheight = 0.8))
     grid::popViewport(2)
@@ -305,6 +305,8 @@ custom_create_PDF <- function(user = FALSE,
   #end if
 } #end create_PDF()
 
+#' @rdname custom_create_PDF
+#' @export
 
 qrcode_make<-function(Labels, ErrCorr){
   # Create text label
@@ -314,10 +316,14 @@ qrcode_make<-function(Labels, ErrCorr){
   return(Xpng)
 }
 
+#' @rdname custom_create_PDF
+#' @export
 code_128_make <- function(Labels){
   ## labels is a character string
   ## read in dict 
-  Barcodes <- baRcodeR:::barcodes128
+  Barcodes <- barcodes128
+  ## double check Labels
+  Labels <- as.character(Labels)
   start_code <- 209
   lab_chars <- unlist(strsplit(Labels, split = ""))
   lab_values <- sapply(lab_chars, function(x) utf8ToInt(x))
@@ -340,7 +346,7 @@ code_128_make <- function(Labels){
                         collapse = "", sep ="")
   ## split binary apart for 
   bar_values <- as.numeric(unlist(strsplit(binary_label, split = "")))
-  barcode_bars <- rasterGrob(t(!as.matrix(bar_values)), width = 1, height = 1, interpolate = F)
+  barcode_bars <- grid::rasterGrob(t(!as.matrix(bar_values)), width = 1, height = 1, interpolate = F)
   return(barcode_bars)
 }
 

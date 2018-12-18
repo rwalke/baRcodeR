@@ -11,15 +11,20 @@ create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
 \item{user}{logical. Run function using interactive mode (prompts user for
 parameter values) Default is \code{FALSE}}
 
-\item{Labels}{vector or data frame object containing label names (i.e. unique ID codes).}
+\item{Labels}{vector or data frame object containing label names (i.e. unique
+ID codes).}
 
-\item{name}{character. Name of the PDF output file. Default is \code{"LabelsOut"}.}
+\item{name}{character. Name of the PDF output file. Default is
+\code{"LabelsOut"}.}
 
-\item{ErrCorr}{error correction value. Level of damage from low to high:
-\code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default is \code{"H"}}
+\item{ErrCorr}{error correction value for matrix labels only. Level of damage
+from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
+is \code{"H"}.}
 
-\item{Fsz}{numerical. Sets font size in points. Longer ID codes may be shrunk to fit if trunaction is not used. 
-Default font size is \code{5}}
+\item{Fsz}{numerical. Sets font size in points. Longer ID codes may be shrunk
+to fit if truncation is not used for matrix labels. Default font size is
+\code{5}. ID codes are also shrunk automatically to fit on the label if
+actual size is bigger than label dimensions.}
 
 \item{...}{advanced arguments to modify the PDF layout. See
 \code{\link{custom_create_PDF}} for arguments. The advanced options can be
