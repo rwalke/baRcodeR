@@ -82,6 +82,7 @@ make_labels<-function() {
                      shiny::tags$h3("2. (Optional) Modify PDF from default values"),
                      shiny::textInput("filename", "PDF file name", value = "LabelsOut"),
                      shiny::selectInput(inputId = "err_corr", label = "Error Correction", choices = c("L (up to 7% damage)"="L", "M (up to 15% damage)"= "M", "Q (up to 25% damage)" = "Q", "H (up to 30% damage)" = "H"), multiple=FALSE),
+                     shiny::selectInput("type", "Barcode Type", choices = list("Matrix (2D)" = "matrix", "Linear (1D)" = "linear"), multiple = F),
                      shiny::numericInput("font_size", "Font Size", value = 2.5, min = 2.2, max = 4.7),
                      shiny::radioButtons("across", "Print across?", choices = c(Yes = TRUE, No = FALSE), selected = TRUE),
                      shiny::numericInput("erow", "# of rows to skip", value = 0, min = 0, max = 20, width=NULL),
@@ -176,12 +177,12 @@ make_labels<-function() {
     )
     # text indicator that pdf finished making
     PDF_done<-shiny::eventReactive(input$make_pdf, {
-      baRcodeR::custom_create_PDF(user=FALSE, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, page_width = input$page_width, page_height = input$ page_height, height_margin = input$height_margin, width_margin = input$width_margin, label_width = input$label_width, label_height = input$label_height, x_space = input$x_space, y_space = input$y_space)
+      baRcodeR::custom_create_PDF(user=FALSE, Labels = Labels_pdf()[, input$check_make_labels_columns_selected], name = input$filename, type = input$type, ErrCorr = input$err_corr, Fsz = input$font_size, Across = input$across, ERows = input$erow, ECols = input$ecol, trunc = input$trunc, numrow = input$numrow, numcol = input$numcol, page_width = input$page_width, page_height = input$ page_height, height_margin = input$height_margin, width_margin = input$width_margin, label_width = input$label_width, label_height = input$label_height, x_space = input$x_space, y_space = input$y_space)
       status<-"Done"
       status
     })
     PDF_code_snippet<-shiny::reactive({
-      noquote(paste0("custom_create_PDF(user=FALSE, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\', ErrCorr = \'", input$err_corr, "\', Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", label_width = ", input$label_width, ", label_height = ", input$label_height,", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
+      noquote(paste0("custom_create_PDF(user=FALSE, Labels = label_csv[,", input$check_make_labels_columns_selected, "], name = \'", input$filename, "\' type = \'", input$type, "\', ErrCorr = \'", input$err_corr, "\', Fsz = ", input$font_size, ", Across = ", input$across, ", ERows = ", input$erow, ", ECols = ", input$ecol, ", trunc = ", input$trunc, ", numrow = ", input$numrow, ", numcol = ", input$numcol, ", page_width = ", input$page_width, ", page_height = ", input$page_height, ", width_margin = ", input$width_margin, ", height_margin = ", input$height_margin, ", label_width = ", input$label_width, ", label_height = ", input$label_height,", x_space = ", input$x_space, ", y_space = ", input$y_space, ")"))
       })
     csv_code_snippet<-shiny::reactive({noquote(paste0("label_csv <- read.csv( \'", input$labels$name, "\', header = ", input$header, ")"))})
     output$PDF_code_render<-shiny::renderText({
