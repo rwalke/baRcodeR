@@ -27,3 +27,8 @@ A few changes from Oct 4 were not included in the last upload.
 Additionally, fixed a minor text errors:
 1. 'collection' occurred twice in DESCRIPTION
 2. 'unique' was mis-spelled in documentation of uniqID_maker
+
+### Nov 29, 2018
+
+Bug fixes and minor features added, as outlined in NEWS.md
+
