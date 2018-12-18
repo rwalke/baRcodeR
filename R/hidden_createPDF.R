@@ -1,11 +1,13 @@
 #' Make QR codes and print labels
 #'
-#' Input a vector or data frame of ID codes to produce a PDF of QR-coded labels
+#' Input a vector or data frame of ID codes to produce a PDF of barcode labels
 #' that can then be printed. The PDF setup is for the ULINE 1.75" * 0.5" WEATHER
 #' RESISTANT LABEL for laser printer; item # S-19297 (uline.ca)
 #'
-#' \code{barcode_make} is the helper function generating the actual QR code and
-#' creating the page layout for printed labels.
+#' \code{qrcode_make} is the helper function for generating a QR code matrix.
+#' \code{code_128_make} is the helper function for generating a linear barcode
+#' according to code 128 set B. \code{custom_create_PDF} is the main function
+#' which sets page layout, and creates the PDF file.
 #'
 #' @return a PDF file containing QR-coded labels, saved to the default
 #'   directory.
