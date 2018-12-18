@@ -4,7 +4,7 @@
 \alias{custom_create_PDF}
 \alias{qrcode_make}
 \alias{code_128_make}
-\title{Make QR codes and print labels}
+\title{Make barcodes and print labels}
 \usage{
 custom_create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
   type = "matrix", ErrCorr = "H", Fsz = 5, Across = TRUE,

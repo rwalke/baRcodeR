@@ -1,4 +1,4 @@
-#' Make QR codes and print labels
+#' Make barcodes and print labels
 #'
 #' Input a vector or data frame of ID codes to produce a PDF of barcode labels
 #' that can then be printed. The PDF setup is for the ULINE 1.75" * 0.5" WEATHER

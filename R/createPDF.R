@@ -1,4 +1,4 @@
-#' Make QR codes and print labels
+#' Make barcodes and print labels
 #'
 #' Input vector or data.frame of ID codes to produce a PDF of QR codes which can 
 #' be printed. This is a wrapper function for \code{\link{custom_create_PDF}}
