@@ -136,6 +136,11 @@ custom_create_PDF <- function(user = FALSE,
       Advanced <- noquote(toupper(readline("Edit advanced parameters? (Y/N): ")))
     }
     if (Advanced =="Y") {
+      type <- noquote(toupper(readline("Linear barcodes ( Y = Linear, N = matrix): ")))
+      while (type %in% yesNo) {
+        noquote(print("Invalid input"))
+        type <- noquote(toupper(readline("Linear barcodes ( Y = Linear, N = matrix): ")))
+      }
       ## Set to TRUE to print labels across rows instead of down columns
       Across <- noquote(toupper(readline("Please enter T or F to print across: ")))
       while((Across %in% inputCheck) == FALSE){
@@ -218,8 +223,8 @@ custom_create_PDF <- function(user = FALSE,
   # } else {
   #   y_space <- 182
   # }
-  column_space <- (width_margin - label_width * numcol)/(numcol-1)
-  row_space <- (height_margin - label_height * numrow)/(numrow-1)
+  column_space <- (width_margin - label_width * numcol)/(numcol - 1)
+  row_space <- (height_margin - label_height * numrow)/(numrow - 1)
   # Viewport Setup
   ## grid for page, the layout is set up so last row and column do not include the spacers for the other columns
   barcode_layout <- grid::grid.layout(numrow, numcol, widths = grid::unit(c(rep(label_width + column_space, numcol-1), label_width), "in"), heights = grid::unit(c(rep(label_height + row_space, numrow-1), label_height), "in"))
