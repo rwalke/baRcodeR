@@ -2,6 +2,8 @@
 % Please edit documentation in R/hidden_createPDF.R
 \name{custom_create_PDF}
 \alias{custom_create_PDF}
+\alias{qrcode_make}
+\alias{code_128_make}
 \title{Make QR codes and print labels}
 \usage{
 custom_create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
@@ -10,6 +12,10 @@ custom_create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
   page_width = 8.5, page_height = 11, width_margin = 0.25,
   height_margin = 0.5, label_width = NA, label_height = NA,
   x_space = 0, y_space = 0.5)
+
+qrcode_make(Labels, ErrCorr)
+
+code_128_make(Labels)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for
