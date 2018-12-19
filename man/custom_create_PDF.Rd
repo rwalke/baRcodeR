@@ -22,7 +22,7 @@ code_128_make(Labels)
 parameter values) Default is \code{FALSE}}
 
 \item{Labels}{vector or data frame object containing label names (i.e. unique
-ID codes).}
+ID codes) with either UTF-8 or ASCII encoding.}
 
 \item{name}{character. Name of the PDF output file. Default is
 \code{"LabelsOut"}.}

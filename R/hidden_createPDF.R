@@ -15,7 +15,7 @@
 #' @param user logical. Run function using interactive mode (prompts user for
 #'   parameter values) Default is \code{FALSE}
 #' @param Labels vector or data frame object containing label names (i.e. unique
-#'   ID codes).
+#'   ID codes) with either UTF-8 or ASCII encoding.
 #' @param name character. Name of the PDF output file. Default is
 #'   \code{"LabelsOut"}.
 #' @param type character. Choice of \code{"linear"} code 128 or \code{"matrix"}
@@ -326,6 +326,7 @@ code_128_make <- function(Labels){
   Barcodes <- barcodes128
   ## double check Labels
   Labels <- as.character(Labels)
+  Labels <- iconv(Labels, from = "utf-8", to = "ascii", sub = "-")
   start_code <- 209
   lab_chars <- unlist(strsplit(Labels, split = ""))
   lab_values <- sapply(lab_chars, function(x) utf8ToInt(x))
