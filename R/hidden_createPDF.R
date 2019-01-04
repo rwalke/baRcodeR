@@ -57,11 +57,11 @@
 #'   calculated as \code{(page_height - 2 * height_margin)/numrow} if
 #'   \code{label_height} is set as \code{NULL}.
 #' @param x_space numerical. A value between \code{0} and \code{1}. This sets
-#'   the distance between the QR code and text of each label. Default is
-#'   \code{0}.
+#'   the distance between the QR code and text of each label. Only applies when
+#'   \code{type = "matrix"}. Default is \code{0}.
 #' @param y_space numerical. The height position of the text on the physical
-#'   label as a proportion of the label height. A value between \code{0} and
-#'   \code{1}.
+#'   label as a proportion of the label height. Only applies when \code{type =
+#'   "matrix"}. A value between \code{0} and \code{1}. Default is \code{0.5}.
 
 #' @seealso \code{\link{create_PDF}}
 #' @export

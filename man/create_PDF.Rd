@@ -5,7 +5,7 @@
 \title{Make barcodes and print labels}
 \usage{
 create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
-  ErrCorr = "H", Fsz = 2.5, ...)
+  type = "matrix", ErrCorr = "H", Fsz = 2.5, ...)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for
@@ -16,6 +16,9 @@ ID codes) with either UTF-8 or ASCII encoding.}
 
 \item{name}{character. Name of the PDF output file. Default is
 \code{"LabelsOut"}.}
+
+\item{type}{character. Choice of \code{"linear"} code 128 or \code{"matrix"}
+QR code labels. Default is \code{"matrix"}.}
 
 \item{ErrCorr}{error correction value for matrix labels only. Level of damage
 from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
@@ -73,6 +76,13 @@ create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(), "examp
 example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
 ## specify column from data frame
 create_PDF(user = FALSE, Labels = example_df[,2], name = file.path(tempdir(), "example_3"))
+}
+\donttest{
+## create linear (code128) label rather than matrix label
+example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
+## specify column from data frame
+create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(),
+"example_4", type = "linear"))
 }
 }
 \seealso{
