@@ -48,7 +48,7 @@
 #' create_PDF(user = FALSE, Labels = example_df[,2], name = file.path(tempdir(), "example_3"))
 #' }
 #' \donttest{
-#' ## create linear (code128) label rather than matrix label
+#' ## create linear (code128) label rather than matrix (2D/QR) labels
 #' example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
 #' ## specify column from data frame
 #' create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(),

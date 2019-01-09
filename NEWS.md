@@ -2,7 +2,7 @@
 
 New Feature:
 
-- As requested, there is now an option to print linear (code 128 set B) barcodes. 
+- In response to a user request, there is now an option to print linear (code 128 set B) barcodes. 
 
 # baRcodeR 0.1.1
 
