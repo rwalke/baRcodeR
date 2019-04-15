@@ -339,11 +339,11 @@ code_128_make <- function(Labels){
   ## create quiet zone
   quiet_zone <- paste(c(1:(10)*0),collapse="")
   ## paste together in order: quiet zone, start code binary, binary label, checksum character
-  ## stop code, and quiet zone
+  ## stop code, and quiet zone. Barcode for checksum is extracted based on position in Barcodes.
   binary_label <- paste(quiet_zone, 
                         Barcodes$Barcode[Barcodes$ASCII == start_code],
                         paste(Binary_code, collapse=""),
-                        Barcodes$Barcode[Barcodes$ASCII == check_character + 32],
+                        Barcodes$Barcode[Barcodes[check_character + 1],
                         "1100011101011",
                         quiet_zone,
                         collapse = "", sep ="")
