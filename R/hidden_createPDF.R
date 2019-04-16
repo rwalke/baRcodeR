@@ -313,7 +313,7 @@ custom_create_PDF <- function(user = FALSE,
 qrcode_make<-function(Labels, ErrCorr){
   # Create text label
   Xtxt<-gsub("_", "-", Labels)
-  if(nchar(Xtxt <= 1)){
+  if(nchar(Xtxt) <= 1){
     Xtxt <- paste0("\\s\\s", Xtxt)
     warning("Label is single character or blank. Padding with empty spaces.")
   }
