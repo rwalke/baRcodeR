@@ -1,3 +1,12 @@
+# baRcodeR 0.1.3
+
+Bugs and Improvements:
+
+- major bug fix for linear barcodes where a minority of barcodes would not be valid.
+- added documentation on how to format labels
+- added padding for labels which were single character/blank
+- downloadable cheatsheet now available as addin 
+
 # baRcodeR 0.1.2
 
 New Feature:
