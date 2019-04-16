@@ -18,7 +18,8 @@ Imports:
     grDevices,
     grid,
     miniUI (>= 0.1.1),
-    shiny (>= 0.13)
+    shiny (>= 0.13),
+    rstudioapi
 Suggests: testthat,
     knitr,
     rmarkdown
