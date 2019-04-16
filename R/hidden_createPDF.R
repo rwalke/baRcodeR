@@ -353,7 +353,7 @@ code_128_make <- function(Labels){
   binary_label <- paste(quiet_zone, 
                         Barcodes$Barcode[Barcodes$ASCII == start_code],
                         paste(Binary_code, collapse=""),
-                        Barcodes$Barcode[Barcodes[check_character + 1],
+                        Barcodes$Barcode[check_character + 1],
                         "1100011101011",
                         quiet_zone,
                         collapse = "", sep ="")
