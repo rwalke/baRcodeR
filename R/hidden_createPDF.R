@@ -313,6 +313,10 @@ custom_create_PDF <- function(user = FALSE,
 qrcode_make<-function(Labels, ErrCorr){
   # Create text label
   Xtxt<-gsub("_", "-", Labels)
+  if(nchar(Xtxt <= 1)){
+    Xtxt <- paste0("\\s\\s", Xtxt)
+    warning("Label is single character or blank. Padding with empty spaces.")
+  }
   # Create qrcode
   Xpng <- grid::rasterGrob(abs(qrcode::qrcode_gen(paste0(Xtxt), ErrorCorrectionLevel = ErrCorr, dataOutput = TRUE, plotQRcode = FALSE, mask = 3) - 1), interpolate = FALSE)
   return(Xpng)
