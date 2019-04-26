@@ -36,3 +36,7 @@ Bug fixes and minor features added, as outlined in NEWS.md
 
 - Added the ability to create linear (1D) barcodes using the type='linear' parameter in create_pdf()
 - fixed a few minor spelling/grammar changes
+
+### April 26, 2019
+
+Bug fix for linear barcodes and minor changes outlined in NEWS.md (ver. 0.1.3)
