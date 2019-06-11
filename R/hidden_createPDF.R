@@ -14,6 +14,9 @@
 #' \code{\\x0A} and \code{\\x20} can be used to format text labels. Tab character
 #' \code{\\t} (\code{\\x09}) does not work for QR codes and should be replaced by
 #' a number of space characters. See the package vignette for examples.
+#' 
+#' If \code{ECol} or \code{ERow} is greater than \code{numcol} and \code{numrow}, 
+#' the labels will be printed starting on the second page. 
 #'
 #' @return a PDF file containing QR-coded labels, saved to the default
 #'   directory.
@@ -252,8 +255,8 @@ custom_create_PDF <- function(user = FALSE,
     label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
   }
   # File Creation
-  x_pos <- ERows + 1
-  y_pos <- ECols + 1
+  x_pos <- ECols + 1
+  y_pos <- ERows + 1
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, width = page_width, height = page_height, onefile = TRUE, family = "Courier") # Standard North American 8.5 x 11
   bc_vp = grid::viewport(layout = barcode_layout)
@@ -272,6 +275,7 @@ custom_create_PDF <- function(user = FALSE,
     # print(c("in", x_pos, y_pos))
     # reset if any of the values are greater than page limits
     if (x_pos > numcol | y_pos > numrow){
+      warning("Number of rows/columns to skip greater than number of rows/columns on page. Starting a new page.")
       grid::grid.newpage()
       grid::pushViewport(grid::viewport(width = grid::unit(page_width, "in"), height = grid::unit(page_height, "in")))
       # barcode_layout=grid.layout(numrow, numcol, widths = widths, heights = heights)
