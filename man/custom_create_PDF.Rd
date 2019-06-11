@@ -108,6 +108,9 @@ The escape characters \code{\\n} and \code{\\s} (and the hex equivalents
 \code{\\x0A} and \code{\\x20} can be used to format text labels. Tab character
 \code{\\t} (\code{\\x09}) does not work for QR codes and should be replaced by
 a number of space characters. See the package vignette for examples.
+
+If \code{ECol} or \code{ERow} is greater than \code{numcol} and \code{numrow}, 
+the labels will be printed starting on the second page.
 }
 \seealso{
 \code{\link{create_PDF}}
