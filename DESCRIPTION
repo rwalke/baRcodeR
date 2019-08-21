@@ -33,7 +33,7 @@ Imports:
 Suggests: testthat,
     knitr,
     rmarkdown
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 URL: https://github.com/yihanwu/baRcodeR
 BugReports: https://github.com/yihanwu/baRcodeR/issues
