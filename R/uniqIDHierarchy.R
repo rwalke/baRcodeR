@@ -50,7 +50,7 @@
 
 uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   # user interaction code
-  if(user == TRUE){
+  if(user == TRUE){ # nocov start
     hlevels <- readline("What is the # of levels in hierarchy: ")
     hlevels <- as.numeric(hlevels)
     # possible inputs
@@ -88,10 +88,12 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
       maxNum <- max(startNum,endNum)
       hierarchy[[i]]<-c(str, startNum, endNum)
     }
-  } # end user input
+  } # nocov end
+  # end user input
   # hierarchy format check
   if (is.list(hierarchy) == FALSE) stop("Hierarchy is not in list format. See ?uniqID_hier_maker")
-  if (length(unique(sapply(hierarchy, length))) != 1) stop("Hierarchy entries are not of equal length. Each element should have a string, a beginning value and an end value.")
+  if (length(unique(sapply(hierarchy, length))) != 1) stop("Hierarchy entries are not of equal length.")
+  if (any(sapply(hierarchy, length) != 3)) stop("Each level in hierarchy should have a string, a beginning value and an end value.")
   if (length(hierarchy) == 1) stop("Input list has only one level. Did you forget a level or are you sure you are not looking for uniqIDMaker()?")
   # loop through hierarchy to generate text
   for(i in 1:length(hierarchy)){
@@ -127,13 +129,7 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   # makes columns out of hierarchy levels
   label_df <- cbind(barcodes, data.frame(t(sapply(strsplit(barcodes, "-"),c))))
   df_names <- sapply(hierarchy, function(x) x[1])
-  # different ways to name the data frame columns depending on presence of level strings.
-  if (any(nchar(df_names) == 0)){
-    warning("Empty string in level. Using default column naming.")
-    names(label_df) <- c("label", paste0("level", 1:length(hierarchy)))
-  } else {
-    names(label_df) <- c("label", df_names)
-  }
+  names(label_df) <- c("label", df_names)
   # dont forget to add the string at the end
   label_df$label <- paste0(label_df$label, end)
   return(label_df)

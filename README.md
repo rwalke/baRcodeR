@@ -1,6 +1,8 @@
 # baRcodeR
 [![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
+[![Travis build status](https://travis-ci.org/yihanwu/baRcodeR.svg?branch=master)](https://travis-ci.org/yihanwu/baRcodeR)
+  [![Codecov test coverage](https://codecov.io/gh/yihanwu/baRcodeR/branch/master/graph/badge.svg)](https://codecov.io/gh/yihanwu/baRcodeR?branch=master)
 
 ## Open-source label generation for more repeatable workflows with biological samples
 

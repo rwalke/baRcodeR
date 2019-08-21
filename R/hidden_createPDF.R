@@ -119,9 +119,9 @@ custom_create_PDF <- function(user = FALSE,
   if (x_space > 1 | x_space < 0) stop("ERROR: x_space value out of bounds. Must be between 0 and 1")
   if (y_space < 0 | y_space > 1) stop("ERROR: y_space value out of bounds. Must be between 0 and 1")
   # clean up any open graphical devices if function fails
-  on.exit(grDevices::dev.off())
+  on.exit(grDevices::graphics.off())
   # if user prompt has been set to true
-  if (user == TRUE){
+  if (user == TRUE){ # nocov start
     # possible inputs
     inputCheck <- c("T", "t", "F", "f")
     yesNo <- c("Y", "N")
@@ -218,17 +218,17 @@ custom_create_PDF <- function(user = FALSE,
     } ## end of advanced options loop
 
 
-  } # user ask == T
+  } # nocov end
+  # user ask == T
   # Dummy data.frame for plotting
 
   # if (Fsz >= 2.2 && Fsz <= 2.5 && labelLength >= 27) stop("ERROR: not enought space to print full label, please decrease font size")
   
   width_margin <- page_width - width_margin * 2
   height_margin <- page_height - height_margin * 2
-  if(is.na(label_width)){label_width <- width_margin/numcol}
-  if(is.na(label_height)){label_height <- height_margin/numrow}
+  if(!is.numeric(label_width)){label_width <- width_margin/numcol}
+  if(!is.numeric(label_height)){label_height <- height_margin/numrow}
   if(type == "linear" & label_width / labelLength < 0.03) warning("Linear barcodes created will have bar width smaller than 0.03 inches which may be unreadable by some barcode scanners.")
-  if(!is.numeric(c(label_width, label_height))) stop("label_width and label_height should be set to NULL or a numeric value.")
   # if (cust_spacing == T) {
   #   y_space <- x_space - (as.integer(x_space * 0.5)) - 15
   # } else {
@@ -253,7 +253,7 @@ custom_create_PDF <- function(user = FALSE,
     label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6*x_space)*label_width, "in"), y=grid::unit(y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
     # generate qr, most time intensive part
     label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
-  }
+  } else {stop("Barcode type must be linear or matrix")}
   # File Creation
   x_pos <- ECols + 1
   y_pos <- ERows + 1

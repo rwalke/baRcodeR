@@ -47,7 +47,7 @@
 
 
 uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3){
-  if (user == TRUE) {
+  if (user == TRUE) { # nocov start
     ## asks for string
     string <- readline(paste0("Please enter string for level: "))
     ## first value of level
@@ -79,7 +79,7 @@ uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3){
       digits <- as.numeric(readline(paste0("Number of digits to print for level: ")))
     }
     level <-c(startNum:endNum)
-  }
+  } # nocov end
   if (is.numeric(level) == FALSE) stop("Level is not a string of numbers")
   if (is.numeric(digits) == FALSE) stop("Digits is not a numerical value")
   if (nchar(paste(max(level))) > digits){

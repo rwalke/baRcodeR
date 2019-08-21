@@ -30,9 +30,11 @@ Imports:
     miniUI (>= 0.1.1),
     shiny (>= 0.13),
     rstudioapi
-Suggests: testthat,
+Suggests: 
+    testthat (>= 2.1.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 URL: https://github.com/yihanwu/baRcodeR
