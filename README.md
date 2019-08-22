@@ -4,19 +4,15 @@
 [![Travis build status](https://travis-ci.org/yihanwu/baRcodeR.svg?branch=master)](https://travis-ci.org/yihanwu/baRcodeR)
   [![Codecov test coverage](https://codecov.io/gh/yihanwu/baRcodeR/branch/master/graph/badge.svg)](https://codecov.io/gh/yihanwu/baRcodeR?branch=master)
 
-## Open-source label generation for more repeatable workflows with biological samples
+baRcodeR generates labels for more repeatable workflows with biological samples
 
-Yihan Wu and Robert I. Colautti
+## See also:
 
-## Cheat Sheet
+- [zintr](https://github.com/carlganz/zintr), an R interface to the C zint library
 
-A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
+## Quick Start
 
-## Overview
-
-![Flowchart of major functions](man/figures/Flowchart.png)
-
-## Quick Start:
+### Installation
 
 EITHER install directly from CRAN
 ```
@@ -31,9 +27,17 @@ devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
 library(baRcodeR)
 ```
 
+### Cheat Sheet
+
+A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
+
+## Overview
+
+![Flowchart of major functions](man/figures/Flowchart.png)
+
 ## Introduction
 
-`baRcodeR` is a R package for generating unique indentifier strings and printable 2D (QR) barcodes, with the aim of improving repeatability of labelling, tracking and curating data from biological samples. Specifically, users can:
+`baRcodeR` is a R package for generating unique identifier strings and printable 2D (QR) barcodes, with the aim of improving repeatability of labelling, tracking and curating data from biological samples. Specifically, users can:
 
 * generate simple ID codes (Ex001, Ex002, Ex003 ...),
 * generate hierarchical (i.e. nested) ID codes (A01-B01, A01-B02, A02-B01, A02-B02, A03-B01 ...),

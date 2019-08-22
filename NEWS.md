@@ -2,7 +2,7 @@
 
 Bugs and Improvements:
 
-- major bug fix for linear barcodes that occassionally created unscannable barcodes.
+- major bug fix for linear barcodes that occasionally created unscannable barcodes.
 - added documentation on how to create alternative formatting of labels (e.g. spaces, line breaks)
 - added padding for labels which were single character or blank
 - 2-page cheatsheet now available as addin 

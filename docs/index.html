@@ -86,24 +86,21 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#barcoder" class="anchor"></a>baRcodeR</h1></div>
 
-<div id="open-source-label-generation-for-more-repeatable-workflows-with-biological-samples" class="section level2">
+<p>baRcodeR generates labels for more repeatable workflows with biological samples</p>
+<div id="see-also" class="section level2">
 <h2 class="hasAnchor">
-<a href="#open-source-label-generation-for-more-repeatable-workflows-with-biological-samples" class="anchor"></a>Open-source label generation for more repeatable workflows with biological samples</h2>
-<p>Yihan Wu and Robert I. Colautti</p>
-</div>
-<div id="cheat-sheet" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cheat-sheet" class="anchor"></a>Cheat Sheet</h2>
-<p>A 2-page, quick-reference guide is available via <a href="https://dx.doi.org/10.6084/m9.figshare.7043309">Figshare</a></p>
-</div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p><img src="reference/figures/Flowchart.png" alt="Flowchart of major functions"></p>
+<a href="#see-also" class="anchor"></a>See also:</h2>
+<ul>
+<li>
+<a href="https://github.com/carlganz/zintr">zintr</a>, an R interface to the C zint library</li>
+</ul>
 </div>
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
-<a href="#quick-start" class="anchor"></a>Quick Start:</h2>
+<a href="#quick-start" class="anchor"></a>Quick Start</h2>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
 <p>EITHER install directly from CRAN</p>
 <pre><code>install.packages("baRcodeR")
 library(baRcodeR)</code></pre>
@@ -111,10 +108,21 @@ library(baRcodeR)</code></pre>
 <pre><code>devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
 library(baRcodeR)</code></pre>
 </div>
+<div id="cheat-sheet" class="section level3">
+<h3 class="hasAnchor">
+<a href="#cheat-sheet" class="anchor"></a>Cheat Sheet</h3>
+<p>A 2-page, quick-reference guide is available via <a href="https://dx.doi.org/10.6084/m9.figshare.7043309">Figshare</a></p>
+</div>
+</div>
+<div id="overview" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overview" class="anchor"></a>Overview</h2>
+<p><img src="reference/figures/Flowchart.png" alt="Flowchart of major functions"></p>
+</div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p><code>baRcodeR</code> is a R package for generating unique indentifier strings and printable 2D (QR) barcodes, with the aim of improving repeatability of labelling, tracking and curating data from biological samples. Specifically, users can:</p>
+<p><code>baRcodeR</code> is a R package for generating unique identifier strings and printable 2D (QR) barcodes, with the aim of improving repeatability of labelling, tracking and curating data from biological samples. Specifically, users can:</p>
 <ul>
 <li>generate simple ID codes (Ex001, Ex002, Ex003 …),</li>
 <li>generate hierarchical (i.e. nested) ID codes (A01-B01, A01-B02, A02-B01, A02-B02, A03-B01 …),</li>

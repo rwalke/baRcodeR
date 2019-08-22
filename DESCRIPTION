@@ -21,6 +21,7 @@ Depends:
     R (>= 3.4.0),
     qrcode
 License: file LICENSE
+Language: en-CA
 Encoding: UTF-8
 LazyData: true
 Imports:
