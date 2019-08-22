@@ -8,7 +8,7 @@ r:
   - devel
 cache: packages
 after_success:
-  - Rscript -e 'covr::codecov()'
+  - Rscript -e 'covr::codecov(line_exclusions = "R/uniqID_maker_addin.R")'
 
 r_github_packages:
   - r-lib/covr
