@@ -25,9 +25,9 @@ make_labels<-function() {
 make_labels_internals <- function(){
   ui<-miniUI::miniPage(
     miniUI::gadgetTitleBar("baRcodeR"),
-    miniUI::miniTabstripPanel(id = NULL, selected = NULL, between = NULL,
+    miniUI::miniTabstripPanel(id = "addin_tabs", selected = NULL, between = NULL,
                               # simple label tab
-                              miniUI::miniTabPanel("Simple ID Code Generation", value = graphics::title, icon = shiny::icon("bars"),
+                              miniUI::miniTabPanel(id = "simple_labs", title = "Simple ID Code Generation", value = "simple_labs", icon = shiny::icon("bars"),
                                                    miniUI::miniContentPanel(
                                                      shiny::fillRow(
                                                        shiny::fillCol(shiny::tagList(# user input elements
@@ -48,7 +48,7 @@ make_labels_internals <- function(){
                                                      
                                                    )),
                               # hierarchy label tab
-                              miniUI::miniTabPanel("Hierarchical ID Code Generation", value = graphics::title, icon = shiny::icon("sitemap"),
+                              miniUI::miniTabPanel(id = "hier_labs", title = "Hierarchical ID Code Generation", value = "hier_labs", icon = shiny::icon("sitemap"),
                                                    miniUI::miniContentPanel(
                                                      shiny::fillRow(
                                                        shiny::fillCol(shiny::tagList(
@@ -79,7 +79,7 @@ make_labels_internals <- function(){
                                                      
                                                    )),
                               # tab for pdf output
-                              miniUI::miniTabPanel("Barcode Creation", value= graphics::title, icon = shiny::icon("qrcode"),
+                              miniUI::miniTabPanel(id = "bar_gen", title = "Barcode Creation", value= "bar_gen", icon = shiny::icon("qrcode"),
                                                    miniUI::miniContentPanel(
                                                      shiny::fillRow(
                                                        shiny::fillCol(
@@ -278,7 +278,7 @@ make_labels_internals <- function(){
       shiny::stopApp()
     })
   }
-  shiny::shinyApp(ui=ui, server = server)
+  shiny::shinyApp(ui = ui, server = server)
 }
 
 #' @title baRcodeR Cheatsheet
