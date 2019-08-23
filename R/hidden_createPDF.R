@@ -245,14 +245,14 @@ custom_create_PDF <- function(user = FALSE,
     text_height <- ifelse(Fsz / 72 > label_height * 0.3, label_height * 0.3, Fsz/72)
     label_vp <- grid::viewport(x=grid::unit(0.5, "npc"), y = grid::unit(1, "npc"), width = grid::unit(1, "npc"), height = grid::unit(text_height, "in"), just = c("centre", "top"))
     Fsz <- ifelse(Fsz / 72 > label_height * 0.3, label_height * 72 * 0.3 , Fsz)
-    label_plots <- sapply(as.character(Labels), code_128_make , USE.NAMES = T, simplify = F)
+    label_plots <- sapply(as.character(Labels), code_128_make , USE.NAMES = TRUE, simplify = FALSE)
   } else if (type =="matrix"){
     ## vp for the qrcode within the grid layout
     code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), y=grid::unit(0.8, "npc"), width = grid::unit(0.3 *label_width, "in"), height = grid::unit(0.6 * label_height, "in"), just=c("left", "top"))
     ## vp for the text label within the grid layout, scaling the x_space by 0.6 makes sure it will not overlap with the qrcode
     label_vp <- grid::viewport(x=grid::unit((0.4 + 0.6*x_space)*label_width, "in"), y=grid::unit(y_space, "npc"), width = grid::unit(0.4, "npc"), height = grid::unit(0.8, "npc"), just=c("left", "center"))
     # generate qr, most time intensive part
-    label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = T, simplify = F)
+    label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = TRUE, simplify = FALSE)
   } else {stop("Barcode type must be linear or matrix")}
   # File Creation
   x_pos <- ECols + 1
