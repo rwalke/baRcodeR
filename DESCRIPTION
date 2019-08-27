@@ -12,7 +12,7 @@ Authors@R:
              email = "robert.colautti@queensu.ca", 
              role = c("aut", "cre"), 
              comment = c(ORCID = "0000-0003-4213-0711")))
-Maintainer: Robert Colautti <robert.colautti@queensu.ca>
+Maintainer: Yihan Wu <yihan.wu@queensu.ca>
 Description: Tools to generate unique identifier codes and printable barcoded 
     labels for the management of biological samples. The creation of unique ID 
     codes and printable PDF files can be initiated by standard commands, user 
