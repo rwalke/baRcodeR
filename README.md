@@ -88,4 +88,10 @@ Please load the vignette "Using-baRcodeR" for console use.
 library(baRcodeR)
 vignette("Using-baRcodeR")
 ```
+# Contribution
 
+Please note that the 'baRcodeR' project is released with a
+  [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+  By contributing to this project, you agree to abide by its terms.
+  
+Please document issues with a description, a minimal reproducible example, and the `sessionInfo()`. 

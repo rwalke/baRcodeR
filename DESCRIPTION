@@ -1,5 +1,5 @@
 Package: baRcodeR
-Title: Labelling, Tracking, and Collecting Data from Biological Samples
+Title:  Label Creation for Tracking and Collecting Data from Biological Samples
 Version: 0.1.3
 Authors@R: 
     c(person(given = "Yihan", 
@@ -13,10 +13,11 @@ Authors@R:
              role = c("aut", "cre"), 
              comment = c(ORCID = "0000-0003-4213-0711")))
 Maintainer: Robert Colautti <robert.colautti@queensu.ca>
-Description: Tools to generate unique identifiers and printable barcoded labels for sample management. 
-    The creation of unique ID codes and printable PDF files can be initiated by standard commands, 
-    user prompts, or through a GUI addin for R Studio. Both single-level and hierarchical labels can 
-    be created in the command line interactively or non-interactively. 
+Description: Tools to generate unique identifier codes and printable barcoded 
+    labels for the management of biological samples. The creation of unique ID 
+    codes and printable PDF files can be initiated by standard commands, user 
+    prompts, or through a GUI addin for R Studio. Biologically informative codes
+    can be included for hierarchically structured sampling designs.
 Depends:
     R (>= 3.4.0),
     qrcode
