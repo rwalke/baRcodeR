@@ -8,7 +8,7 @@ test_that("input errors are produced", {
   expect_warning(uniqID_maker(string="example", level=1:300, digits=2), "Digits specified less than max number. Increasing number of digits.")
   expect_warning(
     uniqID_maker(string="example", level=9:10, digits = 1), 
-    data.frame(label = c("example09", "example10"), ind_string = c("example", "example"), ind_number = c("09", "10")))
+    "Digits specified less than max number. Increasing number of digits.")
   expect_error(uniqID_hier_maker(hierarchy = c("a",3,6)), "Hierarchy is not in list format")
   expect_error(uniqID_hier_maker(hierarchy = list(c("a",3,6), c("b",1))), "Hierarchy entries are not of equal length.")
   expect_error(uniqID_hier_maker(hierarchy = list(c(3,6), c(1, 3))), "Each level in hierarchy should have a string, a beginning value and an end value")
