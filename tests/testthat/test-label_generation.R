@@ -10,10 +10,6 @@ test_that("labels are generated properly", {
   expect_identical(
     uniqID_maker(string="example", level=1:2, digits = 1), 
     data.frame(label = c("example1", "example2"), ind_string = c("example", "example"), ind_number = c("1", "2")))
-  expect_identical(
-    uniqID_maker(string="example", level=9:10, digits = 1), 
-    data.frame(label = c("example09", "example10"), ind_string = c("example", "example"), ind_number = c("09", "10")))
-  
 })
 
 test_that("are rasters generated?", {

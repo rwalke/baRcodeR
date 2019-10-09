@@ -98,13 +98,13 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   # loop through hierarchy to generate text
   for(i in 1:length(hierarchy)){
     str <- hierarchy[[i]][1]
-    startNum <- as.numeric(hierarchy[[i]][2])
-    endNum <- as.numeric(hierarchy[[i]][3])
+    startNum <- suppressWarnings(as.numeric(hierarchy[[i]][2]))
+    endNum <- suppressWarnings(as.numeric(hierarchy[[i]][3]))
     if (is.na(startNum) == TRUE){
-      stop(paste0("Invalid starting number on level", i, ". Please doublecheck your input"))
+      stop(paste0("Invalid starting number on level ", i, ". Please doublecheck your input"))
     }
     if (is.na(endNum) == TRUE){
-      stop(paste0("Invalid ending number on level", i, ". Please doublecheck your input"))
+      stop(paste0("Invalid ending number on level ", i, ". Please doublecheck your input"))
     }
     maxNum <- max(startNum, endNum)
     digitsMax <- max(digits, nchar(paste(maxNum)))
