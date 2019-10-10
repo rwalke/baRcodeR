@@ -1,44 +1,46 @@
 Package: baRcodeR
-Title:  Label Creation for Tracking and Collecting Data from Biological Samples
+Title: Label Creation for Tracking and Collecting Data from
+    Biological Samples
 Version: 0.1.4
 Authors@R: 
-    c(person(given = "Yihan", 
-             family = "Wu", 
-             role="aut", 
-             email = "yihan.wu@queensu.ca", 
-             comment = c(ORCID = "0000-0002-1202-4208")), 
-      person(given = "Robert", 
-             family = "Colautti", 
-             email = "robert.colautti@queensu.ca", 
-             role = c("aut", "cre"), 
+    c(person(given = "Yihan",
+             family = "Wu",
+             role = c("aut", "cre"),
+             email = "yihan.wu@queensu.ca",
+             comment = c(ORCID = "0000-0002-1202-4208")),
+      person(given = "Robert",
+             family = "Colautti",
+             role = c("aut", "cre"),
+             email = "robert.colautti@queensu.ca",
              comment = c(ORCID = "0000-0003-4213-0711")))
-Maintainer: Yihan Wu <yihan.wu@queensu.ca>
-Description: Tools to generate unique identifier codes and printable barcoded 
-    labels for the management of biological samples. The creation of unique ID 
-    codes and printable PDF files can be initiated by standard commands, user 
-    prompts, or through a GUI addin for R Studio. Biologically informative codes
-    can be included for hierarchically structured sampling designs.
-Depends:
-    R (>= 3.4.0),
-    qrcode
+Description: Tools to generate unique identifier codes and
+    printable barcoded labels for the management of biological samples.
+    The creation of unique ID codes and printable PDF files can be
+    initiated by standard commands, user prompts, or through a GUI addin
+    for R Studio. Biologically informative codes can be included for
+    hierarchically structured sampling designs.
 License: file LICENSE
-Language: en-CA
-Encoding: UTF-8
-LazyData: true
+URL: https://github.com/yihanwu/baRcodeR
+BugReports: https://github.com/yihanwu/baRcodeR/issues
+Depends:
+    qrcode,
+    R (>= 3.4.0)
 Imports:
     DT (>= 0.3),
     grDevices,
     grid,
     miniUI (>= 0.1.1),
-    shiny (>= 0.13),
-    rstudioapi
+    rstudioapi,
+    shiny (>= 0.13)
 Suggests: 
-    testthat (>= 2.1.0),
+    covr,
     knitr,
     rmarkdown,
-    covr,
-    shinytest
+    shinytest,
+    testthat (>= 2.1.0)
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+Language: en-CA
+LazyData: true
 RoxygenNote: 6.1.1
-VignetteBuilder: knitr
-URL: https://github.com/yihanwu/baRcodeR
-BugReports: https://github.com/yihanwu/baRcodeR/issues
