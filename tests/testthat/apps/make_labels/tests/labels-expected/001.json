@@ -9,7 +9,6 @@
     "end_number": 11,
     "erow": 0,
     "err_corr": "L",
-    "err_corr-selectized": "",
     "filename": "LabelsOut",
     "font_size": 12,
     "header": true,
@@ -51,7 +50,6 @@
     "start_number": 9,
     "trunc": false,
     "type": "matrix",
-    "type-selectized": "",
     "width_margin": 0.25,
     "x_space": 0,
     "y_space": 0.5
