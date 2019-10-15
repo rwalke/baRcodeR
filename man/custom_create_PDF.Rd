@@ -7,7 +7,7 @@
 \title{Make barcodes and print labels}
 \usage{
 custom_create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
-  type = "matrix", ErrCorr = "H", Fsz = 5, Across = TRUE,
+  type = "matrix", ErrCorr = "H", Fsz = 12, Across = TRUE,
   ERows = 0, ECols = 0, trunc = TRUE, numrow = 20, numcol = 4,
   page_width = 8.5, page_height = 11, width_margin = 0.25,
   height_margin = 0.5, label_width = NA, label_height = NA,

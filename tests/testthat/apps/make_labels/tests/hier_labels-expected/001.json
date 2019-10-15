@@ -11,7 +11,7 @@
     "err_corr": "L",
     "err_corr-selectized": "",
     "filename": "LabelsOut",
-    "font_size": 2.5,
+    "font_size": 12,
     "header": true,
     "height_margin": 0.5,
     "hier_digits": 2,

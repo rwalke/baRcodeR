@@ -5,7 +5,7 @@
 \title{Make barcodes and print labels}
 \usage{
 create_PDF(user = FALSE, Labels = NULL, name = "LabelsOut",
-  type = "matrix", ErrCorr = "H", Fsz = 2.5, ...)
+  type = "matrix", ErrCorr = "H", Fsz = 12, ...)
 }
 \arguments{
 \item{user}{logical. Run function using interactive mode (prompts user for

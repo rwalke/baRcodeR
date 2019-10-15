@@ -92,7 +92,7 @@ make_labels_internals <- function(){
                                                            shiny::textInput("filename", "PDF file name", value = "LabelsOut"),
                                                            shiny::selectInput(inputId = "err_corr", label = "Error Correction", choices = c("L (up to 7% damage)"="L", "M (up to 15% damage)"= "M", "Q (up to 25% damage)" = "Q", "H (up to 30% damage)" = "H"), multiple=FALSE),
                                                            shiny::selectInput("type", "Barcode Type", choices = list("Matrix (2D)" = "matrix", "Linear (1D)" = "linear"), multiple = FALSE),
-                                                           shiny::numericInput("font_size", "Font Size", value = 2.5, min = 2.2, max = 4.7),
+                                                           shiny::numericInput("font_size", "Font Size", value = 12, min = 2, max = 100),
                                                            shiny::radioButtons("across", "Print across?", choices = c(Yes = TRUE, No = FALSE), selected = TRUE),
                                                            shiny::numericInput("erow", "# of rows to skip", value = 0, min = 0, max = 20, width=NULL),
                                                            shiny::numericInput("ecol", "# of columns to skip", value = 0, min = 0, max = 20, width=NULL),

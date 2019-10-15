@@ -65,7 +65,7 @@ create_PDF <- function(user = FALSE,
                      name ="LabelsOut",
                      type = "matrix",
                      ErrCorr = "H",
-                     Fsz = 2.5, ...) {
+                     Fsz = 12, ...) {
   custom_create_PDF(user, Labels, name, type, ErrCorr, Fsz, ...)
 }
 
