@@ -31,7 +31,42 @@ And the development version from [GitHub](https://github.com/) with:
     # install.packages("devtools")
     devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
 
-## Example
+## Quick Start
+
+Text identifiers can be created in a sequential or hierarchical pattern.
+
+``` r
+library(baRcodeR)
+```
+
+    ## Loading required package: qrcode
+
+    ## Registered S3 method overwritten by 'R.oo':
+    ##   method        from       
+    ##   throw.default R.methodsS3
+
+``` r
+example_labels <- uniqID_maker(user = F, string = "Example", level = 1:40)
+head(example_labels)
+```
+
+    ##        label ind_string ind_number
+    ## 1 Example001    Example        001
+    ## 2 Example002    Example        002
+    ## 3 Example003    Example        003
+    ## 4 Example004    Example        004
+    ## 5 Example005    Example        005
+    ## 6 Example006    Example        006
+
+Then the text identifiers can be printed out with a laser printer on
+sticker sheets.
+
+``` r
+pdf_file_name <- tempfile()
+create_PDF(Labels = example_labels, name = pdf_file_name)
+```
+
+![](man/figures/example.png)<!-- -->
 
 ### Cheat Sheet
 
@@ -149,12 +184,6 @@ Please load the vignette “Using-baRcodeR” for console use.
 library(baRcodeR)
 ```
 
-    ## Loading required package: qrcode
-
-    ## Registered S3 method overwritten by 'R.oo':
-    ##   method        from       
-    ##   throw.default R.methodsS3
-
     vignette("Using-baRcodeR")
 
 # Contribution
@@ -185,12 +214,17 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ## [1] baRcodeR_0.1.3 qrcode_0.1.1  
+    ## [1] baRcodeR_0.1.4 qrcode_0.1.1  
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.2        digest_0.6.20     R.methodsS3_1.7.1
-    ##  [4] magrittr_1.5      evaluate_0.14     stringi_1.4.3    
-    ##  [7] rstudioapi_0.10   R.oo_1.22.0       R.utils_2.9.0    
-    ## [10] rmarkdown_1.14    tools_3.6.1       stringr_1.4.0    
-    ## [13] xfun_0.8          yaml_2.2.0        compiler_3.6.1   
-    ## [16] htmltools_0.3.6   knitr_1.24
+    ##  [1] Rcpp_1.0.2        png_0.1-7         digest_0.6.20    
+    ##  [4] R.methodsS3_1.7.1 magrittr_1.5      evaluate_0.14    
+    ##  [7] stringi_1.4.3     rstudioapi_0.10   R.oo_1.22.0      
+    ## [10] R.utils_2.9.0     rmarkdown_1.14    tools_3.6.1      
+    ## [13] stringr_1.4.0     xfun_0.8          yaml_2.2.0       
+    ## [16] compiler_3.6.1    htmltools_0.3.6   knitr_1.24
+
+# See also:
+
+  - [zintr](https://github.com/carlganz/zintr), an R interface to the C
+    zint library

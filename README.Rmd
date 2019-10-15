@@ -30,7 +30,40 @@ And the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
 ```
-## Example
+
+## Quick Start
+
+Text identifiers can be created in a sequential or hierarchical pattern.
+
+```{r}
+library(baRcodeR)
+
+example_labels <- uniqID_maker(user = F, string = "Example", level = 1:40)
+head(example_labels)
+```
+
+Then the text identifiers can be printed out with a laser printer on sticker sheets.
+
+
+```{r include = F, eval = F}
+# generate the image shown in vignettes as png rather than pdf so it shows up in markdown
+# pdf_file_name <- "man/figures/example_file"
+# create_PDF(Labels = example_labels, name = pdf_file_name)
+# pdf_file <- magick::image_read_pdf("man/figures/example_file.pdf")
+# magick::image_write(pdf_file, path = "man/figures/example.png", format = "png")
+```
+
+
+```{r eval = F}
+pdf_file_name <- tempfile()
+create_PDF(Labels = example_labels, name = pdf_file_name)
+```
+
+```{r echo = F}
+knitr::include_graphics("man/figures/example.png")
+```
+
+
 
 ### Cheat Sheet
 
@@ -108,3 +141,6 @@ Please document issues with a description, a minimal reproducible example, and t
 sessionInfo()
 ```
 
+# See also:
+
+- [zintr](https://github.com/carlganz/zintr), an R interface to the C zint library
