@@ -5,7 +5,7 @@
 #' See details of \code{\link{custom_create_PDF}} on how to format text labels
 #' if needed.
 #' 
-#' #' The default PDF setup is for ULINE 1.75" * 0.5" WEATHER RESISTANT LABEL for laser
+#' The default PDF setup is for ULINE 1.75" * 0.5" WEATHER RESISTANT LABEL for laser
 #' printer; item # S-19297 (uline.ca). The page format can be modified using
 #' the \code{...} (advanced arguments) for other label types.
 #'
@@ -26,10 +26,12 @@
 #' ## run with default options
 #' ## pdf file will be "example.pdf" saved into a temp directory
 #' 
-#' create_PDF(Labels = example_vector, name = file.path(tempdir(), "example"))
+#' temp_file <- tempfile()
+#' 
+#' create_PDF(Labels = example_vector, name = temp_file)
 #' 
 #' ## view example output from temp folder
-#' system(paste0('open "', file.path(tempdir(), "example"), ".pdf"))
+#' system2("open", paste0(temp_file, ".pdf"))
 #' }
 #' 
 #' ## run interactively. Overrides default pdf options

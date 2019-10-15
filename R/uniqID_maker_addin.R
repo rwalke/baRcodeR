@@ -2,6 +2,8 @@
 #' 
 #' @description This addin will allow you to interactive create ID codes and generate PDF files
 #' of QR codes.
+#' 
+#' @return Opens RStudio addin gadget window for making labels and barcodes in a GUI
 #' @export
 #' @import qrcode
 #' @examples 
@@ -284,12 +286,13 @@ make_labels_internals <- function(){
 #' @title baRcodeR Cheatsheet
 #' 
 #' @description This addin links to a downloadable PDF version of the baRcodeR cheatsheet.
+#' 
+#' @return Opens webpage of PDF
 #' @import rstudioapi
 #' @export
 #' @examples 
 #' if(interactive()){
-#' library(baRcodeR)
-#' cheatsheet()
+#' baRcodeR::cheatsheet()
 #' }
 
 cheatsheet <- function(){
