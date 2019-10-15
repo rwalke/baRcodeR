@@ -121,6 +121,7 @@ Please load the vignette “Use Addin”.
 
 ``` r
 library(baRcodeR)
+vignette("use-addin")
 ```
 
 ## Usage from the console

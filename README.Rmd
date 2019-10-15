@@ -99,6 +99,7 @@ Please load the vignette "Use Addin".
 
 ```{r eval = F}
 library(baRcodeR)
+vignette("use-addin")
 ```
 
 
