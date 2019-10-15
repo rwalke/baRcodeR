@@ -1,5 +1,5 @@
 ---
-title: "baRcodeR"
+title: "Using baRcodeR with command line prompts"
 author: "Yihan Wu and Robert I. Colautti"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,16 +16,14 @@ BaRcodeR is an open-source program to facilitate repeatable label generation and
 Flowchart of major functions
 <img src="https://raw.githubusercontent.com/yihanwu/baRcodeR/master/man/figures/Flowchart.png" alt="drawing" width="650"/>
 
+For a quick start, see the [introduction](http://yihanwu.github.io/baRcodeR).
+
 
 # Cheat Sheet
 
 A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
 
 # Overview
-
-The baRcodeR package will generate unique IDs with 2-dimensional barcode tags (i.e. QR codes) in a PDF output format that can be printed using a laser printer and sticker sheets. Default spacing is provided for ULINE 1.75" * 0.5" WEATHER RESISTANT LABEL for laser printer; item # S-19297 (uline.ca). Each function can be run interactively with prompts to guide generation of unique identifier codes and barcoded labels, including custom options to modify the PDF to fit any printed format. 
-
-> NOTE: When printing from pdf, ensure that 'anti-aliasing' or 'smoothing' options are turned OFF, and that you are not using 'fit to page' or similar options that will re-scale the output.
 
 Creating unique, scannable 2-D barcodes involves two steps:
 
@@ -34,13 +32,7 @@ Creating unique, scannable 2-D barcodes involves two steps:
 
 If you already have ID codes saved in a CSV file, skip step #1 and import directly as a `data.frame()` object for step #2: see [Create barcodes](#create-barcodes).
 
-# Required packages 
-
-'baRcodeR' requires four additional packages and their dependencies. 
-
-```{r eval=F, include=T}
-install.packages(c("ggplot2", "grDevices", "grid", "qrcode"))
-```
+For using the baRcodeR RStudio addin, refer to the package vignette *Use baRcodeR addin* through `vignette("use-addin", package="baRcodeR")`. 
 
 
 # Create simple ID codes {#uniqID-maker}
