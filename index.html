@@ -117,7 +117,7 @@
 <a class="sourceLine" id="cb4-3" data-line-number="3">## Registered S3 method overwritten by 'R.oo':</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">##   method        from       </a>
 <a class="sourceLine" id="cb4-5" data-line-number="5">##   throw.default R.methodsS3</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">example_labels &lt;-<span class="st"> </span><span class="kw"><a href="reference/uniqID_maker.html">uniqID_maker</a></span>(<span class="dt">user =</span> F, <span class="dt">string =</span> <span class="st">"Example"</span>, <span class="dt">level =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">40</span>)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">example_labels &lt;-<span class="st"> </span><span class="kw"><a href="reference/uniqID_maker.html">uniqID_maker</a></span>(<span class="dt">user =</span> <span class="ot">FALSE</span>, <span class="dt">string =</span> <span class="st">"Example"</span>, <span class="dt">level =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">40</span>)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(example_labels)</a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">##        label ind_string ind_number</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">## 1 Example001    Example        001</a>
@@ -130,16 +130,6 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">pdf_file_name &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>()</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="reference/create_PDF.html">create_PDF</a></span>(<span class="dt">Labels =</span> example_labels, <span class="dt">name =</span> pdf_file_name)</a></code></pre></div>
 <p><img src="reference/figures/example.png"><!-- --></p>
-<div id="cheat-sheet" class="section level3">
-<h3 class="hasAnchor">
-<a href="#cheat-sheet" class="anchor"></a>Cheat Sheet</h3>
-<p>A 2-page, quick-reference guide is available via <a href="https://dx.doi.org/10.6084/m9.figshare.7043309">Figshare</a></p>
-</div>
-</div>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p><img src="reference/figures/Flowchart.png" alt="Flowchart of major functions"></p>
 </div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -165,6 +155,12 @@
 <blockquote>
 <p>NOTE: When printing from pdf, ensure that ‘anti-aliasing’ or ‘smoothing’ options are turned OFF, and that you are not using ‘fit to page’ or similar options that will re-scale the output.</p>
 </blockquote>
+<p><img src="reference/figures/Flowchart.png" alt="Flowchart of major functions"></p>
+<div id="cheat-sheet" class="section level3">
+<h3 class="hasAnchor">
+<a href="#cheat-sheet" class="anchor"></a>Cheat Sheet</h3>
+<p>A 2-page, quick-reference guide is available via <a href="https://dx.doi.org/10.6084/m9.figshare.7043309">Figshare</a></p>
+</div>
 </div>
 <div id="usage-with-rstudio-addin" class="section level2">
 <h2 class="hasAnchor">
@@ -204,12 +200,13 @@
 <a class="sourceLine" id="cb11-16" data-line-number="16">## [1] baRcodeR_0.1.4 qrcode_0.1.1  </a>
 <a class="sourceLine" id="cb11-17" data-line-number="17">## </a>
 <a class="sourceLine" id="cb11-18" data-line-number="18">## loaded via a namespace (and not attached):</a>
-<a class="sourceLine" id="cb11-19" data-line-number="19">##  [1] Rcpp_1.0.2        png_0.1-7         digest_0.6.20    </a>
+<a class="sourceLine" id="cb11-19" data-line-number="19">##  [1] Rcpp_1.0.2        png_0.1-7         digest_0.6.21    </a>
 <a class="sourceLine" id="cb11-20" data-line-number="20">##  [4] R.methodsS3_1.7.1 magrittr_1.5      evaluate_0.14    </a>
-<a class="sourceLine" id="cb11-21" data-line-number="21">##  [7] stringi_1.4.3     rstudioapi_0.10   R.oo_1.22.0      </a>
-<a class="sourceLine" id="cb11-22" data-line-number="22">## [10] R.utils_2.9.0     rmarkdown_1.14    tools_3.6.1      </a>
-<a class="sourceLine" id="cb11-23" data-line-number="23">## [13] stringr_1.4.0     xfun_0.8          yaml_2.2.0       </a>
-<a class="sourceLine" id="cb11-24" data-line-number="24">## [16] compiler_3.6.1    htmltools_0.3.6   knitr_1.24</a></code></pre></div>
+<a class="sourceLine" id="cb11-21" data-line-number="21">##  [7] rlang_0.4.0       stringi_1.4.3     rstudioapi_0.10  </a>
+<a class="sourceLine" id="cb11-22" data-line-number="22">## [10] R.oo_1.22.0       R.utils_2.9.0     rmarkdown_1.14   </a>
+<a class="sourceLine" id="cb11-23" data-line-number="23">## [13] tools_3.6.1       stringr_1.4.0     xfun_0.8         </a>
+<a class="sourceLine" id="cb11-24" data-line-number="24">## [16] yaml_2.2.0        compiler_3.6.1    htmltools_0.4.0  </a>
+<a class="sourceLine" id="cb11-25" data-line-number="25">## [19] knitr_1.24</a></code></pre></div>
 </div>
 <div id="see-also" class="section level1">
 <h1 class="hasAnchor">

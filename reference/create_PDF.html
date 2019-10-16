@@ -157,7 +157,9 @@ ID codes) with either UTF-8 or ASCII encoding.</p></td>
     <tr>
       <th>name</th>
       <td><p>character. Name of the PDF output file. Default is
-<code>"LabelsOut"</code>.</p></td>
+<code>"LabelsOut"</code>. A file named <code>name.pdf</code> will be saved to the
+working directory by default. Use <code>"dirname/name"</code> to produce a file
+called <code>name.pdf</code> in the <code>dirname</code> directory.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -191,7 +193,7 @@ actual size is bigger than label dimensions.</p></td>
     <p>a PDF file containing QR-coded labels, saved to the default directory.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>#' The default PDF setup is for ULINE 1.75" * 0.5" WEATHER RESISTANT LABEL for laser
+    <p>The default PDF setup is for ULINE 1.75" * 0.5" WEATHER RESISTANT LABEL for laser
 printer; item # S-19297 (uline.ca). The page format can be modified using
 the <code>...</code> (advanced arguments) for other label types.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -206,10 +208,12 @@ the <code>...</code> (advanced arguments) for other label types.</p>
 <span class='co'>## run with default options</span>
 <span class='co'>## pdf file will be "example.pdf" saved into a temp directory</span>
 
-<span class='fu'>create_PDF</span>(<span class='kw'>Labels</span> <span class='kw'>=</span> <span class='no'>example_vector</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"example"</span>))
+<span class='no'>temp_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>()
+
+<span class='fu'>create_PDF</span>(<span class='kw'>Labels</span> <span class='kw'>=</span> <span class='no'>example_vector</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>temp_file</span>)
 
 <span class='co'>## view example output from temp folder</span>
-<span class='fu'><a href='https://rdrr.io/r/base/system.html'>system</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>'open "'</span>, <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"example"</span>), <span class='st'>".pdf"</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/system2.html'>system2</a></span>(<span class='st'>"open"</span>, <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>temp_file</span>, <span class='st'>".pdf"</span>))
 }
 
 <span class='co'>## run interactively. Overrides default pdf options</span>
