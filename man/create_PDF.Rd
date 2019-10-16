@@ -15,7 +15,9 @@ parameter values) Default is \code{FALSE}}
 ID codes) with either UTF-8 or ASCII encoding.}
 
 \item{name}{character. Name of the PDF output file. Default is
-\code{"LabelsOut"}.}
+\code{"LabelsOut"}. A file named \code{name.pdf} will be saved to the
+working directory by default. Use \code{"dirname/name"} to produce a file
+called \code{name.pdf} in the \code{dirname} directory.}
 
 \item{type}{character. Choice of \code{"linear"} code 128 or \code{"matrix"}
 QR code labels. Default is \code{"matrix"}.}

@@ -46,7 +46,7 @@ library(baRcodeR)
     ##   throw.default R.methodsS3
 
 ``` r
-example_labels <- uniqID_maker(user = F, string = "Example", level = 1:40)
+example_labels <- uniqID_maker(user = FALSE, string = "Example", level = 1:40)
 head(example_labels)
 ```
 
@@ -67,15 +67,6 @@ create_PDF(Labels = example_labels, name = pdf_file_name)
 ```
 
 ![](man/figures/example.png)<!-- -->
-
-### Cheat Sheet
-
-A 2-page, quick-reference guide is available via
-[Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
-
-## Overview
-
-![Flowchart of major functions](man/figures/Flowchart.png)
 
 ## Introduction
 
@@ -114,6 +105,13 @@ data frame will be used.
 > NOTE: When printing from pdf, ensure that ‘anti-aliasing’ or
 > ‘smoothing’ options are turned OFF, and that you are not using ‘fit
 > to page’ or similar options that will re-scale the output.
+
+![Flowchart of major functions](man/figures/Flowchart.png)
+
+### Cheat Sheet
+
+A 2-page, quick-reference guide is available via
+[Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
 
 ## Usage with RStudio addin
 
@@ -163,12 +161,13 @@ sessionInfo()
     ## [1] baRcodeR_0.1.4 qrcode_0.1.1  
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.2        png_0.1-7         digest_0.6.20    
+    ##  [1] Rcpp_1.0.2        png_0.1-7         digest_0.6.21    
     ##  [4] R.methodsS3_1.7.1 magrittr_1.5      evaluate_0.14    
-    ##  [7] stringi_1.4.3     rstudioapi_0.10   R.oo_1.22.0      
-    ## [10] R.utils_2.9.0     rmarkdown_1.14    tools_3.6.1      
-    ## [13] stringr_1.4.0     xfun_0.8          yaml_2.2.0       
-    ## [16] compiler_3.6.1    htmltools_0.3.6   knitr_1.24
+    ##  [7] rlang_0.4.0       stringi_1.4.3     rstudioapi_0.10  
+    ## [10] R.oo_1.22.0       R.utils_2.9.0     rmarkdown_1.14   
+    ## [13] tools_3.6.1       stringr_1.4.0     xfun_0.8         
+    ## [16] yaml_2.2.0        compiler_3.6.1    htmltools_0.4.0  
+    ## [19] knitr_1.24
 
 # See also:
 

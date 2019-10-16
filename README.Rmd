@@ -38,7 +38,7 @@ Text identifiers can be created in a sequential or hierarchical pattern.
 ```{r}
 library(baRcodeR)
 
-example_labels <- uniqID_maker(user = F, string = "Example", level = 1:40)
+example_labels <- uniqID_maker(user = FALSE, string = "Example", level = 1:40)
 head(example_labels)
 ```
 
@@ -65,13 +65,7 @@ knitr::include_graphics("man/figures/example.png")
 
 
 
-### Cheat Sheet
 
-A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
-
-## Overview
-
-![Flowchart of major functions](man/figures/Flowchart.png)
 
 ## Introduction
 
@@ -92,6 +86,12 @@ Creating unique, scannable barcodes generally involves two steps:
 If you already have ID codes saved in a CSV file, the csv can be read into a `data.frame()` in R. The `label` column, if it exists will be used as input to generate barcodes. Otherwise, the first column in the data frame will be used. 
 
 > NOTE: When printing from pdf, ensure that 'anti-aliasing' or 'smoothing' options are turned OFF, and that you are not using 'fit to page' or similar options that will re-scale the output.
+
+![Flowchart of major functions](man/figures/Flowchart.png)
+
+### Cheat Sheet
+
+A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
 
 ## Usage with RStudio addin
 

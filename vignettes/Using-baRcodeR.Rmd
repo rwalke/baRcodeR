@@ -34,6 +34,8 @@ If you already have ID codes saved in a CSV file, skip step #1 and import direct
 
 For using the baRcodeR RStudio addin, refer to the package vignette *Use baRcodeR addin* through `vignette("use-addin", package="baRcodeR")`. 
 
+The functions in `baRcodeR` will accept parameters in two ways: 1) On the command line as part of the function, and 2) interactively through user input when `user=TRUE` is specified as part of the function. This vignette will cover the two different ways to obtain the same text identifiers and PDF sheets needed for printing.
+
 
 # Create simple ID codes {#uniqID-maker}
 
@@ -63,40 +65,46 @@ library(baRcodeR)
 Run the `uniqID_make(r))` function in interactive mode.
 
 ```{r eval=F, include=T}
-IDcodes <- uniqID_maker(user = T)
+IDcodes <- uniqID_maker(user = TRUE)
 ```
+
+> NOTE: When typing into the console for user prompts, strings should not be quoted. 
 
 User prompts will appear in the console. Inputs received from the user are passed as parameters to the `uniqID_maker()` to create the object `IDcodes`, which is a `data.frame()` object containing a vector of unique IDs in the first column, and additional columns for strings and individual numbers provided by the user. 
 
->  \> Please enter string for level: 
+
+> `Please enter string for level: `
+
 
 The string entered here defines the leading part of the ID code that will be the same for each individual code. This can be the name of a population, a species or a location. In this example, the string entered by the user into the console as denoted by the `>` symbol is "example".
 
->  \> Please enter string for level: example
+
+> `Please enter string for level: example`
+
 
 The second user prompt is:
 
->  \> Enter the starting number for level: 
+> `Enter the starting number for level: `
 
 The prompt asks for the starting number to generate unique IDs. These codes do not have to start from 1. 
 
->  \> Enter the starting number for level: 5
+> `Enter the starting number for level: 5`
 
 The third user prompt is:
 
->  \> Enter the ending number for level: 
+> `Enter the ending number for level: `
 
 The prompt asks for the ending number. Unique IDs are generated sequentially from the starting number to the ending number. Note that a higher number can be used as the starting number to generate a reverse order. It is possible to generate IDs that are not sequentially numbered by passing a vector through `uniqID_maker()` (e.g. `seq()`) (see [By arguments](#IDcode-maker-arguments)) 
 
->  \> Enter the ending number for level: 10
+> `Enter the ending number for level: 10`
 
 After the starting and ending numbers are set, the function generates a series of numbers. The user is then asked for the number of digits in the unique ID. 
 
->  \> Number of digits to print for level:
+> `Number of digits to print for level:`
 
 This number must be >= the maximum number of digits in the unique ID code and will add leading zeros as needed. This is particularly useful for generating a smaller number ID codes that are expected to be part of a much larger sample set.
 
->  \> Number of digits to print for level: 3 
+> `Number of digits to print for level: 3 `
 
 
 ## By arguments {#IDcode-maker-arguments}
@@ -154,28 +162,28 @@ a3-b2-c2
 To create hierarchical ID codes in interactive mode, start with the argument `user=T` in the function.
 
 ```{r eval=F, include=T}
-IDcodes <- uniqID_hier_maker(user = T)
+IDcodes <- uniqID_hier_maker(user = TRUE)
 ```
 
 The first prompt that appears in the console is:
 
->  \> What is the # of levels in hierarchy: 
+> `What is the # of levels in hierarchy: `
 
 In this example, we have levels a, b, and c; so three levels in total. 
 
->  \> What is the # of levels in hierarchy: 3
+> `What is the # of levels in hierarchy: 3`
 
 The second prompt asks if a string should be appended to the end of the IDs. 
 
->  \> String at end of barcode? (y/n):
+> `String at end of barcode? (y/n):`
 
 There are only two possible responses to this question as indicated in the parenthesis. If the answer is yes, then a new prompt will appear.
 
->  \> Please enter ending string: 
+> `Please enter ending string: `
 
 In this example, there is no ending string.
 
->  \> String at end of barcode? (y/n): n
+> `String at end of barcode? (y/n): n`
 
 A series of prompts will repeat for each level, allowing the user to set the leading string, the starting number, and the ending number. These are similar to `uniqID_maker`(see [uniqID_maker](#uniqID-maker-user-prompt) for step by step instructions). The number of digits to print can also vary for each level. 
 
@@ -232,23 +240,23 @@ In the following example, the IDcodes data.frame object is used to create a PDF 
 If `IDcodes` is a vector, the vector will be directly used to generate barcodes. If `IDcodes` is a data frame, the function will use the column called `label` or else the first column in the data frame. 
 
 ```{r eval=F, include=T}
-create_PDF(user=T, Labels=IDcodes)
+create_PDF(user=TRUE, Labels=IDcodes)
 ```
 A user prompt is printed into the console. For example:
 
->  \> Please enter name for PDF output file: 
+> `Please enter name for PDF output file: `
 
 Any combination of letters and numbers can be used for the name of the pdf file. Here, the file name is set to "example."
 
->  \> Please enter name for PDF output file: example
+> `Please enter name for PDF output file: example`
 
 The next user prompt is to set the size of the text printed on each barcode. 
 
->  \> Please enter a font size (2.2-4.7): 
+> `Please enter a font size (2.2-4.7): `
 
 This user input has to be a number between 2.2 and 4.7. In this example, the font size will be 3.5.
 
->  \> Please enter a font size (2.2-4.7): 3.5
+> `Please enter a font size (2.2-4.7): 3.5`
 
 The last basic parameter to set is the error correction level. There are four possible levels: L, M, Q, and H. 
 
@@ -259,19 +267,19 @@ Level "H" - up to 30% damage -- good for bigger labels (small pixels)
 
 The user prompt for error correction level is similar to previous prompts.
 
->  \> Specify an error correction - L, M, Q, H: 
+> `Specify an error correction - L, M, Q, H: `
 
 This example uses an error correction level "Q"
 
->  \> Specify an error correction - L, M, Q, H: Q
+> `Specify an error correction - L, M, Q, H: Q`
 
 The last user prompt asks whether the user wants to modify the advanced parameters. 
 
->  \> Edit advanced parameters? (Y/N): 
+> `Edit advanced parameters? (Y/N): `
 
 In this example, no advanced parameters are modified. Using advanced parameters are covered in [advanced options](#custom-create-pdf)
 
->  \> Edit advanced parameters? (Y/N): N
+> `Edit advanced parameters? (Y/N): N`
 
 ## By arguments
 
