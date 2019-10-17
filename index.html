@@ -105,7 +105,12 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"baRcodeR"</span>)</a></code></pre></div>
 <p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"yihanwu/baRcodeR"</span>, <span class="dt">build_vignettes =</span> T)</a></code></pre></div>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"yihanwu/baRcodeR"</span>, <span class="dt">build_vignettes =</span> T)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># for windows users to build vignettes</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># install_github("yihanwu/baRcodeR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)</span></a></code></pre></div>
+<blockquote>
+<p>NOTE: Restarting RStudio is necessary for the addin for baRcodeR to appear.</p>
+</blockquote>
 </div>
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
@@ -130,6 +135,7 @@
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">pdf_file_name &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span>()</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="reference/create_PDF.html">create_PDF</a></span>(<span class="dt">Labels =</span> example_labels, <span class="dt">name =</span> pdf_file_name)</a></code></pre></div>
 <p><img src="reference/figures/example.png"><!-- --></p>
+<p>Th particular layout above defaults to ULINE 1.75" * 0.5" labels but other layouts can be specified through parameters in the <code>custom_create_PDF</code> function.</p>
 </div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -212,8 +218,8 @@
 <h1 class="hasAnchor">
 <a href="#see-also" class="anchor"></a>See also:</h1>
 <ul>
-<li>
-<a href="https://github.com/carlganz/zintr">zintr</a>, an R interface to the C zint library</li>
+<li><p><a href="https://github.com/carlganz/zintr">zintr</a>is an R interface to the C zint library. Use zintr if you want to create single barcode images. zintr does not include functions for (i) automating the creation of biologically-relevant, unique ID codes or (ii) customizable layouts for printing multiple barcodes.</p></li>
+<li><p><a href="http://zint.org.uk/">zint</a> is a C library that generates a variety of different barcodes. Just like zintr, zint produces single barcode images.</p></li>
 </ul>
 </div>
 

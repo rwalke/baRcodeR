@@ -108,18 +108,27 @@
 <h2 class="hasAnchor">
 <a href="#using-the-rstudio-addin" class="anchor"></a>Using the RStudio addin</h2>
 <p>The main baRcodeR functions for unique identifiers and QR code generation can be performed interactive via the RStudio addin found on the toolbar.</p>
+<div id="find-the-addin" class="section level3">
+<h3 class="hasAnchor">
+<a href="#find-the-addin" class="anchor"></a>Find the addin</h3>
+<p>Make sure to restart RStudio after installing. Then the addin should appear in the toolbar.</p>
+<p>Click on the add-in, and a popup window will appear.</p>
 <div class="figure">
 <img src="add-in-screenshot.png" alt="Screenshot of RStudio addins bar" width="364"><p class="caption">
 Screenshot of RStudio addins bar
 </p>
 </div>
-<p>Click on the add-in, and a popup window will appear. NOTE the 3 tabs along the bottom, corresponding to the three main baRcodeR commands: <code>uniqID_maker</code>, <code>uniqID_hier_maker</code> and <code>create_PDF</code>.</p>
+<p>Note the 3 tabs along the bottom, corresponding to the three main baRcodeR commands: <code>uniqID_maker</code>, <code>uniqID_hier_maker</code> and <code>create_PDF</code>.</p>
 <div class="figure">
 <img src="tab-1-screenshot.png" alt="Screenshot of the simple ID Code tab" width="412"><p class="caption">
 Screenshot of the simple ID Code tab
 </p>
 </div>
-<p>The first tab generates basic ID codes:</p>
+</div>
+<div id="generate-simple-id-codes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#generate-simple-id-codes" class="anchor"></a>Generate simple ID codes</h3>
+<p>The first tab generates basic ID codes with user input as seen below:</p>
 <div class="figure">
 <img src="tab-1-screenshot-2.png" alt="Active simple ID code tab" width="412"><p class="caption">
 Active simple ID code tab
@@ -131,6 +140,10 @@ Active simple ID code tab
 Screenshot of the hierarchical ID code tab
 </p>
 </div>
+</div>
+<div id="generate-hierarchical-id-codes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#generate-hierarchical-id-codes" class="anchor"></a>Generate Hierarchical ID codes</h3>
 <p>You can switch from the simple ID code generation tab to the hierarchical ID code generation or QR code creation tabs at the bottom.</p>
 <p>Hierarchical ID codes have a nested structure (e.g. X subsamples from Y individuals at Z time points), the information for each level is saved under the “Hierarchy” section. The “Add level” button is used to add more levels to the hierarchy, and the “Remove level” button will remove the most recently added level. The data frame output will contain ID codes in the first column, and a separate column for each level of the hierarchy, with the user-defined string as the header; as shown under ‘Preview’. As with the simple ID code tab, the output of Hierarchical ID codes is a CSV file “Labels_YYYY-MM-DD.csv”, saved in the working directory. This file is useful for archiving ID codes and as a starting point for data entry. For example, it can be opened in a spreadsheet program to add data measurement columns. It is also the input for creating printable, QR-coded labels with <code>create_PDF</code>.</p>
 <div class="figure">
@@ -138,18 +151,22 @@ Screenshot of the hierarchical ID code tab
 Sceenshot of PDF creation tab
 </p>
 </div>
+</div>
+<div id="create-the-pdf-for-sticker-printing" class="section level3">
+<h3 class="hasAnchor">
+<a href="#create-the-pdf-for-sticker-printing" class="anchor"></a>Create the PDF for sticker printing</h3>
 <p>The Barcode Creation tab contains all the advanced options for page layout. The default options fit a specific format: ULINE 1.75" * 0.5" WEATHER RESISTANT LABEL for laser printer; item # S-19297 (uline.ca). A text file containing ID codes is imported by clicking the “Browse” button and selecting the CSV text file in the file browser. The file is be previewed by clicking “Import File”.</p>
+<p>After importing a CSV file, the preview shows part of the expected output PDF file based on font size and other layout options. The first column is highlighted by default and defines the column to use for the labels. Clicking on a different column will set it as the ID code column, as shown in the preview.</p>
 <div class="figure">
 <img src="tab-3-screenshot-2.png" alt="Screenshot of Column Selection" width="412"><p class="caption">
 Screenshot of Column Selection
 </p>
 </div>
-<p>After importing a CSV file, the preview shows part of the expected output PDF file based on font size and other layout options. The first column is highlighted by default and defines the column to use for the labels. Clicking on a different column will set it as the ID code column, as shown in the preview.</p>
 <p>Clicking “Make PDF” will generate a printable PDF of all barcodes provided. This can take several minutes for &gt;100 barcodes, depending on computer speed. The text “Done” will appear upon completion of the PDF file.</p>
 <blockquote>
 <p>NOTE: When printing from pdf, ensure that ‘anti-aliasing’ or ‘smoothing’ options are turned OFF, and that you are not using ‘fit to page’ or similar options that will re-scale the output.</p>
 </blockquote>
-<pre><code>## R version 3.6.1 (2017-01-27)
+<pre><code>## R Under development (unstable) (2019-10-17 r77306)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 16.04.6 LTS
 ## 
@@ -173,9 +190,10 @@ Screenshot of Column Selection
 ##  [5] digest_0.6.21    assertthat_0.2.1 MASS_7.3-51.4    R6_2.4.0        
 ##  [9] backports_1.1.5  magrittr_1.5     evaluate_0.14    highr_0.8       
 ## [13] stringi_1.4.3    rlang_0.4.0      fs_1.3.1         rmarkdown_1.16  
-## [17] pkgdown_1.4.1    desc_1.2.0       tools_3.6.1      stringr_1.4.0   
-## [21] yaml_2.2.0       xfun_0.10        compiler_3.6.1   memoise_1.1.0   
+## [17] pkgdown_1.4.1    desc_1.2.0       tools_4.0.0      stringr_1.4.0   
+## [21] yaml_2.2.0       xfun_0.10        compiler_4.0.0   memoise_1.1.0   
 ## [25] htmltools_0.4.0  knitr_1.25</code></pre>
+</div>
 </div>
 </div>
   </div>
