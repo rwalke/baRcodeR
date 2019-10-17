@@ -72,7 +72,7 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
       digits <- as.numeric(readline(paste0("Number of digits to print: ")))
     }
     hierarchy <- vector("list", hlevels)
-    for(i in 1:hlevels){
+    for(i in seq(1,hlevels)){
       str <- readline(paste0("Please enter string for level ",i,": "))
       # startNum must be smaller than endNum
       startNum <- as.numeric(readline(paste0("Enter the starting number for level ",i,": ")))
@@ -92,11 +92,13 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   # end user input
   # hierarchy format check
   if (is.list(hierarchy) == FALSE) stop("Hierarchy is not in list format. See ?uniqID_hier_maker")
-  if (length(unique(sapply(hierarchy, length))) != 1) stop("Hierarchy entries are not of equal length.")
-  if (any(sapply(hierarchy, length) != 3)) stop("Each level in hierarchy should have a string, a beginning value and an end value.")
-  if (length(hierarchy) == 1) stop("Input list has only one level. Did you forget a level or are you sure you are not looking for uniqIDMaker()?")
+  if (length(unique(vapply(hierarchy, length, integer(1)))) != 1) stop("Hierarchy entries are not of equal length.")
+  if (any(vapply(hierarchy, length, integer(1)) != 3)) 
+    stop("Each level in hierarchy should have a string, a beginning value and an end value.")
+  if (length(hierarchy) == 1) 
+    stop("Input list has only one level. Did you forget a level or are you sure you are not looking for uniqIDMaker()?")
   # loop through hierarchy to generate text
-  for(i in 1:length(hierarchy)){
+  for(i in seq(1,length(hierarchy))){
     str <- hierarchy[[i]][1]
     startNum <- suppressWarnings(as.numeric(hierarchy[[i]][2]))
     endNum <- suppressWarnings(as.numeric(hierarchy[[i]][3]))
