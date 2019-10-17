@@ -30,6 +30,11 @@ And the development version from [GitHub](https://github.com/) with:
 
     # install.packages("devtools")
     devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
+    # for windows users to build vignettes
+    # install_github("yihanwu/baRcodeR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+
+> NOTE: Restarting RStudio is necessary for the addin for baRcodeR to
+> appear.
 
 ## Quick Start
 
@@ -67,6 +72,10 @@ create_PDF(Labels = example_labels, name = pdf_file_name)
 ```
 
 ![](man/figures/example.png)<!-- -->
+
+Th particular layout above defaults to ULINE 1.75" \* 0.5" labels but
+other layouts can be specified through parameters in the
+`custom_create_PDF` function.
 
 ## Introduction
 
@@ -171,5 +180,12 @@ sessionInfo()
 
 # See also:
 
-  - [zintr](https://github.com/carlganz/zintr), an R interface to the C
-    zint library
+  - [zintr](https://github.com/carlganz/zintr)is an R interface to the C
+    zint library. Use zintr if you want to create single barcode images.
+    zintr does not include functions for (i) automating the creation of
+    biologically-relevant, unique ID codes or (ii) customizable layouts
+    for printing multiple barcodes.
+
+  - [zint](http://zint.org.uk/) is a C library that generates a variety
+    of different barcodes. Just like zintr, zint produces single barcode
+    images.
