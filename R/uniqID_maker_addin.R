@@ -61,7 +61,8 @@ make_labels_internals <- function(){
                                                                              max = Inf, 
                                                                              width=NULL),
                                                          # textOutput("check"),
-                                                         shiny::actionButton("make", "Create Label.csv"))),
+                                                         shiny::actionButton("make", "Create Label.csv"),
+                                                         shiny::p("Note: Generated file will be in working directory."))),
                                                        shiny::fillRow(shiny::tagList(# output code snippet for reproducibility
                                                          shiny::tags$h3("Reproducible code"),
                                                          shiny::verbatimTextOutput("label_code"),
@@ -101,7 +102,8 @@ make_labels_internals <- function(){
                                                          shiny::actionButton('insertBtn', 'Add level'),
                                                          shiny::actionButton('removeBtn', 'Remove level'),
                                                          # shiny::actionButton("hier_label_preview", "Preview Labels"),
-                                                         shiny::actionButton("hier_label_make", "Create Labels.csv")
+                                                         shiny::actionButton("hier_label_make", "Create Labels.csv"),
+                                                         shiny::p("Note: Generated file will be in working directory.")
                                                        )),
                                                        shiny::fillCol(shiny::tagList(
                                                          # code snippet
