@@ -41,9 +41,9 @@
   "output": {
     "hier_code": "uniqID_hier_maker(user = FALSE, hierarchy = list(c(Prefix=\"a\",start=\"1\",end=\"2\")), end = NULL, digits = 2)",
     "hier_label_df": [
-      "Input list has only one level. Did you forget a level or are you sure you are not looking for uniqIDMaker()?",
-      "c(\"baRcodeR::uniqID_hier_maker(user = FALSE, hierarchy = hierarchy, \", \"    end = NULL, digits = input$hier_digits)\")",
-      "NULL"
+      "Please add a level",
+      "NULL",
+      "c(\"shiny.silent.error\", \"validation\")"
     ],
     "label_code": "[1] uniqID_maker(user = FALSE, string = '', level = c(NA,NA), digits = 3)",
     "label_df": [
