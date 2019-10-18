@@ -24,7 +24,7 @@ QR code labels. Default is \code{"matrix"}.}
 
 \item{ErrCorr}{error correction value for matrix labels only. Level of damage
 from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
-is \code{"H"}.}
+is \code{"H"}. See details for explanation of values.}
 
 \item{Fsz}{numerical. Sets font size in points. Longer ID codes may be shrunk
 to fit if truncation is not used for matrix labels. Default font size is

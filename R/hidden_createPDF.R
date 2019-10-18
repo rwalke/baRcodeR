@@ -10,6 +10,13 @@
 #' according to code 128 set B. \code{custom_create_PDF} is the main function
 #' which sets page layout, and creates the PDF file.
 #' 
+#' Correction levels for QR codes refer to the level of damage a label can
+#' tolerate before the label become unreadable by a scanner (L = Low (7%), M =
+#' Medium (15%), Q = Quantile (25%), H = High (30%)). So a label with L
+#' correction can lose up to at most 7% of the code before it is unreadable
+#' while a H label can lose up to 30% of the code. This also means that L codes
+#' can be printed at smaller sizes compared to H codes.
+#' 
 #' The escape characters \code{\\n} and \code{\\s} (and the hex equivalents
 #' \code{\\x0A} and \code{\\x20} can be used to format text labels. Tab character
 #' \code{\\t} (\code{\\x09}) does not work for QR codes and should be replaced by
@@ -33,7 +40,7 @@
 #'   QR code labels. Default is \code{"matrix"}.
 #' @param ErrCorr error correction value for matrix labels only. Level of damage
 #'   from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
-#'   is \code{"H"}.
+#'   is \code{"H"}. See details for explanation of values.
 #' @param Fsz numerical. Sets font size in points. Longer ID codes may be shrunk
 #'   to fit if truncation is not used for matrix labels. Default font size is
 #'   \code{5}. ID codes are also shrunk automatically to fit on the label if
