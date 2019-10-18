@@ -12,7 +12,12 @@ Authors@R:
              family = "Colautti",
              role = c("aut", "cre"),
              email = "robert.colautti@queensu.ca",
-             comment = c(ORCID = "0000-0003-4213-0711")))
+             comment = c(ORCID = "0000-0003-4213-0711")),
+      person(given = "Emily",
+             family = "Bao",
+            role = "ctb",
+            email = "13syeb@queensu.ca")       
+      )
 Maintainer: Yihan Wu <yihan.wu@queensu.ca>             
 Description: Tools to generate unique identifier codes and
     printable barcoded labels for the management of biological samples.
