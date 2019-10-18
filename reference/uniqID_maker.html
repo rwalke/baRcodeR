@@ -140,7 +140,8 @@ to generate printable QR-coded labels; and (ii) to downstream data
 collection software (spreadsheets, relational databases, etc.)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>uniqID_maker</span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>string</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>level</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>)</pre>
+    <pre class="usage"><span class='fu'>uniqID_maker</span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>string</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>level</span>, <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>ending_string</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +167,11 @@ adding leading 0s as needed. This will apply to all levels when <code>user=FALSE
 When the numeric value of the label has a greater number of digits than 
 <code>digits</code>, <code>digits</code> is automatically increased for the entire level. 
 Default is <code>3</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ending_string</th>
+      <td><p>a character string or vector of strings to attach to the label.
+If a vector is used, all combinations of that vector with a unique label will be produced.</p></td>
     </tr>
     </table>
 
@@ -208,6 +214,33 @@ See example below.</p>
 #&gt; 8  string0010     string       0010
 #&gt; 9  string0999     string       0999
 #&gt; 10 string1000     string       1000</div><div class='input'>
+
+<span class='co'>## Using the ending_string to produce labels with unique endings</span>
+<span class='co'>## this is different from hierarchical labels with two levels as there </span>
+<span class='co'>## is no numbering, just the text string</span>
+
+
+<span class='no'>Labels</span> <span class='kw'>&lt;-</span> <span class='fu'>uniqID_maker</span>(<span class='kw'>string</span> <span class='kw'>=</span> <span class='st'>"string"</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>), <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ending_string</span> <span class='kw'>=</span> <span class='st'>"A"</span>)
+<span class='no'>Labels</span></div><div class='output co'>#&gt;        label ind_string ind_number end_string
+#&gt; 1 string01-A     string         01          A
+#&gt; 2 string02-A     string         02          A
+#&gt; 3 string03-A     string         03          A
+#&gt; 4 string04-A     string         04          A
+#&gt; 5 string05-A     string         05          A</div><div class='input'>
+<span class='no'>Labels</span> <span class='kw'>&lt;-</span> <span class='fu'>uniqID_maker</span>(<span class='kw'>string</span> <span class='kw'>=</span> <span class='st'>"string"</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>),
+                       <span class='kw'>digits</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>ending_string</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>))
+<span class='no'>Labels</span></div><div class='output co'>#&gt;         label ind_string ind_number end_string
+#&gt; 1  string01-A     string         01          A
+#&gt; 2  string02-A     string         02          A
+#&gt; 3  string03-A     string         03          A
+#&gt; 4  string04-A     string         04          A
+#&gt; 5  string05-A     string         05          A
+#&gt; 6  string01-B     string         01          B
+#&gt; 7  string02-B     string         02          B
+#&gt; 8  string03-B     string         03          B
+#&gt; 9  string04-B     string         04          B
+#&gt; 10 string05-B     string         05          B</div><div class='input'>
+
 <span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()){
 <span class='co'>## function using user prompt does not use any of the other parameters</span>
 <span class='no'>Labels</span> <span class='kw'>&lt;-</span> <span class='fu'>uniqID_maker</span>(<span class='kw'>user</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
