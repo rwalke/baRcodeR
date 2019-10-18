@@ -423,7 +423,7 @@ make_labels_internals <- function(){
       #   shiny::need(input$hier_digits != "", "Please enter the number of digits")
       # )
       shiny::validate(
-        shiny::need(nrow(values$df) != 0, "Please add a level")
+        shiny::need(nrow(values$df) > 1, "Please add a level")
       )
       hierarchy <- split(values$df, seq(nrow(values$df)))
       hier_Labels <- baRcodeR::uniqID_hier_maker(user=FALSE, hierarchy = hierarchy, end = NULL, digits = input$hier_digits)
