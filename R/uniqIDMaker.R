@@ -23,6 +23,8 @@
 #' When the numeric value of the label has a greater number of digits than 
 #' \code{digits}, \code{digits} is automatically increased for the entire level. 
 #' Default is \code{3}.
+#' @param ending_string a character string or vector of strings to attach to the label.
+#' If a vector is used, all combinations of that vector with a unique label will be produced.
 #'
 #' @seealso \code{\link{uniqID_hier_maker}}
 #' @export
@@ -37,6 +39,20 @@
 #' level <- c(1:5, 8:10, 999:1000)
 #' Labels <- uniqID_maker(string = "string", level = level, digits = 4)
 #' Labels
+#' 
+#' 
+#' ## Using the ending_string to produce labels with unique endings
+#' ## this is different from hierarchical labels with two levels as there 
+#' ## is no numbering, just the text string
+#' 
+#' 
+#' Labels <- uniqID_maker(string = "string", level = c(1:5), digits = 2, ending_string = "A")
+#' Labels
+#' 
+#' Labels <- uniqID_maker(string = "string", level = c(1:5), 
+#'                        digits = 2, ending_string = c("A", "B"))
+#' Labels
+#' 
 #'
 #' if(interactive()){
 #' ## function using user prompt does not use any of the other parameters
@@ -46,7 +62,7 @@
 
 
 
-uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3){
+uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3, ending_string = NULL){
   if (user == TRUE) { # nocov start
     ## asks for string
     string <- readline(paste0("Please enter string for level: "))
@@ -86,11 +102,26 @@ uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3){
     warning("Digits specified less than max number. Increasing number of digits.")
     digits <- nchar(paste(max(level)))
   }
-  line <- paste0(string, "%0", digits, "d")
-  label <- sprintf(line, rep(level))
-  ind_string <- rep(string, length(rep(level)))
-  ind_number <- sprintf(paste0("%0", digits, "d"), rep(level))
-  return(data.frame(label, ind_string, ind_number))
+  
+  if(!is.null(ending_string)){
+    line <- paste0(string, "%0", digits, "d")
+    label <- sprintf(line, rep(level))
+    ind_string <- rep(string, length(rep(level)))
+    ind_number <- sprintf(paste0("%0", digits, "d"), rep(level))
+    suffix_strings <- expand.grid(label, ending_string)$Var2
+    label <- paste(label, suffix_strings, sep = "-")
+    label_df <- data.frame(label, ind_string, ind_number, end_string = suffix_strings)
+  } else {
+    line <- paste0(string, "%0", digits, "d")
+    label <- sprintf(line, rep(level))
+    ind_string <- rep(string, length(rep(level)))
+    ind_number <- sprintf(paste0("%0", digits, "d"), rep(level))
+    label_df <- data.frame(label, ind_string, ind_number)
+  }
+  
+
+
+  return(label_df)
 
 }
 

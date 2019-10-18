@@ -55,7 +55,7 @@ for printing on partially-used label sheets.}
 
 \item{trunc}{logical. Text is broken into multiple lines for longer ID codes,
 to prevent printing off of the label area. Default is \code{TRUE}. If
-\code{trunc = F}, and text is larger than the physical label, the text will
+\code{trunc = FALSE}, and text is larger than the physical label, the text will
 be shrunk down automatically.}
 
 \item{numrow}{numerical. Number of rows per page. Default is \code{20}.}
