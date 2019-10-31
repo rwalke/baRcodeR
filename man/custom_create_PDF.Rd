@@ -107,8 +107,8 @@ according to code 128 set B. \code{custom_create_PDF} is the main function
 which sets page layout, and creates the PDF file.
 
 Correction levels for QR codes refer to the level of damage a label can
-tolerate before the label become unreadable by a scanner (L = Low (7%), M =
-Medium (15%), Q = Quantile (25%), H = High (30%)). So a label with L
+tolerate before the label become unreadable by a scanner (L = Low (7\%), M =
+Medium (15\%), Q = Quantile (25\%), H = High (30\%)). So a label with L
 correction can lose up to at most 7% of the code before it is unreadable
 while a H label can lose up to 30% of the code. This also means that L codes
 can be printed at smaller sizes compared to H codes.

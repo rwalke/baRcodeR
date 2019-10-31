@@ -51,7 +51,7 @@ library(baRcodeR)
     ##   throw.default R.methodsS3
 
 ``` r
-example_labels <- uniqID_maker(user = FALSE, string = "Example", level = 1:40)
+example_labels <- uniqID_maker(user = FALSE, string = "Example", level = 1:80)
 head(example_labels)
 ```
 

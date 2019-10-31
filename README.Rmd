@@ -42,7 +42,7 @@ Text identifiers can be created in a sequential or hierarchical pattern.
 ```{r}
 library(baRcodeR)
 
-example_labels <- uniqID_maker(user = FALSE, string = "Example", level = 1:40)
+example_labels <- uniqID_maker(user = FALSE, string = "Example", level = 1:80)
 head(example_labels)
 ```
 
