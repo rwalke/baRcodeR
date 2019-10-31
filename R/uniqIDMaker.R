@@ -63,41 +63,25 @@
 
 
 uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3, ending_string = NULL){
-  if (user == TRUE) { # nocov start
+  if (user == TRUE) {
     ## asks for string
     string <- readline(paste0("Please enter string for level: "))
     ## first value of level
-    startNum <- as.numeric(readline(paste0("Enter the starting number for level: ")))
-    while(is.na(startNum) == TRUE) {
-      print("Invalid input. Please enter an integer.")
-      startNum <- as.numeric(readline(paste0("Enter the starting number for level: ")))
-    }
+    startNum <- numeric_input("Please enter the starting number for level (integer): ")
     ## ending value of level
-    endNum <- as.numeric(readline(paste0("Enter the ending number for level: ")))
-    while(is.na(endNum) == TRUE){
-      print("Invalid input. Please enter an integer.")
-      endNum <- as.numeric(readline(paste0("Enter the ending number for level: ")))
-    }
+    endNum <- numeric_input("Enter the ending number for level: ")
     ## finds greatest value
     maxNum <- max(startNum,endNum)
     ## checks what is number of digits in max value
     digitsMax <- nchar(paste(maxNum))
     ## asks for how many digits to print
-    digits <- as.numeric(readline(paste0("Number of digits to print for level: ")))
-    # check input
-    while(is.na(as.numeric(digits)) == TRUE){
-      print("Invalid input. Please only enter an integer.")
-      digits <- as.numeric(readline(paste0("Number of digits to print: ")))
-    }
-    ## if the number to digits to print is less than the digits in max value, try again
-    while (digits<digitsMax){
-      print(paste0("Please enter a number larger or equal to ", nchar(paste(maxNum))))
-      digits <- as.numeric(readline(paste0("Number of digits to print for level: ")))
-    }
+    digits <- numeric_input("Number of digits to print for level: ")
     level <-c(startNum:endNum)
+    
   } # nocov end
   if (is.numeric(level) == FALSE) stop("Level is not a string of numbers")
   if (is.numeric(digits) == FALSE) stop("Digits is not a numerical value")
+  ## if the number to digits to print is less than the digits in max value, increase digits
   if (nchar(paste(max(level))) > digits){
     warning("Digits specified less than max number. Increasing number of digits.")
     digits <- nchar(paste(max(level)))
@@ -119,11 +103,11 @@ uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3, ending_
     label_df <- data.frame(label, ind_string, ind_number)
   }
   
-
-
+  
   return(label_df)
-
+  
 }
+
 
 
 

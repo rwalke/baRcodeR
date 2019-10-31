@@ -11,8 +11,8 @@
 #' which sets page layout, and creates the PDF file.
 #' 
 #' Correction levels for QR codes refer to the level of damage a label can
-#' tolerate before the label become unreadable by a scanner (L = Low (7%), M =
-#' Medium (15%), Q = Quantile (25%), H = High (30%)). So a label with L
+#' tolerate before the label become unreadable by a scanner (L = Low (7\%), M =
+#' Medium (15\%), Q = Quantile (25\%), H = High (30\%)). So a label with L
 #' correction can lose up to at most 7% of the code before it is unreadable
 #' while a H label can lose up to 30% of the code. This also means that L codes
 #' can be printed at smaller sizes compared to H codes.
@@ -183,103 +183,93 @@ custom_create_PDF <- function(user = FALSE,
   on.exit(grDevices::graphics.off())
   # if user prompt has been set to true
   if (user == TRUE){ # nocov start
-    # possible inputs
-    inputCheck <- c("T", "t", "F", "f")
-    yesNo <- c("Y", "N")
+    
     ## ask for name
     name <- readline(paste0("Please enter name for PDF output file: "))
     ## Set font size
-    Fsz <- noquote(as.numeric(readline("Please enter a font size ")))
-    while (Fsz <= 0){
-      noquote(print("Invalid input, please specify a font size greater than 0"))
-      Fsz <- noquote(as.numeric(readline("Please enter a font size greater than 0: ")))
-    }
+    Fsz <- numeric_input("Please enter a font size: ", integer = F)
     ## Error correction
-    ErrCorr <- noquote(toupper(readline("Specify an error correction - L, M, Q, H: ")))
-    errCheck <- c("L", "l", "M", "m", "Q", "q", "H", "h")
+    
+    ErrCorr <- switch(
+      utils::menu(
+        c("L (up to 7% damage)", "M (up to 15% damage)", 
+          "Q (up to 25% damage)", "H (up to 30% damage)"), 
+        graphics = FALSE, 
+        "Select an error correction level. "),
+      "L", "M", "Q", "H")
+    
     # check errCorr input
-    while((ErrCorr %in% errCheck) == FALSE){
-      noquote(print("Invalid input, please only enter what is specified"))
-      ErrCorr <- noquote(toupper(readline("Specify an error correction - L, M, Q, H: ")))
-    }
-    Advanced <- noquote(toupper(readline("Edit advanced parameters? (Y/N): ")))
-    while((Advanced %in% yesNo) == FALSE){
-      noquote(print("Invalid input"))
-      Advanced <- noquote(toupper(readline("Edit advanced parameters? (Y/N): ")))
-    }
-    if (Advanced =="Y") {
-      type <- noquote(toupper(readline("Linear barcodes ( Y = Linear, N = matrix): ")))
-      while (type %in% yesNo) {
-        noquote(print("Invalid input"))
-        type <- noquote(toupper(readline("Linear barcodes ( Y = Linear, N = matrix): ")))
-      }
+    Advanced <- switch(
+      utils::menu(c("Yes", "No"), graphics = FALSE, 
+                  "Edit advanced parameters?"), 
+      TRUE, FALSE)
+    
+    if (Advanced) {
+      type <- switch(
+        utils::menu(c("Matrix QR Code", "Linear"), graphics = FALSE, 
+                    "Type of Barcode: "),
+        "matrix", "linear"
+      )
+      
       ## Set to TRUE to print labels across rows instead of down columns
-      Across <- noquote(toupper(readline("Please enter T or F to print across: ")))
-      while((Across %in% inputCheck) == FALSE){
-        noquote(print("Invalid input"))
-        Across <- noquote(toupper(readline("Please enter T or F to print across: ")))
+      Across <- switch(utils::menu(c("Yes", "No"), graphics = FALSE, 
+                                   "Print labels across?"), 
+                       TRUE, FALSE)
+      
+      # Split text into rows (prevents text cutoff with narrow labels)
+      trunc<- switch(utils::menu(c("Yes", "No"), graphics = FALSE, 
+                                 "Truncate longer labels into multiple lines if necessary?"), 
+                     TRUE, FALSE)
+      
+      ERows <- numeric_input("Number of rows to skip? (enter 0 for default): ")
+      
+      ECols <- numeric_input("Number of cols to skip? (enter 0 for default): ")
+      
+      numrow <- numeric_input("Number of rows per page: ")
+      
+      numcol <- numeric_input("Number of col per page: ")
+      
+      height_margin <- numeric_input(
+        "Please enter the height margin of page (in inches): ", integer = F)
+      
+      width_margin <- numeric_input(
+        "Please enter the width margin of page (in inches): ", integer = F)
+      
+      label_width <- numeric_input(
+        "Please enter the width of the label (in inches): ", integer = F)
+      
+      label_height <- numeric_input(
+        "Please enter the height of the label (in inches): ", integer = F)
+      
+      if(type == "matrix"){
+        space <- switch(
+          utils::menu(c("Yes", "No"), graphics = FALSE, 
+                      "Change distances between QR code and text label?"), 
+          TRUE, FALSE)
       }
-      # Split text into rows (prevents text cutoff when label has >8 characters without \\n in labels)
-      trunc<-noquote(toupper(readline("Do you want to split text into rows? (T/F): ")))
-      while((trunc %in% inputCheck) == FALSE){
-        noquote(print("Invalid input"))
-        trunc <- noquote(toupper(readline("Do you want to split text into rows? (T/F): ")))
-      }
-      ERows <- noquote(as.numeric(readline("Number of rows to skip? (enter 0 for default): ")))
-      ECols <- noquote(as.numeric(readline("Number of cols to skip? (enter 0 for default): ")))
-      numrow <- as.numeric(readline("# of rows per page: "))
-      while(is.numeric(numrow) == FALSE) {
-        noquote(print("Invalid input"))
-        numrow <- as.numeric(readline("# of rows per page: "))
-      }
-      numcol <- as.numeric(readline("# of col per page: "))
-      while(is.numeric(numcol) == FALSE) {
-        noquote(print("Invalid input"))
-        numcol <- as.numeric(readline("# of col per page: "))
-      }
-      height_margin <- as.numeric(readline("Please enter the height margin of page (in inch): "))
-      while(is.numeric(height_margin) == FALSE){
-        noquote(print("Invalid input"))
-        height_margin <- as.numeric(readline("Please enter the height margin of page (in inch): "))
-      }
-      width_margin <- as.numeric(readline("Please enter the width margin of page (in inch): "))
-      while(is.numeric(width_margin) == FALSE){
-        noquote(print("Invalid input"))
-        width_margin <- as.numeric(readline("Please enter the width margin of page (in inch): "))
-      }
-      label_width <- as.numeric(readline("Please enter the width of the label (in inch): "))
-      while(is.numeric(label_width) == FALSE){
-        noquote(print("Invalid input"))
-        label_width <- as.numeric(readline("Please enter the width of the label (in inch): "))
-      }
-      label_height <- as.numeric(readline("Please enter the height of the label (in inch): "))
-      while(is.numeric(label_height) == FALSE){
-        noquote(print("Invalid input"))
-        label_height <- as.numeric(readline("Please enter the height of the label (in inch): "))
-      }
-      space <- toupper(readline("change distance between qrcode and label? (y/n): "))
-      while((space %in% yesNo) == FALSE){
-        noquote(print("Invalid input"))
-        space<-toupper(readline("change distance between qrcode and label? (y/n): "))
-      }
+      
       x_space <- 0
       y_space <- 0.5
       if (space=="Y"){
-        x_space <- as.numeric(readline("Please enter a distance between 0 and 1: "))
-        while((x_space < 1 | x_space > 0)){
+        x_space <- numeric_input("Please enter a number between 0 and 1 for \n 
+                                 horizontal distance between QR code and label: ", 
+                                 integer = F)
+        while(x_space > 1 ){
           noquote(print("Invalid input"))
-          x_space <- as.numeric(readline("Please enter a distance between 0 and 1: "))
+          x_space <- numeric_input("Please enter a number between 0 and 1: ", integer = F)
         }
-        y_space <- as.numeric(readline("Please enter a value between 0 and 1: "))
-        while((x_space < 0 | x_space > 1)){
+        
+        y_space <- numeric_input("Please enter a distance between 0 and 1 for \n
+                                 vertical distance from bottom: ", integer = F)
+        
+        while(y_space > 1){
           noquote(print("Invalid input"))
-          y_space <- as.numeric(readline("Please enter a distance between 0 and 1:"))
+          numeric_input("Please enter a distance between 0 and 1: ", integer = F)
         }
       }
     } ## end of advanced options loop
-
-
-  } # nocov end
+    
+  }
   # user ask == T
   # Dummy data.frame for plotting
   # if (Fsz >= 2.2 && Fsz <= 2.5 && labelLength >= 27)
@@ -461,7 +451,9 @@ code_128_make <- function(Labels){
   # 104 is the start value for start code b, hardcoded right now
   check_sum <- 104 + sum(code_values * seq(1,length(code_values)))
   check_character <- check_sum %% 103
-  Binary_code <- sapply(lab_values, function(x, Barcodes) Barcodes$Barcode[x == Barcodes$ASCII], Barcodes = Barcodes)
+  Binary_code <- sapply(lab_values, 
+                        function(x, Barcodes) Barcodes$Barcode[x == Barcodes$ASCII], 
+                        Barcodes = Barcodes)
   ## create quiet zone
   quiet_zone <- paste(c(1:(10)*0),collapse="")
   ## paste together in order: quiet zone, start code binary, binary label, checksum character

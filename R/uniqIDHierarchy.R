@@ -51,44 +51,33 @@
 uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   # user interaction code
   if(user == TRUE){ # nocov start
-    hlevels <- readline("What is the # of levels in hierarchy: ")
-    hlevels <- as.numeric(hlevels)
-    # possible inputs
-    strEndCheck <- c("Y", "y", "N", "n")
-    strEnd <- readline("String at end of label? (y/n) ")
-    # check input
-    while((strEnd %in% strEndCheck) == FALSE){
-      print("Invalid input, please only enter what is specified.")
-      strEnd <- readline("String at end? (y/n) ")
-    }
-    if (paste(strEnd) == "y"){
+    hlevels <- numeric_input("What is the number of levels in hierarchy: ")
+    
+    strEnd <- switch(utils::menu(c("Yes", "No"), graphics = FALSE, "String at end of label? (y/n) "), TRUE, FALSE)
+    
+    if(strEnd){
       end <- readline("Please enter ending string: ")
     } else {
       end <- ""
     }
-    digits <- as.numeric(readline(paste0("Number of digits to print: ")))
-    while(is.na(as.numeric(digits)) == TRUE){
-      print("Invalid input. Please only enter an integer.")
-      digits <- as.numeric(readline(paste0("Number of digits to print: ")))
-    }
+    
+    digits <- numeric_input("Number of digits to print: ")
+    
+    # possible inputs
+
     hierarchy <- vector("list", hlevels)
+    
     for(i in seq(1,hlevels)){
       str <- readline(paste0("Please enter string for level ",i,": "))
-      # startNum must be smaller than endNum
-      startNum <- as.numeric(readline(paste0("Enter the starting number for level ",i,": ")))
-      while(is.na(startNum) == TRUE) {
-        print("Invalid input. Please enter an integer.")
-        startNum <- as.numeric(readline(paste0("Enter the starting number for level ",i,": ")))
-      }
-      endNum <- as.numeric(readline(paste0("Enter the ending number for level ",i,": ")))
-      while(is.na(endNum) == TRUE){
-        print("Invalid input. Please enter an integer.")
-        endNum <- as.numeric(readline(paste0("Enter the ending number for level ",i,": ")))
-      }
+      
+      startNum <- numeric_input(paste0("Enter the starting number for level ",i,": "))
+      
+      endNum <- numeric_input(paste0("Enter the ending number for level ",i,": "))
+      
       maxNum <- max(startNum,endNum)
       hierarchy[[i]]<-c(str, startNum, endNum)
     }
-  } # nocov end
+  }
   # end user input
   # hierarchy format check
   if (is.list(hierarchy) == FALSE) stop("Hierarchy is not in list format. See ?uniqID_hier_maker")
