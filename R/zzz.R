@@ -3,7 +3,7 @@
 # }
 
 
-numeric_input <- function(prompt_string, attempts_allowed = 3, integer = T){
+numeric_input <- function(prompt_string, attempts_allowed = 3, integer = TRUE){
   attempt <- 1
   repeat {
     
