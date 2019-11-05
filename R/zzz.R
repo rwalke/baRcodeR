@@ -1,13 +1,13 @@
-# .onAttach <- function(libname, pkgname){
-#   options(baRcodeR.connection = stdin())
-# }
+.onAttach <- function(libname, pkgname){
+  options(baRcodeR.connection = stdin())
+}
 
 
 numeric_input <- function(prompt_string, attempts_allowed = 3, integer = TRUE){
   attempt <- 1
   repeat {
-    
-    startNum <- suppressWarnings(abs(as.numeric(readline(prompt_string))))
+    cat(prompt_string)
+    startNum <- suppressWarnings(abs(as.numeric(readLines(con = getOption("baRcodeR.connection"), n = 1))))
     if(integer){
       startNum <- as.integer(startNum)
     }
@@ -27,3 +27,8 @@ numeric_input <- function(prompt_string, attempts_allowed = 3, integer = TRUE){
   
 }
 
+
+string_input <- function(prompt_string){
+  cat(prompt_string)
+  return(readLines(con = getOption("baRcodeR.connection"), n = 1))
+}

@@ -185,7 +185,7 @@ custom_create_PDF <- function(user = FALSE,
   if (user == TRUE){ # nocov start
     
     ## ask for name
-    name <- readline(paste0("Please enter name for PDF output file: "))
+    name <- string_input("Please enter name for PDF output file: ")
     ## Set font size
     Fsz <- numeric_input("Please enter a font size: ", integer = F)
     ## Error correction

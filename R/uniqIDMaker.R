@@ -65,7 +65,7 @@
 uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3, ending_string = NULL){
   if (user == TRUE) {
     ## asks for string
-    string <- readline(paste0("Please enter string for level: "))
+    string <- string_input("Please enter string for level: ")
     ## first value of level
     startNum <- numeric_input("Please enter the starting number for level (integer): ")
     ## ending value of level

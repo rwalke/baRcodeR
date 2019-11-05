@@ -56,7 +56,7 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
     strEnd <- switch(utils::menu(c("Yes", "No"), graphics = FALSE, "String at end of label? (y/n) "), TRUE, FALSE)
     
     if(strEnd){
-      end <- readline("Please enter ending string: ")
+      end <- string_input("Please enter ending string: ")
     } else {
       end <- ""
     }
@@ -68,7 +68,7 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
     hierarchy <- vector("list", hlevels)
     
     for(i in seq(1,hlevels)){
-      str <- readline(paste0("Please enter string for level ",i,": "))
+      str <- string_input(paste0("Please enter string for level ",i,": "))
       
       startNum <- numeric_input(paste0("Enter the starting number for level ",i,": "))
       
