@@ -1,3 +1,12 @@
+# baRcodeR 0.1.4
+
+Bugs and Improvements:
+
+- tests have been added for user prompts and the RStudio addin with shinytest
+- vignettes describing how to use the add-in and the command line are now organized separately from the restructured README
+- `custom_create_PDF()` page generation should now be faster (helpful when making sheets for hundreds of labels)
+- the command prompts have been restructured for a more menu-like selection for yes/no questions.
+
 # baRcodeR 0.1.3
 
 Bugs and Improvements:
