@@ -191,33 +191,32 @@ custom_create_PDF <- function(user = FALSE,
     ## Error correction
     
     ErrCorr <- switch(
-      utils::menu(
+      fake_menu(
         c("L (up to 7% damage)", "M (up to 15% damage)", 
           "Q (up to 25% damage)", "H (up to 30% damage)"), 
-        graphics = FALSE, 
         "Select an error correction level. "),
       "L", "M", "Q", "H")
     
     # check errCorr input
     Advanced <- switch(
-      utils::menu(c("Yes", "No"), graphics = FALSE, 
+      fake_menu(c("Yes", "No"),
                   "Edit advanced parameters?"), 
       TRUE, FALSE)
     
     if (Advanced) {
       type <- switch(
-        utils::menu(c("Matrix QR Code", "Linear"), graphics = FALSE, 
+        fake_menu(c("Matrix QR Code", "Linear"),
                     "Type of Barcode: "),
         "matrix", "linear"
       )
       
       ## Set to TRUE to print labels across rows instead of down columns
-      Across <- switch(utils::menu(c("Yes", "No"), graphics = FALSE, 
+      Across <- switch(fake_menu(c("Yes", "No"), 
                                    "Print labels across?"), 
                        TRUE, FALSE)
       
       # Split text into rows (prevents text cutoff with narrow labels)
-      trunc<- switch(utils::menu(c("Yes", "No"), graphics = FALSE, 
+      trunc<- switch(fake_menu(c("Yes", "No"), 
                                  "Truncate longer labels into multiple lines if necessary?"), 
                      TRUE, FALSE)
       
@@ -243,14 +242,13 @@ custom_create_PDF <- function(user = FALSE,
       
       if(type == "matrix"){
         space <- switch(
-          utils::menu(c("Yes", "No"), graphics = FALSE, 
-                      "Change distances between QR code and text label?"), 
+          numeric_input("Change distances between QR code and text label?\n 1: Yes \n 2: No"), 
           TRUE, FALSE)
       }
       
       x_space <- 0
       y_space <- 0.5
-      if (space=="Y"){
+      if (space){
         x_space <- numeric_input("Please enter a number between 0 and 1 for \n 
                                  horizontal distance between QR code and label: ", 
                                  integer = F)

@@ -53,7 +53,7 @@ uniqID_hier_maker <- function(user = FALSE, hierarchy, end = NULL, digits = 2){
   if(user == TRUE){ # nocov start
     hlevels <- numeric_input("What is the number of levels in hierarchy: ")
     
-    strEnd <- switch(utils::menu(c("Yes", "No"), graphics = FALSE, "String at end of label? (y/n) "), TRUE, FALSE)
+    strEnd <- switch(fake_menu(c("Yes", "No"), "String at end of label? "), TRUE, FALSE)
     
     if(strEnd){
       end <- string_input("Please enter ending string: ")

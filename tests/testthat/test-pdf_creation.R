@@ -7,6 +7,7 @@ test_that("PDF successful generation", {
   pdf_name <- tools::file_path_sans_ext(pdftemp)
   expect_invisible(
     custom_create_PDF(Labels = data.frame(label = c("example09", "example10"), ind_string = c("example", "example"), ind_number = c("09", "10")), name = pdf_name))
+  expect_true(file.exists(pdftemp))
   expect_warning(
     custom_create_PDF(Labels = data.frame(not_label = c("example09", "example10"), ind_string = c("example", "example"), ind_number = c("09", "10")), name = pdf_name),
     "Cannot find a label column. Using first column as label input."
