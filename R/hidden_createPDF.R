@@ -165,15 +165,12 @@ custom_create_PDF <- function(user = FALSE,
   } else {
     stop("Label input not a vector or a data frame. Please check your input.")
   }
-  if (any(
-    unlist(
-      lapply(c(
-        numcol, numrow, 
-        Fsz, ERows, ECols, 
-        trunc, page_width, page_height, 
-        height_margin, width_margin, 
-        x_space, y_space), class)
-      ) != "numeric") == TRUE) {
+  if (all(vapply(c(
+    numcol, numrow, 
+    Fsz, ERows, ECols, 
+    trunc, page_width, page_height, 
+    height_margin, width_margin, 
+    x_space, y_space), is.numeric, logical(1L))) != TRUE) {
     stop("One or more numerical parameters are not numeric")
   }
   labelLength <- max(nchar(paste(Labels)))
@@ -187,7 +184,7 @@ custom_create_PDF <- function(user = FALSE,
     ## ask for name
     name <- string_input("Please enter name for PDF output file: ")
     ## Set font size
-    Fsz <- numeric_input("Please enter a font size: ", integer = F)
+    Fsz <- numeric_input("Please enter a font size: ", integer = FALSE)
     ## Error correction
     
     ErrCorr <- switch(
@@ -229,16 +226,16 @@ custom_create_PDF <- function(user = FALSE,
       numcol <- numeric_input("Number of col per page: ")
       
       height_margin <- numeric_input(
-        "Please enter the height margin of page (in inches): ", integer = F)
+        "Please enter the height margin of page (in inches): ", integer = FALSE)
       
       width_margin <- numeric_input(
-        "Please enter the width margin of page (in inches): ", integer = F)
+        "Please enter the width margin of page (in inches): ", integer = FALSE)
       
       label_width <- numeric_input(
-        "Please enter the width of the label (in inches): ", integer = F)
+        "Please enter the width of the label (in inches): ", integer = FALSE)
       
       label_height <- numeric_input(
-        "Please enter the height of the label (in inches): ", integer = F)
+        "Please enter the height of the label (in inches): ", integer = FALSE)
       
       if(type == "matrix"){
         space <- switch(
@@ -251,28 +248,24 @@ custom_create_PDF <- function(user = FALSE,
       if (space){
         x_space <- numeric_input("Please enter a number between 0 and 1 for \n 
                                  horizontal distance between QR code and label: ", 
-                                 integer = F)
+                                 integer = FALSE)
         while(x_space > 1 ){
           noquote(print("Invalid input"))
-          x_space <- numeric_input("Please enter a number between 0 and 1: ", integer = F)
+          x_space <- numeric_input("Please enter a number between 0 and 1: ", integer = FALSE)
         }
         
         y_space <- numeric_input("Please enter a distance between 0 and 1 for \n
-                                 vertical distance from bottom: ", integer = F)
+                                 vertical distance from bottom: ", integer = FALSE)
         
         while(y_space > 1){
           noquote(print("Invalid input"))
-          numeric_input("Please enter a distance between 0 and 1: ", integer = F)
+          numeric_input("Please enter a distance between 0 and 1: ", integer = FALSE)
         }
       }
     } ## end of advanced options loop
     
   }
-  # user ask == T
-  # Dummy data.frame for plotting
-  # if (Fsz >= 2.2 && Fsz <= 2.5 && labelLength >= 27)
-  #   stop("ERROR: not enought space to print full label, please decrease font size")
-  
+
   width_margin <- page_width - width_margin * 2
   height_margin <- page_height - height_margin * 2
   
@@ -280,13 +273,7 @@ custom_create_PDF <- function(user = FALSE,
   if(!is.numeric(label_height)){label_height <- height_margin/numrow}
   
   if(type == "linear" & label_width / labelLength < 0.03) 
-    warning("Linear barcodes created will have bar width smaller than 0.03 inches which may be unreadable by some barcode scanners.")
-  
-  # if (cust_spacing == T) {
-  #   y_space <- x_space - (as.integer(x_space * 0.5)) - 15
-  # } else {
-  #   y_space <- 182
-  # }
+    warning("Linear barcodes created will have bar width smaller than 0.03 inches. \n  Increase label width to make them readable by all scanners.")
   
   column_space <- (width_margin - label_width * numcol)/(numcol - 1)
   row_space <- (height_margin - label_height * numrow)/(numrow - 1)
@@ -336,9 +323,33 @@ custom_create_PDF <- function(user = FALSE,
     # generate qr, most time intensive part
         label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = TRUE, simplify = FALSE)
   } else {stop("Barcode type must be linear or matrix")}
+
+  # generate label positions
+  
+  if(Across){
+    # across = TRUE
+    positions <- expand.grid(x = 1:numcol, y = 1:numrow)
+  } else {
+    # across = FALSE
+    positions <- expand.grid(y = 1:numrow, x = 1:numcol)
+  }
+
+  # make df of position for each label
+  # this extra 5 is so that even if starting position is last cell, there are enough positions generated, hopefully
+  duplication <- ceiling(length(Labels) / nrow(positions)) + 5
+  
+  label_positions <- do.call("rbind", replicate(duplication, positions, simplify = FALSE))
+  
+  # condition here for col/row skipping
+  starting_pos_index <- min(which(label_positions$x == ECols + 1  & label_positions$y == ERows + 1))
+  if(ECols > numcol | ERows > numrow){
+      warning("Number of rows/columns to skip greater than number of rows/columns on page. Labels will start in top left corner.") 
+      starting_pos_index <- 1
+  }
+  label_positions <- label_positions[seq(starting_pos_index, starting_pos_index + length(Labels)),]
+  
   # File Creation
-  x_pos <- ECols + 1
-  y_pos <- ERows + 1
+
   oname <- paste0(name, ".pdf")
   grDevices::pdf(oname, 
                  width = page_width, 
@@ -350,33 +361,28 @@ custom_create_PDF <- function(user = FALSE,
   grid::pushViewport(bc_vp)
   
   for (i in seq(1,length(label_plots))){
+    
     # Split label to count characters
     Xsplt <- names(label_plots[i])
-    if(trunc == TRUE){  # Truncate string across lines if trunc==T
-      # if(nchar(Xsplt) > 27){Xsplt <- Xsplt[1:27]}
-      # If remaining string is > 8 characters, split into separate lines
-      if(nchar(Xsplt) > 15){
-        Xsplt <- paste0(substring(Xsplt, seq(1, nchar(Xsplt), 15), seq(15, nchar(Xsplt)+15-1, 15)), collapse = "\n")
-      }
-    }
-    # print(c("in", x_pos, y_pos))
-    # reset if any of the values are greater than page limits
-    if (x_pos > numcol | y_pos > numrow){
-      warning("Number of rows/columns to skip greater than number of rows/columns on page. Starting a new page.")
+    lab_pos <- label_positions[i,]
+    
+    if(all(i != 1 & lab_pos == c(1, 1))){
       grid::grid.newpage()
       
       grid::pushViewport(
         grid::viewport(width = grid::unit(page_width, "in"), 
                        height = grid::unit(page_height, "in"))
-        )
+      )
       # barcode_layout=grid.layout(numrow, numcol, widths = widths, heights = heights)
       grid::pushViewport(bc_vp)
-      x_pos = 1
-      y_pos = 1
     }
-    # print(c(x_pos, y_pos))
-    # print the label onto the viewport
-    grid::pushViewport(grid::viewport(layout.pos.row=y_pos, layout.pos.col=x_pos))
+    
+    if(trunc == TRUE){
+      if(nchar(Xsplt) > 15){
+        Xsplt <- paste0(substring(Xsplt, seq(1, nchar(Xsplt), 15), seq(15, nchar(Xsplt)+15-1, 15)), collapse = "\n")
+      }
+    }
+    grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y, layout.pos.col=lab_pos$x))
     # grid::grid.rect()
     grid::pushViewport(code_vp)
     grid::grid.draw(label_plots[[i]])
@@ -391,26 +397,9 @@ custom_create_PDF <- function(user = FALSE,
     
     grid::popViewport(2)
     
-    if (Across == "T" | Across == TRUE){
-      x_pos <- x_pos + 1
-      if (x_pos > numcol) {
-        x_pos <- 1
-        y_pos <- y_pos + 1
-      }
-      
-    } else {
-      y_pos <- y_pos + 1
-      if (y_pos > numrow) {
-        y_pos <- 1
-        x_pos <- x_pos + 1
-      }
-    }
-    # print(c("out", x_pos, y_pos))
   }
 
-
-  #end if
-} #end create_PDF()
+} #end custom_create_PDF()
 
 #' @rdname custom_create_PDF
 #' @export
