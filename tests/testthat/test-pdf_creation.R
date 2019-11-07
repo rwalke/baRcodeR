@@ -2,7 +2,7 @@ context("Create PDF testing")
 
 
 test_that("PDF successful generation", {
-  skip_on_cran()
+  # skip_on_cran()
   pdftemp <- tempfile(fileext = ".pdf")
   pdf_name <- tools::file_path_sans_ext(pdftemp)
   expect_invisible(

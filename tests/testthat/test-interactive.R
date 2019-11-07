@@ -100,7 +100,7 @@ test_that("hierarchical user prompts work correctly", {
 context("Interactive with create PDF")
 
 test_that("PDF creation prompts work correctly", {
-  skip_on_cran()
+  # skip_on_cran()
   pdftemp <- tempfile(fileext = ".pdf")
   pdf_name <- tools::file_path_sans_ext(pdftemp)
   

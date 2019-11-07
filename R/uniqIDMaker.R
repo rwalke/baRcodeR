@@ -78,7 +78,7 @@ uniqID_maker <- function(user = FALSE, string = NULL, level, digits = 3, ending_
     digits <- numeric_input("Number of digits to print for level: ")
     level <-c(startNum:endNum)
     
-  } # nocov end
+  } 
   if (is.numeric(level) == FALSE) stop("Level is not a string of numbers")
   if (is.numeric(digits) == FALSE) stop("Digits is not a numerical value")
   ## if the number to digits to print is less than the digits in max value, increase digits

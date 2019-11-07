@@ -179,7 +179,7 @@ custom_create_PDF <- function(user = FALSE,
   # clean up any open graphical devices if function fails
   on.exit(grDevices::graphics.off())
   # if user prompt has been set to true
-  if (user == TRUE){ # nocov start
+  if (user == TRUE){
     
     ## ask for name
     name <- string_input("Please enter name for PDF output file: ")
