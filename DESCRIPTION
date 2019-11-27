@@ -15,9 +15,17 @@ Authors@R:
              comment = c(ORCID = "0000-0003-4213-0711")),
       person(given = "Emily",
              family = "Bao",
-            role = "ctb",
-            email = "13syeb@queensu.ca")       
-      )
+             role = "ctb",
+             email = "13syeb@queensu.ca"),
+      person(given = "Lluís",
+             family = "Revilla Sancho",
+             role = c("rev"),
+             email = "lluis.revilla@gmail.com",
+             comment = c(ORCID = "0000-0001-9747-2570")),
+      person(given = "Rayna",
+             family = "Harris",
+             role = c("rev"),
+             email = "rmharris@ucdavis.edu"))
 Maintainer: Yihan Wu <yihan.wu@queensu.ca>             
 Description: Tools to generate unique identifier codes and
     printable barcoded labels for the management of biological samples.
