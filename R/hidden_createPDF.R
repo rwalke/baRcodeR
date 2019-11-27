@@ -152,10 +152,10 @@ custom_create_PDF <- function(user = FALSE,
                               ){
   if (length(Labels) == 0) stop("Labels do not exist. Please pass in Labels")
   # what to do depending on class of Label input
-  if(class(Labels) %in% c("character", "integer", "numeric", "factor")){
+  if(class(Labels)[1] %in% c("character", "integer", "numeric", "factor")){
     # treat as vector
     Labels <- Labels
-  } else if (class(Labels) == "data.frame") {
+  } else if (class(Labels)[1] == "data.frame") {
     if (any(tolower(names(Labels)) == "label")){
       Labels <- Labels[, "label"]
     } else {
