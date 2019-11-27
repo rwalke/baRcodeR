@@ -26,7 +26,6 @@ Authors@R:
              family = "Harris",
              role = c("rev"),
              email = "rmharris@ucdavis.edu"))
-Maintainer: Yihan Wu <yihan.wu@queensu.ca>             
 Description: Tools to generate unique identifier codes and
     printable barcoded labels for the management of biological samples.
     The creation of unique ID codes and printable PDF files can be
