@@ -4,4 +4,7 @@ pkgdown_sha: ~
 articles:
   Using-baRcodeR: Using-baRcodeR.html
   use-addin: use-addin.html
+urls:
+  reference: https://docs.ropensci.org/baRcodeR/reference
+  article: https://docs.ropensci.org/baRcodeR/articles
 
