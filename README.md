@@ -8,9 +8,9 @@
 [![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
 [![Travis build
-status](https://travis-ci.org/yihanwu/baRcodeR.svg?branch=master)](https://travis-ci.org/yihanwu/baRcodeR)
+status](https://travis-ci.org/ropensci/baRcodeR.svg?branch=master)](https://travis-ci.org/ropensci/baRcodeR)
 [![Codecov test
-coverage](https://codecov.io/gh/yihanwu/baRcodeR/branch/master/graph/badge.svg)](https://codecov.io/gh/yihanwu/baRcodeR?branch=master)
+coverage](https://codecov.io/gh/ropensci/baRcodeR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/baRcodeR?branch=master)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -29,9 +29,9 @@ You can install the released version of baRcodeR from
 And the development version from [GitHub](https://github.com/) with:
 
     # install.packages("devtools")
-    devtools::install_github("yihanwu/baRcodeR", build_vignettes = T)
+    devtools::install_github("ropensci/baRcodeR", build_vignettes = T)
     # for windows users to build vignettes
-    # install_github("yihanwu/baRcodeR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+    # install_github("ropensci/baRcodeR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
 
 > NOTE: Restarting RStudio is necessary for the addin for baRcodeR to
 > appear.
@@ -170,13 +170,11 @@ sessionInfo()
     ## [1] baRcodeR_0.1.4 qrcode_0.1.1  
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.2        png_0.1-7         digest_0.6.21    
-    ##  [4] R.methodsS3_1.7.1 magrittr_1.5      evaluate_0.14    
-    ##  [7] rlang_0.4.0       stringi_1.4.3     rstudioapi_0.10  
-    ## [10] R.oo_1.22.0       R.utils_2.9.0     rmarkdown_1.14   
-    ## [13] tools_3.6.1       stringr_1.4.0     xfun_0.8         
-    ## [16] yaml_2.2.0        compiler_3.6.1    htmltools_0.4.0  
-    ## [19] knitr_1.24
+    ##  [1] Rcpp_1.0.3        png_0.1-7         digest_0.6.23     R.methodsS3_1.7.1
+    ##  [5] magrittr_1.5      evaluate_0.14     rlang_0.4.1       stringi_1.4.3    
+    ##  [9] rstudioapi_0.10   R.oo_1.22.0       R.utils_2.9.0     rmarkdown_1.17   
+    ## [13] tools_3.6.1       stringr_1.4.0     xfun_0.11         yaml_2.2.0       
+    ## [17] compiler_3.6.1    htmltools_0.4.0   knitr_1.26
 
 # See also:
 
@@ -189,3 +187,5 @@ sessionInfo()
   - [zint](http://zint.org.uk/) is a C library that generates a variety
     of different barcodes. Just like zintr, zint produces single barcode
     images.
+
+[![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

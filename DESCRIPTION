@@ -25,9 +25,10 @@ Description: Tools to generate unique identifier codes and
     initiated by standard commands, user prompts, or through a GUI addin
     for R Studio. Biologically informative codes can be included for
     hierarchically structured sampling designs.
-License: file LICENSE
-URL: https://github.com/yihanwu/baRcodeR
-BugReports: https://github.com/yihanwu/baRcodeR/issues
+ This package has been peer-reviewed by rOpenSci (v. 0.1.4).
+License: https://github.com/ropensci/baRcodeR/blob/master/LICENSE
+URL: https://docs.ropensci.org/baRcodeR (website) https://github.com/ropensci/baRcodeR  
+BugReports: https://github.com/ropensci/baRcodeR/issues
 Depends:
     qrcode,
     R (>= 3.4.0)

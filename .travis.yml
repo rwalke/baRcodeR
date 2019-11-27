@@ -7,12 +7,10 @@ r:
   - release
   - devel
 cache: packages
+
 r_github_packages:
   - r-lib/covr
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
-deploy:
-  provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github()'
-  skip_cleanup: true
+
 after_success:
   - Rscript -e 'covr::codecov(line_exclusions = "R/uniqID_maker_addin.R")'
