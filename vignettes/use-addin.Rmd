@@ -22,7 +22,7 @@ For a quick start, see the [introduction](https://docs.ropensci.org/baRcodeR).
 
 A 2-page, quick-reference guide is available via [Figshare](https://dx.doi.org/10.6084/m9.figshare.7043309)
 
-If RStudio is not available, see the [introduction](http://yihanwu.github.io/baRcodeR) for command line use, and `vignette("Using-baRcodeR)"` for interactive prompts to set parameters for label generation. 
+If RStudio is not available, see the [introduction](https://docs.ropensci.org/baRcodeR) and `vignette("Using-baRcodeR)"` for command line use. 
 
 ## Using the RStudio addin 
 
