@@ -5,15 +5,17 @@
 
 <!-- badges: start -->
 
-[![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
+[![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://CRAN.R-project.org/package=baRcodeR)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
 [![Travis build
 status](https://travis-ci.org/ropensci/baRcodeR.svg?branch=master)](https://travis-ci.org/ropensci/baRcodeR)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/baRcodeR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/baRcodeR?branch=master)
-[![Project Status: Active – The project has reached a stable, usable
+[![Project Status: Active â€“ The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN
+checks](https://cranchecks.info/badges/worst/baRcodeR)](https://cran.r-project.org/web/checks/check_results_baRcodeR.html)
 <!-- badges: end -->
 
 baRcodeR generates labels for more repeatable workflows with biological
@@ -142,8 +144,9 @@ vignette("Using-baRcodeR")
 # Contribution
 
 Please note that the ‘baRcodeR’ project is released with a [Contributor
-Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
-you agree to abide by its terms.
+Code of
+Conduct](https://github.com/ropensci/baRcodeR/blob/master/CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.
 
 Please document issues with a description, a minimal reproducible
 example, and the `sessionInfo()`.
