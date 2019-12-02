@@ -1,9 +1,30 @@
+
+
+
 ## Test environments
-* local Windows 10 install, R 3.5.1
+
+* local Windows 10 install, R 3.6.1
 * win-builder (devel and release)
+* Ubuntu 16.04 (on travis-ci), R-oldrel, R-release, R-devel
+* R-hub 
+  * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+  * Ubuntu Linux 16.04 LTS, R-release, GCC
+  * Fedora Linux, R-devel, clang, gfortran
 
 ## R CMD check results
-There were no ERRORS or WARNINGS
+
+There were no ERRORS or WARNINGS. 1 NOTE regarding change of package maintainer from Robert Colautti to Yihan Wu.
+
+This is our third submission. From our last submission, we made
+
+1. changes to clarify documentation 
+
+2. modify command line prompts with menu-like choices
+
+3. added a vignette tutorial to show how to use the package with the RStudio addin and removed similar content from the package README.
+
+
+### April 26, 2019
 
 This is our second submission. From first submission on September 10, 2018, we made three changes:
 
