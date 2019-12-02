@@ -21,7 +21,9 @@ This is our third submission. From our last submission, we made
 
 2. modify command line prompts with menu-like choices
 
-3. added a vignette tutorial to show how to use the package with the RStudio addin and removed similar content from the package README.
+3. added a vignette tutorial to show how to use the package with the RStudio addin and removed similar content from the package README
+
+4. corrected error in current CRAN version of package relating to R-devel changes
 
 
 ### April 26, 2019
