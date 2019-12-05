@@ -8,7 +8,7 @@ output: github_document
 
 <!-- badges: start -->
 [![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://CRAN.R-project.org/package=baRcodeR)
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://CRAN.R-project.org/package=baRcodeR)
 [![Travis build status](https://travis-ci.org/ropensci/baRcodeR.svg?branch=master)](https://travis-ci.org/ropensci/baRcodeR)
 [![Codecov test coverage](https://codecov.io/gh/ropensci/baRcodeR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/baRcodeR?branch=master)
 [![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)

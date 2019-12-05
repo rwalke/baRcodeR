@@ -1,5 +1,6 @@
+## Amendment to previous rejected submission
 
-
+We have removed the license file from the description file and the package file itself as suggested by Uwe Ligges.
 
 ## Test environments
 
@@ -10,10 +11,24 @@
   * Windows Server 2008 R2 SP1, R-devel, 32/64 bit
   * Ubuntu Linux 16.04 LTS, R-release, GCC
   * Fedora Linux, R-devel, clang, gfortran
+  
+## R CMD check results
+
+There were no ERRORS or WARNINGS. 1 NOTE regarding change of package maintainer from Robert Colautti to Yihan Wu. 
+
+This is our third submission. From our last submission, we made
+
+1. changes to clarify documentation 
+
+2. modify command line prompts with menu-like choices
+
+3. added a vignette tutorial to show how to use the package with the RStudio addin and removed similar content from the package README
+
+4. corrected error in current CRAN version of package relating to R-devel changes
 
 ## R CMD check results
 
-There were no ERRORS or WARNINGS. 1 NOTE regarding change of package maintainer from Robert Colautti to Yihan Wu.
+There were no ERRORS or WARNINGS. 1 NOTE regarding change of package maintainer from Robert Colautti to Yihan Wu. 
 
 This is our third submission. From our last submission, we made
 

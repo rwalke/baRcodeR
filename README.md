@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://CRAN.R-project.org/package=baRcodeR)
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://cran.r-project.org/web/packages/baRcodeR/index.html)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://CRAN.R-project.org/package=baRcodeR)
 [![Travis build
 status](https://travis-ci.org/ropensci/baRcodeR.svg?branch=master)](https://travis-ci.org/ropensci/baRcodeR)
 [![Codecov test
