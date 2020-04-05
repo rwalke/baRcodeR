@@ -155,7 +155,7 @@ custom_create_PDF <- function(user = FALSE,
                               x_space = 0,
                               y_space = 0.5,
                               alt_text = NULL,
-                              denote = c("(",")")
+                              denote = c("\n(",")")
                               ){
   if (length(alt_text) > 0) {
     
@@ -409,9 +409,9 @@ custom_create_PDF <- function(user = FALSE,
     }
     
     # Add alt_text
-    #if (length(alt_text) > 0) {
-      Xsplt <- paste0(Xsplt,"\n",Xalt)
-    #}
+    if (length(alt_text) > 0) {
+      Xsplt <- paste0(Xsplt,Xalt)
+    }
     
     grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y, layout.pos.col=lab_pos$x))
     # grid::grid.rect()
