@@ -96,7 +96,6 @@
 #' \dontrun{
 #' ## run with default options
 #' ## pdf file will be "example.pdf" saved into a temp directory
-#' 
 #' temp_file <- tempfile()
 #' 
 #' custom_create_PDF(Labels = example_vector, name = temp_file)
@@ -113,22 +112,30 @@
 #' \dontrun{
 #' ## run using a data frame, automatically choosing the "label" column
 #' example_df <- data.frame("level1" = c("a1", "a2"), "label" = c("a1-b1",
-#' "a1-b2"), "level2" = c("b1", "b1"))
-#' custom_create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(), "example_2"))
-#' }
+#'  "a1-b2"), "level2" = c("b1", "b1"))
 #' 
-#' \dontrun{
+#' custom_create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(), 
+#'  "example_2"))
+#' 
 #' ## run using an unnamed data frame
 #' example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
 #' ## specify column from data frame
 #' custom_create_PDF(user = FALSE, Labels = example_df[,2], name = file.path(tempdir(), "example_3"))
-#' }
-#' \dontrun{
+#' 
 #' ## create linear (code128) label rather than matrix (2D/QR) labels
 #' example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
 #' ## specify column from data frame
 #' custom_create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(),
 #' "example_4", type = "linear"))
+#'  
+#' ## Include text for the user that is NOT encoded into the barcode image
+#' ## Excluded text is denoted with brackets by default
+#' example_df <- data.frame(ID = floor(runif(3) * 10000), name = c("A", "B", "C"),
+#'  dob = c("1/1/2020", "12/6/2001", "2/8/1986")
+#'  
+#' ## linear (1d) barcodes with custom denote parameter
+#' custom_create_PDF(Labels = example_df$ID, alt_text = paste(example_df$name,
+#'  example_df$dob), type = "linear", denote=".")
 #' }  
 #' @seealso \code{\link{create_PDF}}
 #' @export
