@@ -71,3 +71,7 @@ Bug fixes and minor features added, as outlined in NEWS.md
 ### April 26, 2019
 
 Bug fix for linear barcodes and minor changes outlined in NEWS.md (ver. 0.1.3)
+
+### April 4, 2020
+
+At the request of a COVID-2019 research group, we have added an option to allow non-encoded text to appear with linear & 2D barcodes.  
