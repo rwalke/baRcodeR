@@ -32,6 +32,11 @@
 #'   parameter values) Default is \code{FALSE}
 #' @param Labels vector or data frame object containing label names (i.e. unique
 #'   ID codes) with either UTF-8 or ASCII encoding.
+#' @param alt_text vector containing alternative names that are printed along with 
+#'   Labels BUT ARE NOT ENCODED in the barcode image. Use with caution!  
+#' @param denote character (prefix) or vector of length 2 (prefix, suffix). 
+#'   Denotes alt_text that is not encoded in the barcode image. 
+#'   Default is brackets before and after ().  
 #' @param name character. Name of the PDF output file. Default is
 #'   \code{"LabelsOut"}. A file named \code{name.pdf} will be saved to the
 #'   working directory by default. Use \code{"dirname/name"} to produce a file
@@ -148,8 +153,27 @@ custom_create_PDF <- function(user = FALSE,
                               label_width = NA,
                               label_height = NA,
                               x_space = 0,
-                              y_space = 0.5
+                              y_space = 0.5,
+                              alt_text = NULL,
+                              denote = c("(",")")
                               ){
+  if (length(alt_text) > 0) {
+    
+    if (length(denote) == 1) {
+      if (denote[1] %in% c("", NULL, NA, F)) {
+        warning("alt-text is not encoded in barcode. Nothing shows the end-user which text is encoded. Use with caution! see ?custom_create_pdf")
+      } else {
+        warning(paste("alt_text is not encoded in barcode. Non-encoded text begins with",denote[1]))
+        alt_text <- paste0(denote[1],alt_text)
+      } 
+    }
+    if (length(denote) > 1) {
+      warning(paste("alt_text is not encoded in barcode. Non-encoded text is denoted with",denote[1],denote[2]))
+      alt_text <- paste0(denote[1],alt_text,denote[2])
+    }
+    alt_text <- as.factor(alt_text)
+  }
+  
   if (length(Labels) == 0) stop("Labels do not exist. Please pass in Labels")
   # what to do depending on class of Label input
   if(class(Labels)[1] %in% c("character", "integer", "numeric", "factor")){
@@ -362,8 +386,9 @@ custom_create_PDF <- function(user = FALSE,
   
   for (i in seq(1,length(label_plots))){
     
-    # Split label to count characters
+    # Split label to count characters 
     Xsplt <- names(label_plots[i])
+    Xalt <- paste(alt_text[i])
     lab_pos <- label_positions[i,]
     
     if(all(i != 1 & lab_pos == c(1, 1))){
@@ -382,6 +407,12 @@ custom_create_PDF <- function(user = FALSE,
         Xsplt <- paste0(substring(Xsplt, seq(1, nchar(Xsplt), 15), seq(15, nchar(Xsplt)+15-1, 15)), collapse = "\n")
       }
     }
+    
+    # Add alt_text
+    #if (length(alt_text) > 0) {
+      Xsplt <- paste0(Xsplt,"\n",Xalt)
+    #}
+    
     grid::pushViewport(grid::viewport(layout.pos.row=lab_pos$y, layout.pos.col=lab_pos$x))
     # grid::grid.rect()
     grid::pushViewport(code_vp)
