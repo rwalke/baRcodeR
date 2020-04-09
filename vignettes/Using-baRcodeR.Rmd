@@ -359,6 +359,7 @@ X <- "text\ttext"
 cat(X)
 cat(gsub("\\t", "\x20\x20\x20\x20", X))
 ```
+
 ## When reading from file
 
 R automatically escapes the escape characters when reading from file. For example, `text\ntext` will be read in as `text\\ntext` from `read.csv`. 
