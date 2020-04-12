@@ -1,7 +1,7 @@
 Package: baRcodeR
 Title: Label Creation for Tracking and Collecting Data from
     Biological Samples
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: 
     c(person(given = "Yihan",
              family = "Wu",
@@ -56,4 +56,4 @@ VignetteBuilder:
 Encoding: UTF-8
 Language: en-CA
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
