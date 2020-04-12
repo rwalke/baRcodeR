@@ -1,3 +1,10 @@
+### baRcodeR 0.1.6 - new parameters
+
+At the request of a COVID-2019 research group, we have added an option to allow non-encoded text to appear with linear & 2D barcodes:
+
+* alt_text -- adds human-readable text that is NOT encoded in the digital barcode
+* denote -- characters used to denote non-encoded text
+
 ## baRcodeR 0.1.5 R CMD check results
 
 This is a minor update to make sure tests pass on r-devel and fix a broken link. 
@@ -72,6 +79,3 @@ Bug fixes and minor features added, as outlined in NEWS.md
 
 Bug fix for linear barcodes and minor changes outlined in NEWS.md (ver. 0.1.3)
 
-### April 4, 2020
-
-At the request of a COVID-2019 research group, we have added an option to allow non-encoded text to appear with linear & 2D barcodes.  

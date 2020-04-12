@@ -1,3 +1,12 @@
+# baRcodeR 0.1.6
+
+At the request of a COVID-2019 research group, we have added an option to allow non-encoded text to appear with linear & 2D barcodes. These have been added to custom_create_PDF():
+
+* alt_text -- adds human-readable text that is NOT encoded in the digital barcode
+* denote -- characters used to denote non-encoded text
+
+These are considered advanced features that should be used cautiously, and therefore they are not made available through the Addins GUI. 
+
 # baRcodeR 0.1.5
 
 Bugs:
