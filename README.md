@@ -181,7 +181,7 @@ sessionInfo()
 
 # See also:
 
-  - [zintr](https://github.com/carlganz/zintr)is an R interface to the C
+  - [zintr](https://github.com/carlganz/zintr) is an R interface to the C
     zint library. Use zintr if you want to create single barcode images.
     zintr does not include functions for (i) automating the creation of
     biologically-relevant, unique ID codes or (ii) customizable layouts
