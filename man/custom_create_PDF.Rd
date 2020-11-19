@@ -28,6 +28,7 @@ custom_create_PDF(
   x_space = 0,
   y_space = 0.5,
   alt_text = NULL,
+  replace_label = FALSE,
   denote = c("\\n(", ")")
 )
 
@@ -110,6 +111,10 @@ label as a proportion of the label height. Only applies when \code{type =
 
 \item{alt_text}{vector containing alternative names that are printed along with 
 Labels BUT ARE NOT ENCODED in the barcode image. Use with caution!}
+
+\item{replace_label}{logical. Replace label text with \code{alt_text}.
+Generated barcode will contain more information than text label. Use with
+caution!}
 
 \item{denote}{character (prefix) or vector of length 2 (prefix, suffix). 
 Denotes alt_text that is not encoded in the barcode image. 
