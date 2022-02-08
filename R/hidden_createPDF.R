@@ -7,9 +7,11 @@
 #'
 #' \code{qrcode_make} is the helper function for generating a QR code matrix.
 #' \code{code_128_make} is the helper function for generating a linear barcode
-#' according to code 128 set B. \code{custom_create_PDF} is the main function
+#' according to code 128 set B. \code{code_128_make2} is the extended helper function for generating a linear barcode
+#' according to code 128 set B, all Latin-1 characters, set C and partially A. \code{custom_create_PDF} is the main function
 #' which sets page layout, and creates the PDF file.
 #' 
+#'
 #' Correction levels for QR codes refer to the level of damage a label can
 #' tolerate before the label become unreadable by a scanner (L = Low (7\%), M =
 #' Medium (15\%), Q = Quantile (25\%), H = High (30\%)). So a label with L
@@ -44,7 +46,8 @@
 #'   \code{"LabelsOut"}. A file named \code{name.pdf} will be saved to the
 #'   working directory by default. Use \code{"dirname/name"} to produce a file
 #'   called \code{name.pdf} in the \code{dirname} directory.
-#' @param type character. Choice of \code{"linear"} code 128 or \code{"matrix"}
+#' @param type character. Choice of \code{"linear"} code 128 or \code{"linear2"}
+#'   code 128 extended or \code{"matrix"}
 #'   QR code labels. Default is \code{"matrix"}.
 #' @param ErrCorr error correction value for matrix labels only. Level of damage
 #'   from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
@@ -244,9 +247,9 @@ custom_create_PDF <- function(user = FALSE,
     
     if (Advanced) {
       type <- switch(
-        fake_menu(c("Matrix QR Code", "Linear"),
+        fake_menu(c("Matrix QR Code", "Linear", "Linear2"),
                     "Type of Barcode: "),
-        "matrix", "linear"
+        "matrix", "linear", "linear2"
       )
       
       ## Set to TRUE to print labels across rows instead of down columns
@@ -314,7 +317,7 @@ custom_create_PDF <- function(user = FALSE,
   if(!is.numeric(label_width)){label_width <- width_margin/numcol}
   if(!is.numeric(label_height)){label_height <- height_margin/numrow}
   
-  if(type == "linear" & label_width / labelLength < 0.03) 
+  if((type == "linear" | type == "linear2") & label_width / labelLength < 0.03)
     warning("Linear barcodes created will have bar width smaller than 0.03 inches. \n  Increase label width to make them readable by all scanners.")
   
   column_space <- (width_margin - label_width * numcol)/(numcol - 1)
@@ -340,13 +343,31 @@ custom_create_PDF <- function(user = FALSE,
     
     label_vp <- grid::viewport(x=grid::unit(0.5, "npc"), 
                                y = grid::unit(1, "npc"), 
-                               width = grid::unit(1, "npc"), 
+                               width = grid::unit(1, "npc"),
                                height = grid::unit(text_height, "in"), 
                                just = c("centre", "top"))
-    
+
     Fsz <- ifelse(Fsz / 72 > label_height * 0.3, label_height * 72 * 0.3 , Fsz)
-    
+
     label_plots <- sapply(as.character(Labels), code_128_make , USE.NAMES = TRUE, simplify = FALSE)
+  } else if (type == "linear2"){
+    code_vp <- grid::viewport(x=grid::unit(0.05, "npc"),
+                              y=grid::unit(0.8, "npc"),
+                              width = grid::unit(0.9 *label_width, "in"),
+                              height = grid::unit(0.8 * label_height, "in"),
+                              just=c("left", "top"))
+
+    text_height <- ifelse(Fsz / 72 > label_height * 0.3, label_height * 0.3, Fsz/72)
+
+    label_vp <- grid::viewport(x=grid::unit(0.5, "npc"),
+                               y = grid::unit(1, "npc"),
+                               width = grid::unit(1, "npc"),
+                               height = grid::unit(text_height, "in"),
+                               just = c("centre", "top"))
+
+    Fsz <- ifelse(Fsz / 72 > label_height * 0.3, label_height * 72 * 0.3 , Fsz)
+
+    label_plots <- sapply(as.character(Labels), code_128_make2 , USE.NAMES = TRUE, simplify = FALSE)
   } else if (type =="matrix"){
     ## vp for the qrcode within the grid layout
     code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), 
@@ -364,7 +385,7 @@ custom_create_PDF <- function(user = FALSE,
     
     # generate qr, most time intensive part
         label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = TRUE, simplify = FALSE)
-  } else {stop("Barcode type must be linear or matrix")}
+  } else {stop("Barcode type must be linear, linear2 or matrix")}
   
   # since main text label is taken from label_plots, set names of vector
   # then null-out alt text
@@ -444,7 +465,7 @@ custom_create_PDF <- function(user = FALSE,
     grid::popViewport()
     grid::pushViewport(label_vp)
     
-    if(type =="linear"){
+    if(type =="linear" | type == "linear2"){
       grid::grid.rect(gp = grid::gpar(col = NA, fill = "white"))
     }
     
@@ -510,6 +531,205 @@ code_128_make <- function(Labels){
   ## split binary apart for 
   bar_values <- as.numeric(unlist(strsplit(binary_label, split = "")))
   barcode_bars <- grid::rasterGrob(t(!as.matrix(bar_values)), width = 1, height = 1, interpolate = FALSE)
+  return(barcode_bars)
+}
+
+#' @rdname custom_create_PDF
+#' @export
+code_128_make2 <- function(Labels) {
+  ## labels is a character string
+  ## read in dict
+  Barcodes <- barcodes128
+  ## double check Labels
+  Labels <- enc2utf8(as.character(Labels))
+  Labels <- iconv(Labels,
+                  from = "utf-8",
+                  to = "latin1",
+                  sub = "-")
+  # start_code <- 209
+  lab_chars <- enc2utf8(unlist(strsplit(Labels, split = "")))
+
+  is_number <- lab_chars %in% seq(0, 9)
+  len1 <- length(lab_chars)
+  tail <- seq(len1, 1)
+
+  count_number <- 0
+  count_not_number <- 0
+
+  block_number <- rep(0L, len1)
+  block_not_number <- rep(0L, len1)
+
+
+  for (i in seq(len1, 1)) {
+    if (is_number[i]) {
+      count_number <- count_number + 1
+      count_not_number <- 0L
+    } else {
+      count_number <- 0L
+      count_not_number <- count_not_number + 1
+    }
+    block_number[i] <- count_number
+    block_not_number[i] <- count_not_number
+  }
+  # print(rbind(lab_chars, is_number, block_number, block_not_number, tail))
+
+  lab_values2 <- c()
+  code_values2 <- c()
+  last_code_B <- NULL
+
+  i <- 1
+  repeat {
+    if (block_number[i] == 2L & len1 == 2L |
+        block_number[i] > 3 & i == 1L |
+        block_number[i] > 3 & tail[i] == block_number[i] |
+        block_number[i] > 5) {
+
+      res <- block_number[i] %% 2L
+      pairs <- block_number[i] %/% 2L
+      if (i==1L) {
+        if(res == 1L) {
+          # Start code 128B
+          lab_values2 <- c(lab_values2, 209)
+          code_values2 <- c(code_values2, 104)
+          last_code_B <- TRUE
+        } else {
+          # Start code 128C
+          lab_values2 <- c(lab_values2, 210)
+          code_values2 <- c(code_values2, 105)
+          last_code_B <- FALSE
+        }
+      }
+
+      if (res == 1L) {
+
+        utf_int1 <- utf8ToInt(lab_chars[[i]])
+
+        if (31 < utf_int1 & utf_int1 < 160){
+
+          lab_values2 <- c(lab_values2, utf_int1)
+          code_values2 <- c(code_values2, utf_int1 - 32)
+
+        } else {
+
+          if (utf_int1 < 32) {
+            # Shift A
+            lab_values2 <- c(lab_values2, 203)
+            code_values2 <- c(code_values2, 98)
+            lab_values2 <- c(lab_values2, utf_int1 + 64 + 32)
+            code_values2 <- c(code_values2, utf_int1 + 64)
+
+          } else {
+            # FNC4
+            lab_values2 <- c(lab_values2, 205)
+            code_values2 <- c(code_values2, 100)
+            lab_values2 <- c(lab_values2, utf_int1 - 128)
+            code_values2 <- c(code_values2, utf_int1 -128 - 32)
+          }
+        }
+
+      }
+      if (i > 1L | res == 1L) {
+        # Code 128C
+        lab_values2 <- c(lab_values2, 204)
+        code_values2 <- c(code_values2, 99)
+        last_code_B <- FALSE
+      }
+
+      for (j in seq(1, pairs)){
+        pair1 <- as.integer(paste0(lab_chars[i+2*j-2+res],lab_chars[i+2*j-1+res]))
+        lab_values2 <- c(lab_values2, pair1 + ifelse(pair1 < 95, 32, 105))
+        code_values2 <- c(code_values2, pair1)
+
+      }
+
+    } else {
+      if (i==1L) {
+        # Start code 128B
+        lab_values2 <- c(lab_values2, 209)
+        code_values2 <- c(code_values2, 104)
+        last_code_B <- TRUE
+      } else {
+        if (!last_code_B) {
+          # Code 128B
+          lab_values2 <- c(lab_values2, 205)
+          code_values2 <- c(code_values2, 100)
+          last_code_B <- TRUE
+        }
+      }
+      for (j in seq(1, max(block_number[i],block_not_number[i]))){
+
+        utf_int1 <- utf8ToInt(lab_chars[[i+j-1]])
+
+        if (31 < utf_int1 & utf_int1 < 160){
+
+          lab_values2 <- c(lab_values2, utf_int1)
+          code_values2 <- c(code_values2, utf_int1 - 32)
+
+        } else {
+
+          if (utf_int1 < 32) {
+            # Shift A
+            lab_values2 <- c(lab_values2, 203)
+            code_values2 <- c(code_values2, 98)
+            lab_values2 <- c(lab_values2, utf_int1 + 64 + 32)
+            code_values2 <- c(code_values2, utf_int1 + 64)
+
+          } else {
+            # FNC4
+            lab_values2 <- c(lab_values2, 205)
+            code_values2 <- c(code_values2, 100)
+            lab_values2 <- c(lab_values2, utf_int1 - 128)
+            code_values2 <- c(code_values2, utf_int1 -128 - 32)
+          }
+        }
+      }
+    }
+    # print(i)
+    i <- i + max(block_number[i],block_not_number[i])
+    if (i > len1) {
+      break
+    }
+  }
+
+  # print(rbind(lab_values2, code_values2))
+
+
+  # lab_values <- sapply(lab_chars, function(x) utf8ToInt(x))
+  # ascii to code 128 is just a difference of 32, this line keeps clarity
+  # code_values <- lab_values - 32
+  # 104 is the start value for start code b, hardcoded right now
+  # check_sum <- 104 + sum(code_values * seq(1, length(code_values)))
+  check_sum <- sum(code_values2 * c(1,seq(1, length(code_values2)-1)))
+
+  check_character <- check_sum %% 103
+  Binary_code <- sapply(lab_values2,
+                        function(x, Barcodes)
+                          Barcodes$Barcode[x == Barcodes$ASCII],
+                        Barcodes = Barcodes)
+  ## create quiet zone
+  quiet_zone <- paste(c(1:(10) * 0), collapse = "")
+  ## paste together in order: quiet zone, start code binary, binary label, checksum character
+  ## stop code, and quiet zone. Barcode for checksum is extracted based on position in Barcodes.
+  binary_label <- paste(
+    quiet_zone,
+    #Barcodes$Barcode[Barcodes$ASCII == start_code],
+    paste(Binary_code, collapse = ""),
+    Barcodes$Barcode[check_character + 1],
+    "1100011101011",
+    quiet_zone,
+    collapse = "",
+    sep = ""
+  )
+  ## split binary apart for
+  bar_values <-
+    as.numeric(unlist(strsplit(binary_label, split = "")))
+  barcode_bars <-
+    grid::rasterGrob(
+      t(!as.matrix(bar_values)),
+      width = 1,
+      height = 1,
+      interpolate = FALSE
+    )
   return(barcode_bars)
 }
 
