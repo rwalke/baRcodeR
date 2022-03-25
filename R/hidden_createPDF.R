@@ -34,6 +34,9 @@
 #'   ID codes) with either UTF-8 or ASCII encoding.
 #' @param alt_text vector containing alternative names that are printed along with 
 #'   Labels BUT ARE NOT ENCODED in the barcode image. Use with caution!  
+#' @param replace_label logical. Replace label text with \code{alt_text}.
+#'   Generated barcode will contain more information than text label. Use with
+#'   caution!
 #' @param denote character (prefix) or vector of length 2 (prefix, suffix). 
 #'   Denotes alt_text that is not encoded in the barcode image. 
 #'   Default is brackets before and after ().  
@@ -134,7 +137,7 @@
 #' ## Include text for the user that is NOT encoded into the barcode image
 #' ## Excluded text is denoted with brackets by default
 #' example_df <- data.frame(ID = floor(runif(3) * 10000), name = c("A", "B", "C"),
-#'  dob = c("1/1/2020", "12/6/2001", "2/8/1986")
+#'  dob = c("1/1/2020", "12/6/2001", "2/8/1986"))
 #'  
 #' ## linear (1d) barcodes with custom denote parameter
 #' custom_create_PDF(Labels = example_df$ID, alt_text = paste(example_df$name,
@@ -165,26 +168,10 @@ custom_create_PDF <- function(user = FALSE,
                               x_space = 0,
                               y_space = 0.5,
                               alt_text = NULL,
+                              replace_label = FALSE,
                               denote = c("\n(",")")
 
                               ){
-  if (length(alt_text) > 0) {
-    
-    if (length(denote) == 1) {
-      if (denote[1] %in% c("", NULL, NA, F)) {
-        warning("alt-text is not encoded in barcode. Nothing shows the end-user which text is encoded. Use with caution! see ?custom_create_pdf")
-      } else {
-        warning(paste("alt_text is not encoded in barcode. Non-encoded text begins with",denote[1]))
-        alt_text <- paste0(denote[1],alt_text)
-      } 
-    }
-    if (length(denote) > 1) {
-      warning(paste("alt_text is not encoded in barcode. Non-encoded text is denoted with",denote[1],denote[2]))
-      alt_text <- paste0(denote[1],alt_text,denote[2])
-    }
-    alt_text <- as.factor(alt_text)
-  }
-  
   if (length(Labels) == 0) stop("Labels do not exist. Please pass in Labels")
   # what to do depending on class of Label input
   if(class(Labels)[1] %in% c("character", "integer", "numeric", "factor")){
@@ -211,6 +198,26 @@ custom_create_PDF <- function(user = FALSE,
   labelLength <- max(nchar(paste(Labels)))
   if (x_space > 1 | x_space < 0) stop("ERROR: x_space value out of bounds. Must be between 0 and 1")
   if (y_space < 0 | y_space > 1) stop("ERROR: y_space value out of bounds. Must be between 0 and 1")
+  
+  if (length(alt_text) > 0) {
+    if(length(alt_text) != length(Labels)) {
+      stop("Length of alt-text and Labels not equal.")
+    }
+    if (length(denote) == 1) {
+      if (denote[1] %in% c("", NULL, NA, F)) {
+        warning("alt-text is not encoded in barcode. Nothing shows the end-user which text is encoded. Use with caution! see ?custom_create_pdf")
+      } else {
+        warning(paste("alt_text is not encoded in barcode. Non-encoded text begins with",denote[1]))
+        alt_text <- paste0(denote[1],alt_text)
+      } 
+    }
+    if (length(denote) > 1) {
+      warning(paste("alt_text is not encoded in barcode. Non-encoded text is denoted with",denote[1],denote[2]))
+      alt_text <- paste0(denote[1],alt_text,denote[2])
+    }
+    alt_text <- as.factor(alt_text)
+  }
+  
   # clean up any open graphical devices if function fails
   on.exit(grDevices::graphics.off())
   # if user prompt has been set to true
@@ -358,7 +365,13 @@ custom_create_PDF <- function(user = FALSE,
     # generate qr, most time intensive part
         label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = TRUE, simplify = FALSE)
   } else {stop("Barcode type must be linear or matrix")}
-
+  
+  # since main text label is taken from label_plots, set names of vector
+  # then null-out alt text
+  if(replace_label){
+    names(label_plots) <- alt_text
+    alt_text <- NULL
+  }
   # generate label positions
   
   if(Across){
