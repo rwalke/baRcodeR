@@ -13,6 +13,7 @@ output: github_document
 [![Codecov test coverage](https://codecov.io/gh/ropensci/baRcodeR/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/baRcodeR?branch=master)
 [![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN checks](https://cranchecks.info/badges/worst/baRcodeR)](https://cran.r-project.org/web/checks/check_results_baRcodeR.html)
+[![rOpenSci peer-review](https://badges.ropensci.org/338_status.svg)](https://github.com/ropensci/software-review/issues/338)
 <!-- badges: end -->
 
 baRcodeR generates labels for more repeatable workflows with biological samples

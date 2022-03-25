@@ -23,6 +23,10 @@
     "label_df_cell_clicked": {
 
     },
+    "label_df_cells_selected": [
+
+    ],
+    "label_df_columns_selected": null,
     "label_df_rows_all": [
       1,
       2,
@@ -82,7 +86,8 @@
         "selection": {
           "mode": "multiple",
           "selected": null,
-          "target": "row"
+          "target": "row",
+          "selectable": null
         }
       },
       "evals": [

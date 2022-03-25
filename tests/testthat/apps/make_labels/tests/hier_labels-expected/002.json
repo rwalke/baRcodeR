@@ -18,6 +18,10 @@
     "hier_label_df_cell_clicked": {
 
     },
+    "hier_label_df_cells_selected": [
+
+    ],
+    "hier_label_df_columns_selected": null,
     "hier_label_df_rows_all": [
       1,
       2,
@@ -88,7 +92,8 @@
         "selection": {
           "mode": "multiple",
           "selected": null,
-          "target": "row"
+          "target": "row",
+          "selectable": null
         }
       },
       "evals": [
