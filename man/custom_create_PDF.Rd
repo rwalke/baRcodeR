@@ -28,6 +28,10 @@ custom_create_PDF(
   x_space = 0,
   y_space = 0.5,
   alt_text = NULL,
+<<<<<<< HEAD
+=======
+  replace_label = FALSE,
+>>>>>>> 81968b818765a3d4b2c2b65f5d393c41f949fc16
   denote = c("\\n(", ")")
 )
 
@@ -111,6 +115,13 @@ label as a proportion of the label height. Only applies when \code{type =
 \item{alt_text}{vector containing alternative names that are printed along with 
 Labels BUT ARE NOT ENCODED in the barcode image. Use with caution!}
 
+<<<<<<< HEAD
+=======
+\item{replace_label}{logical. Replace label text with \code{alt_text}.
+Generated barcode will contain more information than text label. Use with
+caution!}
+
+>>>>>>> 81968b818765a3d4b2c2b65f5d393c41f949fc16
 \item{denote}{character (prefix) or vector of length 2 (prefix, suffix). 
 Denotes alt_text that is not encoded in the barcode image. 
 Default is brackets before and after ().}
@@ -172,10 +183,18 @@ if(interactive()){
 ## run using a data frame, automatically choosing the "label" column
 example_df <- data.frame("level1" = c("a1", "a2"), "label" = c("a1-b1",
  "a1-b2"), "level2" = c("b1", "b1"))
+<<<<<<< HEAD
 
 custom_create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(), 
  "example_2"))
 
+=======
+
+custom_create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(), 
+ "example_2"))
+ }
+\dontrun{
+>>>>>>> 81968b818765a3d4b2c2b65f5d393c41f949fc16
 ## run using an unnamed data frame
 example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
 ## specify column from data frame
@@ -186,7 +205,12 @@ example_df <- data.frame(c("a1", "a2"), c("a1-b1", "a1-b2"), c("b1", "b1"))
 ## specify column from data frame
 custom_create_PDF(user = FALSE, Labels = example_df, name = file.path(tempdir(),
 "example_4", type = "linear"))
+<<<<<<< HEAD
  
+=======
+}
+\dontrun{
+>>>>>>> 81968b818765a3d4b2c2b65f5d393c41f949fc16
 ## Include text for the user that is NOT encoded into the barcode image
 ## Excluded text is denoted with brackets by default
 example_df <- data.frame(ID = floor(runif(3) * 10000), name = c("A", "B", "C"),
