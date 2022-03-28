@@ -46,9 +46,9 @@
 #'   \code{"LabelsOut"}. A file named \code{name.pdf} will be saved to the
 #'   working directory by default. Use \code{"dirname/name"} to produce a file
 #'   called \code{name.pdf} in the \code{dirname} directory.
-#' @param type character. Choice of \code{"linear"} code 128 or \code{"linear2"}
-#'   code 128 extended or \code{"matrix"}
-#'   QR code labels. Default is \code{"matrix"}.
+#' @param type character. Choice of \code{"linear"} for code 128, or \code{"linear2"}
+#'   for extended code 128, or \code{"matrix"}
+#'   for QR code (i.e. 2D barcode) labels. Default is \code{"matrix"}.
 #' @param ErrCorr error correction value for matrix labels only. Level of damage
 #'   from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
 #'   is \code{"H"}. See details for explanation of values.
