@@ -489,10 +489,8 @@ qrcode_make<-function(Labels, ErrCorr){
   }
   # Create qrcode
   Xpng <- grid::rasterGrob(
-    abs(qrcode::qrcode_gen(paste0(Xtxt), 
-                           ErrorCorrectionLevel = ErrCorr, 
-                           dataOutput = TRUE, 
-                           plotQRcode = FALSE, mask = 3) - 1), 
+    abs(qrcode::qr_code(paste0(Xtxt), 
+                           ecl = ErrCorr) - 1), 
     interpolate = FALSE)
   return(Xpng)
 }
