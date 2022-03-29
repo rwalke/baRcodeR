@@ -1,9 +1,9 @@
-### baRcodeR 0.1.7 - added code 128 extended
+## baRcodeR 0.1.7 - added code 128 extended
 
 * "Linear2" added to option list (Linear, Matrix) to produce Code 128 extended linear barcodes. This allows more special characters for linear (1D) barcodes
 * Changed qrcode::qr_code() from (depricated) qrcode_gen
 
-### baRcodeR 0.1.6 - new parameters
+## baRcodeR 0.1.6 - new parameters
 
 At the request of a COVID-2019 research group, we have added an option to allow non-encoded text to appear with linear & 2D barcodes:
 
