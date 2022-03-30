@@ -2,7 +2,7 @@
 
 Thanks to rwalke for adding "Linear2" to the option list (Linear, Matrix). This will produce Code 128 extended linear barcodes, allowing for particular 1-D barcode patterns that are distinct from "Linear"
 
-Thanks to Theirry() for pointing out that we need to change qrcode::qr_code() from (depricated) qrcode_gen
+Thanks to Theirry() for pointing out that we need to change qrcode::qr_code() from (deprecated) qrcode_gen
 
 
 # baRcodeR 0.1.6
