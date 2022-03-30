@@ -33,7 +33,7 @@ Description: Tools to generate unique identifier codes and
     for R Studio. Biologically informative codes can be included for
     hierarchically structured sampling designs.
 License: GPL-3
-URL: https://docs.ropensci.org/baRcodeR (website) https://github.com/ropensci/baRcodeR/  
+URL: https://docs.ropensci.org/baRcodeR/ (website) https://github.com/ropensci/baRcodeR/  
 BugReports: https://github.com/ropensci/baRcodeR/issues
 Depends:
     qrcode,
