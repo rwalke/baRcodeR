@@ -1,5 +1,6 @@
 ## baRcodeR 0.1.7 - added code 128 extended
 
+* Added missing slash to web link; sorry for the confusion
 * "Linear2" added to option list (Linear, Matrix) to produce Code 128 extended linear barcodes. This allows more special characters for linear (1D) barcodes
 * Changed qrcode::qr_code() from (depricated) qrcode_gen
 
