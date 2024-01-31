@@ -1,3 +1,9 @@
+# baRcodeR 0.1.8
+
+Thanks to cfmw  for suggesting a change to allow underscores in QR codes, and for real-world testing.
+
+Thanks to lavaman13 and wolass for requesting a different layout for the QR Code labels that allows text above or below the barcode. This is now implemented with the `type="matrix2"` argument in `create_PDF()`
+
 # baRcodeR 0.1.7 
 
 Thanks to rwalke for adding "Linear2" to the option list (Linear, Matrix). This will produce Code 128 extended linear barcodes, allowing for particular 1-D barcode patterns that are distinct from "Linear"

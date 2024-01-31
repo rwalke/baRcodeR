@@ -144,8 +144,10 @@ make_labels_internals <- function(){
                                                                               multiple=FALSE),
                                                            shiny::selectInput("type", 
                                                                               "Barcode Type", 
-                                                                              choices = list("Matrix (2D)" = "matrix",
-                                                                                             "Linear (1D)" = "linear"),
+                                                                              choices = list("QR code (right-text)" = "matrix",
+                                                                                             "QR code (inline-text)" = "matrix2",
+                                                                                             "Linear 1" = "linear",
+                                                                                             "Linear 2" = "linear2"),
                                                                               multiple = FALSE),
                                                            shiny::numericInput("font_size", 
                                                                                "Font Size", 
@@ -283,7 +285,25 @@ make_labels_internals <- function(){
         label_plot <- qrcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], 
                                   ErrCorr = input$err_corr)
         
-      } else {
+        }else if(input$type == "matrix2") {
+          code_vp <- grid::viewport(
+            x=grid::unit(0.05, "npc"), 
+            y=grid::unit(0, "npc"), 
+            width = grid::unit(0.3 * (input$page_width - 2 * input$width_margin)/input$numcol, "in"), 
+            height = grid::unit(0.6 * (input$page_height - 2 * input$height_margin)/input$numrow, "in"), 
+            just=c("center", "bottom"))
+          
+          label_vp <- grid::viewport(
+            x=grid::unit(0.05, "npc"), 
+            y=grid::unit(input$y_space, "npc"), 
+            width = grid::unit(0.4, "npc"), 
+            height = grid::unit(0.8, "npc"), 
+            just=c("center", "center"))
+          
+          label_plot <- qrcode_make(Labels = Labels_pdf()[1, input$check_make_labels_columns_selected], 
+                                    ErrCorr = input$err_corr)
+          
+        } else {
         code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), 
                                   y=grid::unit(0.8, "npc"), 
                                   width = grid::unit(0.9 * (input$page_width - 2 * input$width_margin)/input$numcol, "in"), 

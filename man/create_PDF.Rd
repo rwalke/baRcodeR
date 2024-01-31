@@ -26,9 +26,10 @@ ID codes) with either UTF-8 or ASCII encoding.}
 working directory by default. Use \code{"dirname/name"} to produce a file
 called \code{name.pdf} in the \code{dirname} directory.}
 
-\item{type}{character. Choice of \code{"linear"} for code 128, or \code{"linear2"}
-for extended code 128, or \code{"matrix"}
-for QR code (i.e. 2D barcode) labels. Default is \code{"matrix"}.}
+\item{type}{character. Choice of \code{"linear"} for code 128, \code{"linear2"}
+for extended code 128, \code{"matrix"} for QR code (i.e. 2D barcode) with
+text to the right, or \code{"matrix2"} for QR code with text above or below,    
+depending on \code{y_space} value (0 = below, 1 = above).}
 
 \item{ErrCorr}{error correction value for matrix labels only. Level of damage
 from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default

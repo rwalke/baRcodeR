@@ -7,13 +7,18 @@ output: github_document
 # baRcodeR
 
 <!-- badges: start -->
+
 [![Status](https://www.r-pkg.org/badges/version/baRcodeR)](https://CRAN.R-project.org/package=baRcodeR)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/baRcodeR)](https://CRAN.R-project.org/package=baRcodeR)
-[![Travis build status](https://travis-ci.org/ropensci/baRcodeR.svg?branch=master)](https://travis-ci.org/ropensci/baRcodeR)
-[![Codecov test coverage](https://codecov.io/gh/ropensci/baRcodeR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/baRcodeR?branch=master)
-[![Project Status: Active â€“ The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![CRAN checks](https://badges.cranchecks.info/worst/baRcodeR.svg)](https://cran.r-project.org/web/checks/check_results_baRcodeR.html)
-[![rOpenSci peer-review](https://badges.ropensci.org/338_status.svg)](https://github.com/ropensci/software-review/issues/338)
+[![Codecov test
+coverage](https://codecov.io/gh/ropensci/baRcodeR/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/baRcodeR?branch=master)
+[![Project Status: Active â€“ The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN
+checks](https://github.com/r-hub/cchecksbadges/blob/gh-pages/summary/baRcodeR.svg)](https://github.com/r-hub/cchecksbadges/blob/gh-pages/summary/baRcodeR.svg)
+[![rOpenSci
+peer-review](https://badges.ropensci.org/338_status.svg)](https://github.com/ropensci/software-review/issues/338)
 <!-- badges: end -->
 
 baRcodeR generates labels for more repeatable workflows with biological samples
