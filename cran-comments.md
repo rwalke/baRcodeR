@@ -1,3 +1,8 @@
+## baRcodeR 0.1.8 
+
+* `create_PDF()` now allows underscores in QR code. Previously these were switched to dashes.
+* Add a new option (`matrix2`) that places labels above or below, depending on `y_space` parameter
+
 ## baRcodeR 0.1.7 - added code 128 extended
 
 * Added missing slash to web link; sorry for the confusion

@@ -46,9 +46,10 @@
 #'   \code{"LabelsOut"}. A file named \code{name.pdf} will be saved to the
 #'   working directory by default. Use \code{"dirname/name"} to produce a file
 #'   called \code{name.pdf} in the \code{dirname} directory.
-#' @param type character. Choice of \code{"linear"} for code 128, or \code{"linear2"}
-#'   for extended code 128, or \code{"matrix"}
-#'   for QR code (i.e. 2D barcode) labels. Default is \code{"matrix"}.
+#' @param type character. Choice of \code{"linear"} for code 128, \code{"linear2"}
+#'   for extended code 128, \code{"matrix"} for QR code (i.e. 2D barcode) with
+#'   text to the right, or \code{"matrix2"} for QR code with text above or below,    
+#'   depending on \code{y_space} value (0 = below, 1 = above).
 #' @param ErrCorr error correction value for matrix labels only. Level of damage
 #'   from low to high: \code{"L"}, \code{"M"}, \code{"Q"}, \code{"H"}. Default
 #'   is \code{"H"}. See details for explanation of values.
@@ -90,7 +91,8 @@
 #'   \code{type = "matrix"}. Default is \code{0}.
 #' @param y_space numerical. The height position of the text on the physical
 #'   label as a proportion of the label height. Only applies when \code{type =
-#'   "matrix"}. A value between \code{0} and \code{1}. Default is \code{0.5}.
+#'   "matrix"} or \code{"matrix2"}. A value between \code{0} and \code{1}. 
+#'   Default is \code{0.5}.
 #'   
 #'   
 #' @examples
@@ -247,9 +249,10 @@ custom_create_PDF <- function(user = FALSE,
     
     if (Advanced) {
       type <- switch(
-        fake_menu(c("Matrix QR Code", "Linear", "Linear2"),
+        fake_menu(c("Matrix - text beside", "Matrix - text above",
+                    "Linear", "Linear2"),
                     "Type of Barcode: "),
-        "matrix", "linear", "linear2"
+        "matrix", "matrix2", "linear", "linear2"
       )
       
       ## Set to TRUE to print labels across rows instead of down columns
@@ -384,8 +387,25 @@ custom_create_PDF <- function(user = FALSE,
                                just=c("left", "center"))
     
     # generate qr, most time intensive part
-        label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = TRUE, simplify = FALSE)
-  } else {stop("Barcode type must be linear, linear2 or matrix")}
+    label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = TRUE, simplify = FALSE)
+  } else if (type =="matrix2"){
+    ## vp for the qrcode within the grid layout
+    code_vp <- grid::viewport(x=grid::unit(0.05, "npc"), 
+                              y=grid::unit(0, "npc"), 
+                              width = grid::unit(0.3 * label_width, "in"), 
+                              height = grid::unit(0.6 * label_height, "in"), 
+                              just=c("left", "bottom"))
+    
+    ## vp for the text label within the grid layout, scaling the x_space by 0.6 makes sure it will not overlap with the qrcode
+    label_vp <- grid::viewport(x=grid::unit(0.05, "npc"), 
+                               y=grid::unit(y_space, "npc"), 
+                               width = grid::unit(0.4, "npc"), 
+                               height = grid::unit(0.8, "npc"), 
+                               just=c("left", "top"))
+    
+    # generate qr, most time intensive part
+    label_plots <- sapply(as.character(Labels), qrcode_make, ErrCorr = ErrCorr, USE.NAMES = TRUE, simplify = FALSE)
+  } else {stop("Barcode type must be linear, linear2, matrix or matrix2")}
   
   # since main text label is taken from label_plots, set names of vector
   # then null-out alt text
@@ -468,6 +488,8 @@ custom_create_PDF <- function(user = FALSE,
     if(type =="linear" | type == "linear2"){
       grid::grid.rect(gp = grid::gpar(col = NA, fill = "white"))
     }
+    
+
     
     grid::grid.text(label = Xsplt, gp = grid::gpar(fontsize = Fsz, lineheight = 0.8))
     

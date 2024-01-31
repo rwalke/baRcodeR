@@ -1,7 +1,7 @@
 Package: baRcodeR
 Title: Label Creation for Tracking and Collecting Data from
     Biological Samples
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: 
     c(person(given = "Yihan",
              family = "Wu",
@@ -36,10 +36,10 @@ License: GPL-3
 URL: https://docs.ropensci.org/baRcodeR/ (website) https://github.com/ropensci/baRcodeR/  
 BugReports: https://github.com/ropensci/baRcodeR/issues
 Depends:
-    qrcode,
-    R (>= 4.0.0)
+    qrcode (>= 0.2.2),
+    R (>= 4.3.2)
 Imports:
-    DT (>= 0.3),
+    DT (>= 0.31),
     grDevices,
     grid,
     miniUI (>= 0.1.1),
@@ -55,4 +55,4 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 Language: en-CA
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
