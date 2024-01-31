@@ -1,0 +1,216 @@
+{
+  "input": {
+    "across": "TRUE",
+    "addin_tabs": "Simple ID Code Generation",
+    "cancel": 0,
+    "digits": 3,
+    "done": 0,
+    "ecol": 0,
+    "end_number": 11,
+    "erow": 0,
+    "err_corr": "L",
+    "filename": "LabelsOut",
+    "font_size": 12,
+    "header": true,
+    "height_margin": 0.5,
+    "hier_digits": 2,
+    "hier_end_number": null,
+    "hier_label_make": 0,
+    "hier_prefix": "",
+    "hier_start_number": null,
+    "insertBtn": 0,
+    "label_check": 0,
+    "label_df_cell_clicked": {
+
+    },
+    "label_df_cells_selected": [
+
+    ],
+    "label_df_columns_selected": null,
+    "label_df_rows_all": [
+      1,
+      2,
+      3
+    ],
+    "label_df_rows_current": [
+      1,
+      2,
+      3
+    ],
+    "label_df_rows_selected": null,
+    "label_df_search": "",
+    "label_df_state": {
+      "start": 0,
+      "length": 10,
+      "order": [
+
+      ],
+      "search": {
+        "search": "",
+        "smart": true,
+        "regex": false,
+        "caseInsensitive": true
+      },
+      "columns": [
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        }
+      ]
+    },
+    "label_height": null,
+    "label_width": null,
+    "labels": null,
+    "make": 0,
+    "make_pdf": 0,
+    "numcol": 4,
+    "numrow": 20,
+    "page_height": 11,
+    "page_width": 8.5,
+    "prefix": "example",
+    "removeBtn": 0,
+    "start_number": 9,
+    "trunc": false,
+    "type": "matrix",
+    "width_margin": 0.25,
+    "x_space": 0,
+    "y_space": 0.5
+  },
+  "output": {
+    "label_code": "[1] uniqID_maker(user = FALSE, string = 'example', level = c(9,11), digits = 3)",
+    "label_df": {
+      "x": {
+        "filter": "none",
+        "vertical": false,
+        "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>label<\/th>\n      <th>ind_string<\/th>\n      <th>ind_number<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>",
+        "options": {
+          "columnDefs": [
+            {
+              "orderable": false,
+              "targets": 0
+            },
+            {
+              "name": " ",
+              "targets": 0
+            },
+            {
+              "name": "label",
+              "targets": 1
+            },
+            {
+              "name": "ind_string",
+              "targets": 2
+            },
+            {
+              "name": "ind_number",
+              "targets": 3
+            }
+          ],
+          "order": [
+
+          ],
+          "autoWidth": false,
+          "orderClasses": false,
+          "ajax": {
+            "type": "POST",
+            "data": "function(d) {\nd.search.caseInsensitive = true;\nd.search.smart = true;\nd.escape = true;\nvar encodeAmp = function(x) { x.value = x.value.replace(/&/g, \"%26\"); }\nencodeAmp(d.search);\n$.each(d.columns, function(i, v) {encodeAmp(v.search);});\n}"
+          },
+          "serverSide": true,
+          "processing": true
+        },
+        "selection": {
+          "mode": "multiple",
+          "selected": null,
+          "target": "row",
+          "selectable": null
+        }
+      },
+      "evals": [
+        "options.ajax.data"
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "jquery",
+          "version": "3.6.0",
+          "src": {
+            "href": "jquery-3.6.0"
+          },
+          "meta": null,
+          "script": "jquery-3.6.0.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "dt-core",
+          "version": "1.13.6",
+          "src": {
+            "href": "dt-core-1.13.6"
+          },
+          "meta": null,
+          "script": "js/jquery.dataTables.min.js",
+          "stylesheet": [
+            "css/jquery.dataTables.min.css",
+            "css/jquery.dataTables.extra.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "package": null,
+          "all_files": false
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.1",
+          "src": {
+            "href": "crosstalk-1.2.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}
